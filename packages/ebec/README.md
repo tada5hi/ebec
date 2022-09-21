@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@ebec%2Fcore.svg)](https://badge.fury.io/js/@ebec%2Fcore)
 [![main](https://github.com/Tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/ebec/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=RFYI5CVQK4)](https://codecov.io/gh/tada5hi/ebec)
+[![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
 This is a library, which provides a base error class, which can simply be extended ⚡.
 It also provides some utility functions to `build` & `merge` options. 
