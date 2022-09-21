@@ -11,8 +11,13 @@ export function buildMessage(
     data?: string | Error | Options,
     options?: Options,
 ) : string | undefined {
-    data = data ?? {};
-    options = options ?? {};
+    if (typeof data === 'undefined') {
+        data = {};
+    }
+
+    if (typeof options === 'undefined') {
+        options = {};
+    }
 
     let message : string | undefined;
 

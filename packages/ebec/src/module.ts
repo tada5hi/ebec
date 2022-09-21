@@ -57,7 +57,9 @@ export class BaseError extends Error {
     //--------------------------------------------------------------------
 
     setOptions(options?: Options): void {
-        options = options ?? {};
+        if (typeof options === 'undefined') {
+            options = {};
+        }
 
         const keys = Object.keys(options);
         for (let i = 0; i < keys.length; i++) {

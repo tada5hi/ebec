@@ -24,8 +24,13 @@ export function buildOptions(
     data?: string | Error | Options,
     options?: Options,
 ) : Options {
-    data ??= {};
-    options ??= {};
+    if (typeof data === 'undefined') {
+        data = {};
+    }
+
+    if (typeof options === 'undefined') {
+        options = {};
+    }
 
     if (
         !(data instanceof Error) &&
