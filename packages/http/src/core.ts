@@ -10,6 +10,7 @@ import {
     Options,
     buildMessage,
     buildOptions,
+    extendsBaseError,
     mergeOptions,
 } from 'ebec';
 
@@ -17,6 +18,7 @@ export {
     BaseError,
     buildOptions,
     buildMessage,
+    extendsBaseError,
     mergeOptions,
 };
 
