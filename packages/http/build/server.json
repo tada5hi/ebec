@@ -1,0 +1,62 @@
+{
+    "InternalServerError": {
+        "statusCode": 500,
+        "message": "Internal Server Error",
+        "code": "INTERNAL_SERVER_ERROR"
+    },
+    "NotImplemented": {
+        "statusCode": 501,
+        "message": "Not Implemented",
+        "code": "NOT_IMPLEMENTED"
+    },
+    "BadGateway": {
+        "statusCode": 502,
+        "message": "Bad Gateway",
+        "code": "BAD_GATEWAY"
+    },
+    "ServiceUnavailable": {
+        "statusCode": 503,
+        "message": "Service Unavailable",
+        "code": "SERVICE_UNAVAILABLE"
+    },
+    "GatewayTimeout": {
+        "statusCode": 504,
+        "message": "Gateway Timeout",
+        "code": "GATEWAY_TIMEOUT"
+    },
+    "HTTPVersionNotSupported": {
+        "statusCode": 505,
+        "message": "HTTP Version Not Supported",
+        "code": "HTTP_VERSION_NOT_SUPPORTED"
+    },
+    "VariantAlsoNegotiates": {
+        "statusCode": 506,
+        "message": "Variant Also Negotiates",
+        "code": "VARIANT_ALSO_NEGOTIATES"
+    },
+    "InsufficientStorage": {
+        "statusCode": 507,
+        "message": "Insufficient Storage",
+        "code": "INSUFFICIENT_STORAGE"
+    },
+    "LoopDetected": {
+        "statusCode": 508,
+        "message": "Loop Detected",
+        "code": "LOOP_DETECTED"
+    },
+    "BandwidthLimitExceeded": {
+        "statusCode": 509,
+        "message": "Bandwidth Limit Exceeded",
+        "code": "BANDWIDTH_LIMIT_EXCEEDED"
+    },
+    "NotExtended": {
+        "statusCode": 510,
+        "message": "Not Extended",
+        "code": "NOT_EXTENDED"
+    },
+    "NetworkAuthenticationRequired": {
+        "statusCode": 511,
+        "message": "Network Authentication Required",
+        "code": "NETWORK_AUTHENTICATION_REQUIRED"
+    }
+}

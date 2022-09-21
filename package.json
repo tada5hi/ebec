@@ -1,0 +1,51 @@
+{
+    "private": true,
+    "author": {
+        "name": "Peter Placzek",
+        "email": "tadashi@animesu.net",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "version": "1.0.0",
+    "workspaces": [
+        "./packages/*"
+    ],
+    "keywords": [
+        "base",
+        "classes",
+        "extendible",
+        "error",
+        "http",
+        "socket",
+        "interface"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tada5hi/ebec.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Tada5hi/ebec/issues"
+    },
+    "homepage": "https://github.com/Tada5hi/ebec#readme",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "devDependencies": {
+        "@tada5hi/eslint-config-typescript": "^1.0.7",
+        "@types/node": "^18.0.0",
+        "codecov": "^3.8.3",
+        "cross-env": "^7.0.3",
+        "lerna": "^5.5.1",
+        "rimraf": "^3.0.2",
+        "eslint": "^8.23.1"
+    },
+    "scripts": {
+        "bootstrap": "lerna bootstrap",
+        "clean": "lerna run clean",
+        "build": "lerna run build",
+        "test": "lerna run test",
+        "pub": "lerna publish",
+        "lint": "eslint --ext .ts ./packages/",
+        "lint:fix": "npm run lint -- --fix"
+    }
+}

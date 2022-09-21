@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+
+        "declaration": true,
+        "declarationMap": true,
+
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+
+        "noEmitOnError": true,
+
+        "skipLibCheck": true,
+
+        "esModuleInterop": true,
+        "lib": ["ES6"],
+        "target": "ES6",
+
+        "moduleResolution": "Node",
+        "module": "CommonJS",
+
+        "resolveJsonModule": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
