@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
 
@@ -15,7 +15,7 @@ export const VariantAlsoNegotiatesErrorOptions : Options = {
 
 export class VariantAlsoNegotiatesError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             VariantAlsoNegotiatesErrorOptions
         );

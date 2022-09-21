@@ -7,7 +7,7 @@
 
 import exp from 'constants';
 import {
-    BaseError, Options, buildOptions, mergeOptions, setUnsetOptions,
+    BaseError, Options, buildOptions, mergeOptions,
 } from '../../../src';
 
 describe('src/utils/error-options.ts', () => {
@@ -24,22 +24,20 @@ describe('src/utils/error-options.ts', () => {
 
         options = mergeOptions({ }, { code: 'FOO' });
         expect(options).toEqual({ code: 'FOO' });
-    });
 
-    it('should set un-set options', () => {
-        let options = setUnsetOptions({}, { code: 'ERROR' });
+        options = mergeOptions({}, { code: 'ERROR' });
         expect(options).toEqual({ code: 'ERROR' } as Options);
 
-        options = setUnsetOptions({ code: 'FOO' }, { code: 'BAR' });
+        options = mergeOptions({ code: 'FOO' }, { code: 'BAR' });
         expect(options).toEqual({ code: 'FOO' });
 
-        options = setUnsetOptions({ code: null }, { code: 'FOO' });
+        options = mergeOptions({ code: null }, { code: 'FOO' });
         expect(options).toEqual({ code: null });
 
-        options = setUnsetOptions({ code: undefined }, { code: 'FOO' });
+        options = mergeOptions({ code: undefined }, { code: 'FOO' });
         expect(options).toEqual({ code: undefined });
 
-        options = setUnsetOptions({ code: 0 }, { code: 'FOO' });
+        options = mergeOptions({ code: 0 }, { code: 'FOO' });
         expect(options).toEqual({ code: 0 });
     });
 

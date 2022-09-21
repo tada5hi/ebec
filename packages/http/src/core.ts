@@ -11,7 +11,6 @@ import {
     buildMessage,
     buildOptions,
     mergeOptions,
-    setUnsetOptions,
 } from 'ebec';
 
 export {
@@ -19,7 +18,6 @@ export {
     buildOptions,
     buildMessage,
     mergeOptions,
-    setUnsetOptions,
 };
 
 export type {

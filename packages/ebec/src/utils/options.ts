@@ -17,22 +17,7 @@ export function mergeOptions(
     target: Options,
     ...sources: Options[]
 ) : Options {
-    return merge(target, sources);
-}
-
-export function setUnsetOptions(
-    base: Options,
-    options: Options,
-) : Options {
-    const keys = Object.keys(options);
-
-    for (let i = 0; i < keys.length; i++) {
-        if (!Object.prototype.hasOwnProperty.call(base, keys[i])) {
-            base[keys[i]] = options[keys[i]];
-        }
-    }
-
-    return base;
+    return merge(target, ...sources);
 }
 
 export function buildOptions(
@@ -45,7 +30,7 @@ export function buildOptions(
         !(data instanceof Error) &&
         typeof data !== 'string'
     ) {
-        options = mergeOptions(options, data);
+        options = mergeOptions({}, data, { ...options });
     }
 
     if (

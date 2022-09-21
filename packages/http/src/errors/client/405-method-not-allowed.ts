@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
 
@@ -15,7 +15,7 @@ export const MethodNotAllowedErrorOptions : Options = {
 
 export class MethodNotAllowedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             MethodNotAllowedErrorOptions
         );

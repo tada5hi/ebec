@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
 
@@ -15,7 +15,7 @@ export const BadRequestErrorOptions : Options = {
 
 export class BadRequestError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             BadRequestErrorOptions
         );

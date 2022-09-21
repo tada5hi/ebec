@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
 
@@ -15,7 +15,7 @@ export const InsufficientStorageErrorOptions : Options = {
 
 export class InsufficientStorageError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             InsufficientStorageErrorOptions
         );

@@ -172,24 +172,6 @@ console.log(options);
 // {code: 'ERROR'}
 ```
 
-#### setUnsetOptions
-The `setUnsetOptions` method requires two arguments of type `Options`.
-
-```typescript
-import { setUnsetOptions } from 'ebec';
-
-let options = setUnsetOptions({
-    statusCode: 404
-}, {
-    error: 'ERROR'
-});
-console.log(options);
-// {statusCode: 404, code: 'ERROR'}
-
-options = setUnsetOptions({code: undefined}, {code: 'ERROR'});
-console.log(options);
-// {code: undefined}
-```
 ## Types
 
 ### Options

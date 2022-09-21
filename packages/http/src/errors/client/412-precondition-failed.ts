@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
 
@@ -15,7 +15,7 @@ export const PreconditionFailedErrorOptions : Options = {
 
 export class PreconditionFailedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             PreconditionFailedErrorOptions
         );

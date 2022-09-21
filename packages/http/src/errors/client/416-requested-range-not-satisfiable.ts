@@ -2,7 +2,7 @@ import {
     buildOptions,
     buildMessage,
     Options,
-    setUnsetOptions
+    mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
 
@@ -15,7 +15,7 @@ export const RequestedRangeNotSatisfiableErrorOptions : Options = {
 
 export class RequestedRangeNotSatisfiableError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {
-        options = setUnsetOptions(
+        options = mergeOptions(
             buildOptions(data, options),
             RequestedRangeNotSatisfiableErrorOptions
         );
