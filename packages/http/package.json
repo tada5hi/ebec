@@ -39,7 +39,8 @@
         "build:types": "tsc  -p tsconfig.build.json --emitDeclarationOnly",
         "build:js": "rollup -c",
         "build:classes": "ts-node build/index.ts generate",
-        "build": "rimraf dist && npm run build:classes && npm run build:types && npm run build:js"
+        "build": "rimraf dist && npm run build:classes && npm run build:types && npm run build:js",
+        "prepublishOnly": "npm run build"
     },
     "dependencies": {
         "ebec": "^0.0.1"

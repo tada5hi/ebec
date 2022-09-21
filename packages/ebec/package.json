@@ -43,7 +43,8 @@
         "build:js": "rollup -c",
         "build": "rimraf dist && npm run build:types && npm run build:js",
         "test": "cross-env NODE_ENV=test jest --config ./test/jest.config.js",
-        "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage"
+        "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage",
+        "prepublishOnly": "npm run build"
     },
     "dependencies": {
         "smob": "^0.0.3"
