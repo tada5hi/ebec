@@ -9,7 +9,7 @@ import { BaseError } from './module';
 import { hasOwnProperty } from './utils';
 
 function isObject(item: unknown) : item is Record<string, any> {
-    return (item && typeof item === 'object');
+    return (!!item && typeof item === 'object');
 }
 
 function isFunction(item: unknown) : item is CallableFunction {

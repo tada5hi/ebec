@@ -8,9 +8,12 @@
 import { Options } from '../type';
 
 export function buildMessage(
-    data: string | Error | Options,
-    options: Options,
+    data?: string | Error | Options,
+    options?: Options,
 ) : string | undefined {
+    data = data ?? {};
+    options = options ?? {};
+
     let message : string | undefined;
 
     if (

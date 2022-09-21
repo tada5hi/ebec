@@ -27,4 +27,20 @@ describe('src/utils/extends.ts', () => {
             expect(extendsBaseError(e)).toBeTruthy();
         }
     });
+
+    it('should (not) determine lazy inheritance', () => {
+        let ob : Record<string, any> = {
+            options: {},
+            getOption: null,
+            getOptions: null,
+        };
+        expect(extendsBaseError(ob)).toBeFalsy();
+
+        ob = {
+            options: {},
+            getOption: () => null,
+            getOptions: () => null,
+        };
+        expect(extendsBaseError(ob)).toBeTruthy();
+    });
 });

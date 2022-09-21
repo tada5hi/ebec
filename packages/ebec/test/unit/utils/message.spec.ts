@@ -18,4 +18,9 @@ describe('src/utils/message.ts', () => {
 
         expect(message).toEqual('bar');
     });
+
+    it('should build message from previous error', () => {
+        const message = buildMessage(new Error('abc'));
+        expect(message).toEqual('abc');
+    });
 });

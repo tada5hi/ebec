@@ -13,8 +13,9 @@ export function extendsClientError<T extends ClientError = ClientError>(error: u
         return true;
     }
 
-    return extendsBaseError(error) &&
-        (error.getOption('statusCode') >= 400 || error.getOption('statusCode') < 500);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return extendsBaseError(error) && (error.getOption('statusCode') >= 400 || error.getOption('statusCode') < 500);
 }
 
 export function extendsServerError<T extends ServerError = ServerError>(error: unknown) : error is T {
@@ -22,6 +23,7 @@ export function extendsServerError<T extends ServerError = ServerError>(error: u
         return true;
     }
 
-    return extendsBaseError(error) &&
-        (error.getOption('statusCode') >= 500 || error.getOption('statusCode') < 600);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return extendsBaseError(error) && (error.getOption('statusCode') >= 500 || error.getOption('statusCode') < 600);
 }

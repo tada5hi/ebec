@@ -21,9 +21,10 @@ export function mergeOptions(
 }
 
 export function buildOptions(
-    data: string | Error | Options,
+    data?: string | Error | Options,
     options?: Options,
 ) : Options {
+    data ??= {};
     options ??= {};
 
     if (

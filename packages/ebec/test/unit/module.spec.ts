@@ -23,6 +23,12 @@ describe('src/module.ts', () => {
         expect(error.message).toEqual('');
         expect(error.options.statusCode).toEqual(404);
 
+        error.setOptions();
+
+        expect(error.getOption('foo')).toBeUndefined();
+        error.setOptions({ foo: 'bar' });
+        expect(error.getOption('foo')).toEqual('bar');
+
         error = new BaseError({
             message: 'foo',
         });
