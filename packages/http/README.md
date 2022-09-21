@@ -1,10 +1,10 @@
-# @typescript-error/http 🔥
+# @ebec/http 🥁
 
-[![npm version](https://badge.fury.io/js/@typescript-error%2Fhttp.svg)](https://badge.fury.io/js/@typescript-error%2Fhttp)
-[![main](https://github.com/Tada5hi/typescript-error/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/typescript-error/actions/workflows/main.yml)
+[![npm version](https://badge.fury.io/js/@ebec%2Fhttp.svg)](https://badge.fury.io/js/@ebec%2Fhttp)
+[![main](https://github.com/Tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/ebec/actions/workflows/main.yml)
 
-This is a library, which provides HTTP error classes (`NotFoundError`, `InternalServerError`, ...), 
-which can also simply be extended.
+This library provides HTTP base error classes (`NotFoundError`, `InternalServerError`, ...), 
+which can simply be extended.
 
 **Table of Contents**
 
@@ -17,7 +17,7 @@ which can also simply be extended.
 ## Installation
 
 ```bash
-npm install @typescript-error/http --save
+npm install @ebec/http --save
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ in `throw-` & `catch-` statements.
 import {
     InternalServerError,
     NotFoundError
-} from "@typescript-error/http";
+} from "@ebec/http";
 
 const clientError = new NotFoundError();
 
@@ -69,15 +69,14 @@ with own `options`.
 
 ```typescript
 import {
-    ErrorOptions,
-    mergeErrorOptions,
+    Options,
+    mergeOptions,
     NotFoundError
-} from "@typescript-error/http";
-
+} from "@ebec/http";
 
 class UserNotFound extends NotFoundError {
-    constructor(options?: ErrorOptions) {
-        super(mergeErrorOptions(
+    constructor(options?: Options) {
+        super(mergeOptions(
             {
                 message: 'The user was not found.',
                 code: 'USER_NOT_FOUND'
