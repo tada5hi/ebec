@@ -1,6 +1,6 @@
 {
     "name": "@ebec/http",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Extendable base error classes for http.",
     "files": [
         "dist/"
@@ -45,7 +45,7 @@
     "devDependencies": {
         "@types/mustache": "^4.1.2",
         "@types/yargs": "^17.0.4",
-        "ebec": "^0.0.3",
+        "ebec": "^0.0.4",
         "mustache": "^4.2.0",
         "ts-node": "^10.4.0",
         "yargs": "^17.2.1"
