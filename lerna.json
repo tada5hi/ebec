@@ -9,10 +9,31 @@
         "publish": {
             "ignoreChanges": [
                 "*.md",
+                ".eslintrc",
                 "package.json"
             ]
+        },
+        "version": {
+            "message": "build(release): publish"
         }
     },
+    "npmClient": "npm",
+    "useWorkspaces": true,
+    "useNx": false,
+    "conventionalCommits": true,
     "version": "independent",
-    "useWorkspaces": true
+    "changelog": {
+        "labels": {
+            "build": "Build",
+            "ci": "Continuous Integration",
+            "docs": "Documentation",
+            "feat": "New Feature",
+            "fix": "Bug Fix",
+            "perf": "Performance",
+            "refactor": "Refactor",
+            "revert": "Revert",
+            "style": "Style",
+            "test": "Test"
+        }
+    }
 }
