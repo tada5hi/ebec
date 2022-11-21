@@ -15,6 +15,7 @@ It also provides some utility functions to `build` & `merge` options.
     - [Inheritance](#inheritance)
     - [Utils](#utils)
 - [Types](#types)
+- [License](#license)
 
 ## Installation
 
@@ -220,8 +221,14 @@ export type Options = {
     redirectURL?: string,
 
     /**
-     * Provide additional options.
+     * Additional options.
      */
     [key: string]: any
 }
 ```
+
+## License
+
+Made with 💚
+
+Published under [MIT License](./LICENSE).

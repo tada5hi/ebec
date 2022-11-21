@@ -13,6 +13,7 @@ which can simply be extended.
 - [Types](#types)
   - [Client](#client)
   - [Server](#server)
+- [License](#license)
 
 ## Installation
 
@@ -139,3 +140,9 @@ The following HTTP classes are predefined:
 - 509 `BandwidthLimitExceededError`
 - 510 `NotExtendedError`
 - 511 `NetworkAuthenticationRequiredError`
+
+## License
+
+Made with 💚
+
+Published under [MIT License](./LICENSE).
