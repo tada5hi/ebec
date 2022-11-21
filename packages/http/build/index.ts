@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { hasOwnProperty } from 'ebec';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { render } from 'mustache';
 import path from 'path';
 import { loadTemplate, saveFile } from './utils';
