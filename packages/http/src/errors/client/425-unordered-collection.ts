@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const UnorderedCollectionErrorOptions : Options = {
+export const UnorderedCollectionErrorOptions : HTTPOptions = {
     code: `UNORDERED_COLLECTION`,
     statusCode: 425,
     decorateMessage: false,

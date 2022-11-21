@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const VariantAlsoNegotiatesErrorOptions : Options = {
+export const VariantAlsoNegotiatesErrorOptions : HTTPOptions = {
     code: `VARIANT_ALSO_NEGOTIATES`,
     statusCode: 506,
     decorateMessage: true,

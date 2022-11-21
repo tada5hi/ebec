@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const GoneErrorOptions : Options = {
+export const GoneErrorOptions : HTTPOptions = {
     code: `GONE`,
     statusCode: 410,
     decorateMessage: false,

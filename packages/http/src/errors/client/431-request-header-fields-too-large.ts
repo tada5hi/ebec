@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RequestHeaderFieldsTooLargeErrorOptions : Options = {
+export const RequestHeaderFieldsTooLargeErrorOptions : HTTPOptions = {
     code: `REQUEST_HEADER_FIELDS_TOO_LARGE`,
     statusCode: 431,
     decorateMessage: false,

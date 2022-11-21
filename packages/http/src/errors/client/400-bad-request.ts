@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const BadRequestErrorOptions : Options = {
+export const BadRequestErrorOptions : HTTPOptions = {
     code: `BAD_REQUEST`,
     statusCode: 400,
     decorateMessage: false,

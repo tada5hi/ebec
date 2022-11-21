@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const EnhanceYourCalmErrorOptions : Options = {
+export const EnhanceYourCalmErrorOptions : HTTPOptions = {
     code: `ENHANCE_YOUR_CALM`,
     statusCode: 420,
     decorateMessage: false,

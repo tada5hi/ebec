@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RequestEntityTooLargeErrorOptions : Options = {
+export const RequestEntityTooLargeErrorOptions : HTTPOptions = {
     code: `REQUEST_ENTITY_TOO_LARGE`,
     statusCode: 413,
     decorateMessage: false,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RequestedRangeNotSatisfiableErrorOptions : Options = {
+export const RequestedRangeNotSatisfiableErrorOptions : HTTPOptions = {
     code: `REQUESTED_RANGE_NOT_SATISFIABLE`,
     statusCode: 416,
     decorateMessage: false,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const GatewayTimeoutErrorOptions : Options = {
+export const GatewayTimeoutErrorOptions : HTTPOptions = {
     code: `GATEWAY_TIMEOUT`,
     statusCode: 504,
     decorateMessage: true,

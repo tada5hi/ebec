@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NetworkAuthenticationRequiredErrorOptions : Options = {
+export const NetworkAuthenticationRequiredErrorOptions : HTTPOptions = {
     code: `NETWORK_AUTHENTICATION_REQUIRED`,
     statusCode: 511,
     decorateMessage: true,

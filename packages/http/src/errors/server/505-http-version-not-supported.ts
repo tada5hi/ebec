@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const HTTPVersionNotSupportedErrorOptions : Options = {
+export const HTTPVersionNotSupportedErrorOptions : HTTPOptions = {
     code: `HTTP_VERSION_NOT_SUPPORTED`,
     statusCode: 505,
     decorateMessage: true,

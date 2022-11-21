@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const BandwidthLimitExceededErrorOptions : Options = {
+export const BandwidthLimitExceededErrorOptions : HTTPOptions = {
     code: `BANDWIDTH_LIMIT_EXCEEDED`,
     statusCode: 509,
     decorateMessage: true,

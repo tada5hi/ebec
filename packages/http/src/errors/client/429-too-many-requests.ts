@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const TooManyRequestsErrorOptions : Options = {
+export const TooManyRequestsErrorOptions : HTTPOptions = {
     code: `TOO_MANY_REQUESTS`,
     statusCode: 429,
     decorateMessage: false,

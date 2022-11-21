@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ForbiddenErrorOptions : Options = {
+export const ForbiddenErrorOptions : HTTPOptions = {
     code: `FORBIDDEN`,
     statusCode: 403,
     decorateMessage: false,

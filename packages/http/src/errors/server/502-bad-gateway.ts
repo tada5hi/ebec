@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const BadGatewayErrorOptions : Options = {
+export const BadGatewayErrorOptions : HTTPOptions = {
     code: `BAD_GATEWAY`,
     statusCode: 502,
     decorateMessage: true,

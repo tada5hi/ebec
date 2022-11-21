@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const UnauthorizedErrorOptions : Options = {
+export const UnauthorizedErrorOptions : HTTPOptions = {
     code: `UNAUTHORIZED`,
     statusCode: 401,
     decorateMessage: false,

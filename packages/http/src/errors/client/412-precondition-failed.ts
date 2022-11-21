@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const PreconditionFailedErrorOptions : Options = {
+export const PreconditionFailedErrorOptions : HTTPOptions = {
     code: `PRECONDITION_FAILED`,
     statusCode: 412,
     decorateMessage: false,

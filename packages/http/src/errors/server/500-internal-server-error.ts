@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const InternalServerErrorOptions : Options = {
+export const InternalServerErrorOptions : HTTPOptions = {
     code: `INTERNAL_SERVER_ERROR`,
     statusCode: 500,
     decorateMessage: true,

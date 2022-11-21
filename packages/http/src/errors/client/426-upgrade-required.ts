@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const UpgradeRequiredErrorOptions : Options = {
+export const UpgradeRequiredErrorOptions : HTTPOptions = {
     code: `UPGRADE_REQUIRED`,
     statusCode: 426,
     decorateMessage: false,

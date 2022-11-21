@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NotExtendedErrorOptions : Options = {
+export const NotExtendedErrorOptions : HTTPOptions = {
     code: `NOT_EXTENDED`,
     statusCode: 510,
     decorateMessage: true,

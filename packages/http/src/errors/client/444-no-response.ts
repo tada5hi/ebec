@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NoResponseErrorOptions : Options = {
+export const NoResponseErrorOptions : HTTPOptions = {
     code: `NO_RESPONSE`,
     statusCode: 444,
     decorateMessage: false,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ClientClosedRequestErrorOptions : Options = {
+export const ClientClosedRequestErrorOptions : HTTPOptions = {
     code: `CLIENT_CLOSED_REQUEST`,
     statusCode: 499,
     decorateMessage: false,

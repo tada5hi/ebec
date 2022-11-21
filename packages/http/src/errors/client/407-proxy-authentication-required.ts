@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ProxyAuthenticationRequiredErrorOptions : Options = {
+export const ProxyAuthenticationRequiredErrorOptions : HTTPOptions = {
     code: `PROXY_AUTHENTICATION_REQUIRED`,
     statusCode: 407,
     decorateMessage: false,

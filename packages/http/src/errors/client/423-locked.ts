@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const LockedErrorOptions : Options = {
+export const LockedErrorOptions : HTTPOptions = {
     code: `LOCKED`,
     statusCode: 423,
     decorateMessage: false,

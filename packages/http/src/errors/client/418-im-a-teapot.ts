@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ImATeapotErrorOptions : Options = {
+export const ImATeapotErrorOptions : HTTPOptions = {
     code: `IM_A_TEAPOT`,
     statusCode: 418,
     decorateMessage: false,

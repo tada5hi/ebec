@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NotAcceptableErrorOptions : Options = {
+export const NotAcceptableErrorOptions : HTTPOptions = {
     code: `NOT_ACCEPTABLE`,
     statusCode: 406,
     decorateMessage: false,

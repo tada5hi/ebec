@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ServiceUnavailableErrorOptions : Options = {
+export const ServiceUnavailableErrorOptions : HTTPOptions = {
     code: `SERVICE_UNAVAILABLE`,
     statusCode: 503,
     decorateMessage: true,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const FailedDependencyErrorOptions : Options = {
+export const FailedDependencyErrorOptions : HTTPOptions = {
     code: `FAILED_DEPENDENCY`,
     statusCode: 424,
     decorateMessage: false,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ConflictErrorOptions : Options = {
+export const ConflictErrorOptions : HTTPOptions = {
     code: `CONFLICT`,
     statusCode: 409,
     decorateMessage: false,

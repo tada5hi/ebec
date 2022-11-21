@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const LoopDetectedErrorOptions : Options = {
+export const LoopDetectedErrorOptions : HTTPOptions = {
     code: `LOOP_DETECTED`,
     statusCode: 508,
     decorateMessage: true,

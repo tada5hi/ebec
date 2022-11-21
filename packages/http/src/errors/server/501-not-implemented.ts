@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NotImplementedErrorOptions : Options = {
+export const NotImplementedErrorOptions : HTTPOptions = {
     code: `NOT_IMPLEMENTED`,
     statusCode: 501,
     decorateMessage: true,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const MethodNotAllowedErrorOptions : Options = {
+export const MethodNotAllowedErrorOptions : HTTPOptions = {
     code: `METHOD_NOT_ALLOWED`,
     statusCode: 405,
     decorateMessage: false,

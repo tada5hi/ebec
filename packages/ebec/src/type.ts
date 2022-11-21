@@ -49,7 +49,7 @@ export type Options = {
     redirectURL?: string,
 
     /**
-     * Provide additional options.
+     * Additional options.
      */
     [key: string]: any
 };

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const NotFoundErrorOptions : Options = {
+export const NotFoundErrorOptions : HTTPOptions = {
     code: `NOT_FOUND`,
     statusCode: 404,
     decorateMessage: false,

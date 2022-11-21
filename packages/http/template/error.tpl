@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { {{baseClass}} } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const {{{class}}}Options : Options = {
+export const {{{class}}}Options : HTTPOptions = {
     code: `{{code}}`,
     statusCode: {{statusCode}},
     decorateMessage: {{{decorateMessage}}},

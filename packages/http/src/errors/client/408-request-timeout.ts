@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RequestTimeoutErrorOptions : Options = {
+export const RequestTimeoutErrorOptions : HTTPOptions = {
     code: `REQUEST_TIMEOUT`,
     statusCode: 408,
     decorateMessage: false,

@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RequestURITooLongErrorOptions : Options = {
+export const RequestURITooLongErrorOptions : HTTPOptions = {
     code: `REQUEST_URI_TOO_LONG`,
     statusCode: 414,
     decorateMessage: false,

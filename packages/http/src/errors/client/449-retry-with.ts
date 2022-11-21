@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const RetryWithErrorOptions : Options = {
+export const RetryWithErrorOptions : HTTPOptions = {
     code: `RETRY_WITH`,
     statusCode: 449,
     decorateMessage: false,

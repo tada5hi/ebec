@@ -5,8 +5,9 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
+import { HTTPOptions } from '../../type';
 
-export const ExpectationFailedErrorOptions : Options = {
+export const ExpectationFailedErrorOptions : HTTPOptions = {
     code: `EXPECTATION_FAILED`,
     statusCode: 417,
     decorateMessage: false,
