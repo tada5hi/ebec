@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.0.5...@ebec/http@0.0.6) (2022-11-22)
+
+
+### Bug Fixes
+
+* **http:** better typing for predefined error options ([bd4c8f9](https://github.com/Tada5hi/ebec/commit/bd4c8f900cd8dd14fb6c56d87b9f8485c77addb9))
+
+
+
+
+
 ## [0.0.5](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.0.4...@ebec/http@0.0.5) (2022-11-21)
 
 
