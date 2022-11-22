@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const FailedDependencyErrorOptions : HTTPOptions = {
+export const FailedDependencyErrorOptions = {
     code: `FAILED_DEPENDENCY`,
     statusCode: 424,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class FailedDependencyError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

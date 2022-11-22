@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const RequestEntityTooLargeErrorOptions : HTTPOptions = {
+export const RequestEntityTooLargeErrorOptions = {
     code: `REQUEST_ENTITY_TOO_LARGE`,
     statusCode: 413,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class RequestEntityTooLargeError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

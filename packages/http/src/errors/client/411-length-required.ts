@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const LengthRequiredErrorOptions : HTTPOptions = {
+export const LengthRequiredErrorOptions = {
     code: `LENGTH_REQUIRED`,
     statusCode: 411,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class LengthRequiredError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

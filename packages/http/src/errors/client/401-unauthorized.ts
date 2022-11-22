@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const UnauthorizedErrorOptions : HTTPOptions = {
+export const UnauthorizedErrorOptions = {
     code: `UNAUTHORIZED`,
     statusCode: 401,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class UnauthorizedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

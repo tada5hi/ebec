@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const NotFoundErrorOptions : HTTPOptions = {
+export const NotFoundErrorOptions = {
     code: `NOT_FOUND`,
     statusCode: 404,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class NotFoundError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

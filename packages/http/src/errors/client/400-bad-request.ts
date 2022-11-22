@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const BadRequestErrorOptions : HTTPOptions = {
+export const BadRequestErrorOptions = {
     code: `BAD_REQUEST`,
     statusCode: 400,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class BadRequestError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

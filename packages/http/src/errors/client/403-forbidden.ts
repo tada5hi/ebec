@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const ForbiddenErrorOptions : HTTPOptions = {
+export const ForbiddenErrorOptions = {
     code: `FORBIDDEN`,
     statusCode: 403,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class ForbiddenError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

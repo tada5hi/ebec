@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const NotAcceptableErrorOptions : HTTPOptions = {
+export const NotAcceptableErrorOptions = {
     code: `NOT_ACCEPTABLE`,
     statusCode: 406,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class NotAcceptableError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const UnsupportedMediaTypeErrorOptions : HTTPOptions = {
+export const UnsupportedMediaTypeErrorOptions = {
     code: `UNSUPPORTED_MEDIA_TYPE`,
     statusCode: 415,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class UnsupportedMediaTypeError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

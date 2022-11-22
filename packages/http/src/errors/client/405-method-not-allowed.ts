@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const MethodNotAllowedErrorOptions : HTTPOptions = {
+export const MethodNotAllowedErrorOptions = {
     code: `METHOD_NOT_ALLOWED`,
     statusCode: 405,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class MethodNotAllowedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { {{baseClass}} } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const {{{class}}}Options : HTTPOptions = {
+export const {{{class}}}Options = {
     code: `{{code}}`,
     statusCode: {{statusCode}},
     decorateMessage: {{{decorateMessage}}},
     logMessage: {{{logMessage}}}
-}
+} as const;
 
 export class {{{class}}} extends {{baseClass}} {
     constructor(data?: string | Error | Options, options?: Options) {

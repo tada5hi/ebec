@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const RequestTimeoutErrorOptions : HTTPOptions = {
+export const RequestTimeoutErrorOptions = {
     code: `REQUEST_TIMEOUT`,
     statusCode: 408,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class RequestTimeoutError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const EnhanceYourCalmErrorOptions : HTTPOptions = {
+export const EnhanceYourCalmErrorOptions = {
     code: `ENHANCE_YOUR_CALM`,
     statusCode: 420,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class EnhanceYourCalmError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

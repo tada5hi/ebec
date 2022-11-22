@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const UnprocessableEntityErrorOptions : HTTPOptions = {
+export const UnprocessableEntityErrorOptions = {
     code: `UNPROCESSABLE_ENTITY`,
     statusCode: 422,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class UnprocessableEntityError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

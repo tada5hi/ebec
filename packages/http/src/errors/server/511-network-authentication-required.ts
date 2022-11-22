@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const NetworkAuthenticationRequiredErrorOptions : HTTPOptions = {
+export const NetworkAuthenticationRequiredErrorOptions = {
     code: `NETWORK_AUTHENTICATION_REQUIRED`,
     statusCode: 511,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class NetworkAuthenticationRequiredError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const ClientClosedRequestErrorOptions : HTTPOptions = {
+export const ClientClosedRequestErrorOptions = {
     code: `CLIENT_CLOSED_REQUEST`,
     statusCode: 499,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class ClientClosedRequestError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

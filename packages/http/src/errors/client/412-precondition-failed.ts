@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const PreconditionFailedErrorOptions : HTTPOptions = {
+export const PreconditionFailedErrorOptions = {
     code: `PRECONDITION_FAILED`,
     statusCode: 412,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class PreconditionFailedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

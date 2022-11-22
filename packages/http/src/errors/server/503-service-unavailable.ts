@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const ServiceUnavailableErrorOptions : HTTPOptions = {
+export const ServiceUnavailableErrorOptions = {
     code: `SERVICE_UNAVAILABLE`,
     statusCode: 503,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class ServiceUnavailableError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

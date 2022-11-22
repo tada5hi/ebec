@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const ExpectationFailedErrorOptions : HTTPOptions = {
+export const ExpectationFailedErrorOptions = {
     code: `EXPECTATION_FAILED`,
     statusCode: 417,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class ExpectationFailedError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

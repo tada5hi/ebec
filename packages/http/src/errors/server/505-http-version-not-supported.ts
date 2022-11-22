@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const HTTPVersionNotSupportedErrorOptions : HTTPOptions = {
+export const HTTPVersionNotSupportedErrorOptions = {
     code: `HTTP_VERSION_NOT_SUPPORTED`,
     statusCode: 505,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class HTTPVersionNotSupportedError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

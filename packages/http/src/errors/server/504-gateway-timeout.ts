@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const GatewayTimeoutErrorOptions : HTTPOptions = {
+export const GatewayTimeoutErrorOptions = {
     code: `GATEWAY_TIMEOUT`,
     statusCode: 504,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class GatewayTimeoutError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

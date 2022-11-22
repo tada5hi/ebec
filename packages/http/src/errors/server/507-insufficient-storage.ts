@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const InsufficientStorageErrorOptions : HTTPOptions = {
+export const InsufficientStorageErrorOptions = {
     code: `INSUFFICIENT_STORAGE`,
     statusCode: 507,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class InsufficientStorageError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

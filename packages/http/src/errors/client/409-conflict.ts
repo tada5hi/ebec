@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const ConflictErrorOptions : HTTPOptions = {
+export const ConflictErrorOptions = {
     code: `CONFLICT`,
     statusCode: 409,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class ConflictError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

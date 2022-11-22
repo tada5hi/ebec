@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const BlockedByWindowsParentalControlsErrorOptions : HTTPOptions = {
+export const BlockedByWindowsParentalControlsErrorOptions = {
     code: `BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS`,
     statusCode: 450,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class BlockedByWindowsParentalControlsError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {

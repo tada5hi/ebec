@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const NotImplementedErrorOptions : HTTPOptions = {
+export const NotImplementedErrorOptions = {
     code: `NOT_IMPLEMENTED`,
     statusCode: 501,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class NotImplementedError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

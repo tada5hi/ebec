@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ServerError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const VariantAlsoNegotiatesErrorOptions : HTTPOptions = {
+export const VariantAlsoNegotiatesErrorOptions = {
     code: `VARIANT_ALSO_NEGOTIATES`,
     statusCode: 506,
     decorateMessage: true,
     logMessage: true
-}
+} as const;
 
 export class VariantAlsoNegotiatesError extends ServerError {
     constructor(data?: string | Error | Options, options?: Options) {

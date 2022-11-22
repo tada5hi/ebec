@@ -5,14 +5,13 @@ import {
     mergeOptions
 } from 'ebec';
 import { ClientError } from '../base';
-import { HTTPOptions } from '../../type';
 
-export const UnorderedCollectionErrorOptions : HTTPOptions = {
+export const UnorderedCollectionErrorOptions = {
     code: `UNORDERED_COLLECTION`,
     statusCode: 425,
     decorateMessage: false,
     logMessage: false
-}
+} as const;
 
 export class UnorderedCollectionError extends ClientError {
     constructor(data?: string | Error | Options, options?: Options) {
