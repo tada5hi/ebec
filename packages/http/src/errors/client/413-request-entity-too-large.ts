@@ -10,7 +10,8 @@ export const RequestEntityTooLargeErrorOptions = {
     code: `REQUEST_ENTITY_TOO_LARGE`,
     statusCode: 413,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `REQUEST_ENTITY_TOO_LARGE`
 } as const;
 
 export class RequestEntityTooLargeError extends ClientError {

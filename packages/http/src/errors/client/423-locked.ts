@@ -10,7 +10,8 @@ export const LockedErrorOptions = {
     code: `LOCKED`,
     statusCode: 423,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Locked`
 } as const;
 
 export class LockedError extends ClientError {

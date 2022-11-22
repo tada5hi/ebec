@@ -10,7 +10,8 @@ export const GatewayTimeoutErrorOptions = {
     code: `GATEWAY_TIMEOUT`,
     statusCode: 504,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Gateway Timeout`
 } as const;
 
 export class GatewayTimeoutError extends ServerError {

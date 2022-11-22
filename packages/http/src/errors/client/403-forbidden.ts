@@ -10,7 +10,8 @@ export const ForbiddenErrorOptions = {
     code: `FORBIDDEN`,
     statusCode: 403,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Forbidden`
 } as const;
 
 export class ForbiddenError extends ClientError {

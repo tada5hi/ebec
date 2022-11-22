@@ -10,7 +10,8 @@ export const LoopDetectedErrorOptions = {
     code: `LOOP_DETECTED`,
     statusCode: 508,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Loop Detected`
 } as const;
 
 export class LoopDetectedError extends ServerError {

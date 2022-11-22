@@ -10,7 +10,8 @@ export const BlockedByWindowsParentalControlsErrorOptions = {
     code: `BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS`,
     statusCode: 450,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Blocked By Windows Parental Controls`
 } as const;
 
 export class BlockedByWindowsParentalControlsError extends ClientError {

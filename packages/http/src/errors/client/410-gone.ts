@@ -10,7 +10,8 @@ export const GoneErrorOptions = {
     code: `GONE`,
     statusCode: 410,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Gone`
 } as const;
 
 export class GoneError extends ClientError {

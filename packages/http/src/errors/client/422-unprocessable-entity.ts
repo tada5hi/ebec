@@ -10,7 +10,8 @@ export const UnprocessableEntityErrorOptions = {
     code: `UNPROCESSABLE_ENTITY`,
     statusCode: 422,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Unprocessable Entity`
 } as const;
 
 export class UnprocessableEntityError extends ClientError {

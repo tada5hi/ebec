@@ -10,7 +10,8 @@ export const PreconditionFailedErrorOptions = {
     code: `PRECONDITION_FAILED`,
     statusCode: 412,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Precondition Failed`
 } as const;
 
 export class PreconditionFailedError extends ClientError {

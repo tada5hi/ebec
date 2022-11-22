@@ -10,7 +10,8 @@ export const HTTPVersionNotSupportedErrorOptions = {
     code: `HTTP_VERSION_NOT_SUPPORTED`,
     statusCode: 505,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `HTTP Version Not Supported`
 } as const;
 
 export class HTTPVersionNotSupportedError extends ServerError {

@@ -10,7 +10,8 @@ export const BandwidthLimitExceededErrorOptions = {
     code: `BANDWIDTH_LIMIT_EXCEEDED`,
     statusCode: 509,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Bandwidth Limit Exceeded`
 } as const;
 
 export class BandwidthLimitExceededError extends ServerError {

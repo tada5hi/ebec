@@ -10,7 +10,8 @@ export const NetworkAuthenticationRequiredErrorOptions = {
     code: `NETWORK_AUTHENTICATION_REQUIRED`,
     statusCode: 511,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Network Authentication Required`
 } as const;
 
 export class NetworkAuthenticationRequiredError extends ServerError {

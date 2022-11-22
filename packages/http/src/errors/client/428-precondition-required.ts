@@ -10,7 +10,8 @@ export const PreconditionRequiredErrorOptions = {
     code: `PRECONDITION_REQUIRED`,
     statusCode: 428,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Precondition Required`
 } as const;
 
 export class PreconditionRequiredError extends ClientError {

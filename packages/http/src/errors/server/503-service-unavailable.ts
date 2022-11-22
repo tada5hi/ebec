@@ -10,7 +10,8 @@ export const ServiceUnavailableErrorOptions = {
     code: `SERVICE_UNAVAILABLE`,
     statusCode: 503,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Service Unavailable`
 } as const;
 
 export class ServiceUnavailableError extends ServerError {

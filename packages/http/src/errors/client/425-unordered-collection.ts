@@ -10,7 +10,8 @@ export const UnorderedCollectionErrorOptions = {
     code: `UNORDERED_COLLECTION`,
     statusCode: 425,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Unordered Collection`
 } as const;
 
 export class UnorderedCollectionError extends ClientError {

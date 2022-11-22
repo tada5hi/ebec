@@ -10,7 +10,8 @@ export const InternalServerErrorOptions = {
     code: `INTERNAL_SERVER_ERROR`,
     statusCode: 500,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Internal Server Error`
 } as const;
 
 export class InternalServerError extends ServerError {

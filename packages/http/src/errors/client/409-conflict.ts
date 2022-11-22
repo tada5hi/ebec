@@ -10,7 +10,8 @@ export const ConflictErrorOptions = {
     code: `CONFLICT`,
     statusCode: 409,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Conflict`
 } as const;
 
 export class ConflictError extends ClientError {

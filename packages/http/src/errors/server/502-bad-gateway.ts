@@ -10,7 +10,8 @@ export const BadGatewayErrorOptions = {
     code: `BAD_GATEWAY`,
     statusCode: 502,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Bad Gateway`
 } as const;
 
 export class BadGatewayError extends ServerError {

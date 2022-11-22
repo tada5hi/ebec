@@ -10,7 +10,8 @@ export const InsufficientStorageErrorOptions = {
     code: `INSUFFICIENT_STORAGE`,
     statusCode: 507,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Insufficient Storage`
 } as const;
 
 export class InsufficientStorageError extends ServerError {

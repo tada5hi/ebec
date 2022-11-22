@@ -10,7 +10,8 @@ export const NoResponseErrorOptions = {
     code: `NO_RESPONSE`,
     statusCode: 444,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `No Response`
 } as const;
 
 export class NoResponseError extends ClientError {

@@ -10,7 +10,8 @@ export const UnsupportedMediaTypeErrorOptions = {
     code: `UNSUPPORTED_MEDIA_TYPE`,
     statusCode: 415,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Unsupported Media Type`
 } as const;
 
 export class UnsupportedMediaTypeError extends ClientError {

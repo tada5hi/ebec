@@ -10,7 +10,8 @@ export const ExpectationFailedErrorOptions = {
     code: `EXPECTATION_FAILED`,
     statusCode: 417,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Expectation Failed`
 } as const;
 
 export class ExpectationFailedError extends ClientError {

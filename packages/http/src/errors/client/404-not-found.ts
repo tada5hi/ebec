@@ -10,7 +10,8 @@ export const NotFoundErrorOptions = {
     code: `NOT_FOUND`,
     statusCode: 404,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Not Found`
 } as const;
 
 export class NotFoundError extends ClientError {

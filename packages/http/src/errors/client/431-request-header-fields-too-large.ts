@@ -10,7 +10,8 @@ export const RequestHeaderFieldsTooLargeErrorOptions = {
     code: `REQUEST_HEADER_FIELDS_TOO_LARGE`,
     statusCode: 431,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Request Header Fields Too Large`
 } as const;
 
 export class RequestHeaderFieldsTooLargeError extends ClientError {

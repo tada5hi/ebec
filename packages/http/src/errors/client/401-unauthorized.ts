@@ -10,7 +10,8 @@ export const UnauthorizedErrorOptions = {
     code: `UNAUTHORIZED`,
     statusCode: 401,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Unauthorized`
 } as const;
 
 export class UnauthorizedError extends ClientError {

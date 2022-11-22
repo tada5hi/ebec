@@ -10,7 +10,8 @@ export const {{{class}}}Options = {
     code: `{{code}}`,
     statusCode: {{statusCode}},
     decorateMessage: {{{decorateMessage}}},
-    logMessage: {{{logMessage}}}
+    logMessage: {{{logMessage}}},
+    message: `{{message}}`
 } as const;
 
 export class {{{class}}} extends {{baseClass}} {

@@ -10,7 +10,8 @@ export const EnhanceYourCalmErrorOptions = {
     code: `ENHANCE_YOUR_CALM`,
     statusCode: 420,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Enhance Your Calm`
 } as const;
 
 export class EnhanceYourCalmError extends ClientError {

@@ -10,7 +10,8 @@ export const FailedDependencyErrorOptions = {
     code: `FAILED_DEPENDENCY`,
     statusCode: 424,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Failed Dependency`
 } as const;
 
 export class FailedDependencyError extends ClientError {

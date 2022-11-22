@@ -10,7 +10,8 @@ export const ClientClosedRequestErrorOptions = {
     code: `CLIENT_CLOSED_REQUEST`,
     statusCode: 499,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Client Closed Request`
 } as const;
 
 export class ClientClosedRequestError extends ClientError {

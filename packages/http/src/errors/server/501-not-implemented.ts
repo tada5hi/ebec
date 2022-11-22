@@ -10,7 +10,8 @@ export const NotImplementedErrorOptions = {
     code: `NOT_IMPLEMENTED`,
     statusCode: 501,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Not Implemented`
 } as const;
 
 export class NotImplementedError extends ServerError {

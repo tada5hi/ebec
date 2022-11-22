@@ -10,7 +10,8 @@ export const UpgradeRequiredErrorOptions = {
     code: `UPGRADE_REQUIRED`,
     statusCode: 426,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Upgrade Required`
 } as const;
 
 export class UpgradeRequiredError extends ClientError {

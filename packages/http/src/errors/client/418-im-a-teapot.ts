@@ -10,7 +10,8 @@ export const ImATeapotErrorOptions = {
     code: `IM_A_TEAPOT`,
     statusCode: 418,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `I&#39;m a Teapot`
 } as const;
 
 export class ImATeapotError extends ClientError {

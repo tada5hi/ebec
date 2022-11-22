@@ -10,7 +10,8 @@ export const BadRequestErrorOptions = {
     code: `BAD_REQUEST`,
     statusCode: 400,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Bad Request`
 } as const;
 
 export class BadRequestError extends ClientError {

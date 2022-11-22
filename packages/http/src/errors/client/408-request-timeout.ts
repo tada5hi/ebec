@@ -10,7 +10,8 @@ export const RequestTimeoutErrorOptions = {
     code: `REQUEST_TIMEOUT`,
     statusCode: 408,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Request Timeout`
 } as const;
 
 export class RequestTimeoutError extends ClientError {

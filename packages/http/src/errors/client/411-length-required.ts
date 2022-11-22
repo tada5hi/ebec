@@ -10,7 +10,8 @@ export const LengthRequiredErrorOptions = {
     code: `LENGTH_REQUIRED`,
     statusCode: 411,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Length Required`
 } as const;
 
 export class LengthRequiredError extends ClientError {

@@ -10,7 +10,8 @@ export const TooManyRequestsErrorOptions = {
     code: `TOO_MANY_REQUESTS`,
     statusCode: 429,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Too Many Requests`
 } as const;
 
 export class TooManyRequestsError extends ClientError {

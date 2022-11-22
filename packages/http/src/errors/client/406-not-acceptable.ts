@@ -10,7 +10,8 @@ export const NotAcceptableErrorOptions = {
     code: `NOT_ACCEPTABLE`,
     statusCode: 406,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Not Acceptable`
 } as const;
 
 export class NotAcceptableError extends ClientError {

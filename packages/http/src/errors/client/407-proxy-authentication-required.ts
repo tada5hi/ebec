@@ -10,7 +10,8 @@ export const ProxyAuthenticationRequiredErrorOptions = {
     code: `PROXY_AUTHENTICATION_REQUIRED`,
     statusCode: 407,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Proxy Authentication Required`
 } as const;
 
 export class ProxyAuthenticationRequiredError extends ClientError {

@@ -10,7 +10,8 @@ export const RequestedRangeNotSatisfiableErrorOptions = {
     code: `REQUESTED_RANGE_NOT_SATISFIABLE`,
     statusCode: 416,
     decorateMessage: false,
-    logMessage: false
+    logMessage: false,
+    message: `Requested Range Not Satisfiable`
 } as const;
 
 export class RequestedRangeNotSatisfiableError extends ClientError {

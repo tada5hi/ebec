@@ -10,7 +10,8 @@ export const VariantAlsoNegotiatesErrorOptions = {
     code: `VARIANT_ALSO_NEGOTIATES`,
     statusCode: 506,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Variant Also Negotiates`
 } as const;
 
 export class VariantAlsoNegotiatesError extends ServerError {

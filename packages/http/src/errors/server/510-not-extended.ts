@@ -10,7 +10,8 @@ export const NotExtendedErrorOptions = {
     code: `NOT_EXTENDED`,
     statusCode: 510,
     decorateMessage: true,
-    logMessage: true
+    logMessage: true,
+    message: `Not Extended`
 } as const;
 
 export class NotExtendedError extends ServerError {
