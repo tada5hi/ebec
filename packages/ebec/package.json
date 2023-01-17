@@ -47,7 +47,7 @@
         "prepublishOnly": "npm run build"
     },
     "dependencies": {
-        "smob": "^0.0.6"
+        "smob": "^0.0.7"
     },
     "devDependencies": {
         "@types/jest": "^29.2.5",
