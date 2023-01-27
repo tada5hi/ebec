@@ -49,8 +49,8 @@
         "prepublishOnly": "npm run build"
     },
     "devDependencies": {
-        "@types/mustache": "^4.2.1",
-        "@types/yargs": "^17.0.13",
+        "@types/mustache": "^4.2.2",
+        "@types/yargs": "^17.0.20",
         "ebec": "^0.1.0",
         "mustache": "^4.2.0",
         "ts-node": "^10.4.0",
