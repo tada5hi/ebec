@@ -33,11 +33,17 @@
         "url": "https://github.com/Tada5hi/ebec/issues"
     },
     "homepage": "https://github.com/Tada5hi/ebec#readme",
-    "main": "dist/index.cjs.js",
-    "module": "dist/index.esm.js",
-    "browser": "dist/index.browser.js",
-    "unpkg": "dist/index.iife.js",
-    "types": "dist/types/index.d.ts",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "build:types": "tsc  -p tsconfig.build.json --emitDeclarationOnly",
         "build:js": "rollup -c",
@@ -47,7 +53,7 @@
         "prepublishOnly": "npm run build"
     },
     "dependencies": {
-        "smob": "^0.0.6"
+        "smob": "^0.1.0"
     },
     "devDependencies": {
         "@types/jest": "^29.2.2",

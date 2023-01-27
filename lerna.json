@@ -19,7 +19,7 @@
     },
     "npmClient": "npm",
     "useWorkspaces": true,
-    "useNx": false,
+    "useNx": true,
     "conventionalCommits": true,
     "version": "independent",
     "changelog": {
