@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/Tada5hi/ebec/compare/ebec@0.1.0...ebec@0.2.0) (2023-01-27)
+
+
+### Bug Fixes
+
+* **deps:** bump smob from 0.0.6 to 0.0.7 ([b38b525](https://github.com/Tada5hi/ebec/commit/b38b52529e1c0fdfc459eaa8f3eba3db6af1eaab))
+
+
+### Features
+
+* refactor build pipeline + replaced babel with swc ([e5f4782](https://github.com/Tada5hi/ebec/commit/e5f47825e03b0f7ee39f461ac9cd9bb21c0c4117))
+
+
+
+
+
 # [0.1.0](https://github.com/Tada5hi/ebec/compare/ebec@0.0.5...ebec@0.1.0) (2022-11-22)
 
 

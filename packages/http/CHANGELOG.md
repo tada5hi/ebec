@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.1.0...@ebec/http@0.2.0) (2023-01-27)
+
+
+### Features
+
+* refactor build pipeline + replaced babel with swc ([e5f4782](https://github.com/Tada5hi/ebec/commit/e5f47825e03b0f7ee39f461ac9cd9bb21c0c4117))
+
+
+
+
+
 # [0.1.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.0.7...@ebec/http@0.1.0) (2022-11-22)
 
 
