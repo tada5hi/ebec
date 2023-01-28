@@ -24,8 +24,6 @@ export function extendsBaseError<T extends BaseError = BaseError>(error: unknown
     return !!(isObject(error) &&
         hasOwnProperty(error, 'options') &&
         isObject(error.options) &&
-        hasOwnProperty(error, 'getOption') &&
         isFunction(error.getOption) &&
-        hasOwnProperty(error, 'getOptions') &&
         isFunction(error.getOptions));
 }
