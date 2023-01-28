@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.2.1...@ebec/http@0.2.2) (2023-01-28)
+
+
+### Bug Fixes
+
+* enhance check extend base-error fn ([8c28071](https://github.com/Tada5hi/ebec/commit/8c280714ac7cc1ef6b18c21963037de11c61220f))
+
+
+
+
+
 ## [0.2.1](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.2.0...@ebec/http@0.2.1) (2023-01-28)
 
 
