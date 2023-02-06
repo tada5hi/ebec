@@ -39,7 +39,7 @@
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@tada5hi/eslint-config-typescript": "^1.1.1",
         "@tada5hi/tsconfig": "^0.4.0",
-        "@types/node": "^18.11.18",
+        "@types/node": "^18.11.19",
         "codecov": "^3.8.3",
         "cross-env": "^7.0.3",
         "eslint": "^8.33.0",
