@@ -46,7 +46,7 @@
         "husky": "^8.0.3",
         "lerna": "^6.4.1",
         "rimraf": "^4.1.2",
-        "rollup": "^3.12.1"
+        "rollup": "^3.14.0"
     },
     "scripts": {
         "bootstrap": "lerna bootstrap",
