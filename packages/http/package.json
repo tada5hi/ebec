@@ -54,7 +54,7 @@
         "ebec": "^0.2.1",
         "mustache": "^4.2.0",
         "ts-node": "^10.4.0",
-        "yargs": "^17.6.2"
+        "yargs": "^17.7.1"
     },
     "peerDependencies": {
         "ebec": ">=0.2.1 <1.0.0"
