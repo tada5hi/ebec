@@ -37,14 +37,14 @@
         "@tada5hi/commitlint-config": "^1.0.0",
         "@tada5hi/eslint-config-typescript": "^1.1.5",
         "@tada5hi/tsconfig": "^0.4.0",
-        "@types/node": "^18.14.0",
+        "@types/node": "^18.15.3",
         "codecov": "^3.8.3",
         "cross-env": "^7.0.3",
-        "eslint": "^8.33.0",
+        "eslint": "^8.36.0",
         "husky": "^8.0.3",
         "lerna": "^6.5.1",
-        "rimraf": "^4.1.2",
-        "rollup": "^3.17.1"
+        "rimraf": "^4.4.0",
+        "rollup": "^3.20.0"
     },
     "scripts": {
         "bootstrap": "lerna bootstrap",
