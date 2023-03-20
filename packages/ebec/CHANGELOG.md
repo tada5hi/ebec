@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/Tada5hi/ebec/compare/ebec@0.2.1...ebec@1.0.0) (2023-03-20)
+
+
+### Bug Fixes
+
+* **deps:** bump smob to v1.x ([5aceb16](https://github.com/Tada5hi/ebec/commit/5aceb161fb1e00168211c9ef950bd1875f4b4fb5))
+
+
+
+
+
 ## [0.2.1](https://github.com/Tada5hi/ebec/compare/ebec@0.2.0...ebec@0.2.1) (2023-01-28)
 
 
