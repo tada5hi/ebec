@@ -5,7 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { BaseError, Options } from '../../src';
+import type { Options } from '../../src';
+import { BaseError } from '../../src';
 
 describe('src/module.ts', () => {
     it('should create instance with message', () => {

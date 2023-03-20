@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { Options } from './type';
+import type { Options } from './type';
 import { buildMessage, buildOptions, hasOwnProperty } from './utils';
 
 export class BaseError extends Error {

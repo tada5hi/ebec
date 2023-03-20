@@ -5,8 +5,9 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+import type { Options } from '../../../src';
 import {
-    BaseError, Options, buildOptions, mergeOptions,
+    BaseError, buildOptions, mergeOptions,
 } from '../../../src';
 
 describe('src/utils/error-options.ts', () => {

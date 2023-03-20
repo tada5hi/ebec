@@ -6,7 +6,7 @@
  */
 
 import { merge } from 'smob';
-import { Options } from '../type';
+import type { Options } from '../type';
 
 /**
  * Deep merge two objects.
