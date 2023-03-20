@@ -57,7 +57,7 @@
         "yargs": "^17.7.1"
     },
     "peerDependencies": {
-        "ebec": ">=0.2.1 <1.0.0"
+        "ebec": "^1.0.0"
     },
     "publishConfig": {
         "access": "public"
