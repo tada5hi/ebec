@@ -44,7 +44,7 @@ export function createConfig({ pkg, external = [] }) {
                 transform(code) {
                     return transform(code, {
                         jsc: {
-                            target: 'es2015',
+                            target: 'es2016',
                             parser: {
                                 syntax: 'typescript'
                             },
