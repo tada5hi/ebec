@@ -50,7 +50,7 @@
     },
     "devDependencies": {
         "@types/mustache": "^4.2.2",
-        "@types/yargs": "^17.0.22",
+        "@types/yargs": "^17.0.23",
         "ebec": "^1.0.0",
         "mustache": "^4.2.0",
         "ts-node": "^10.4.0",
