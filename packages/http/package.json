@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "Extendable base error classes for http.",
     "files": [
-        "dist/"
+        "core",
+        "dist"
     ],
     "author": {
         "name": "Peter Placzek",
@@ -36,6 +37,11 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/index.mjs",
             "require": "./dist/index.cjs"
+        },
+        "./core": {
+            "types": "./core/index.d.ts",
+            "import": "./core/index.mjs",
+            "require": "./core/index.cjs"
         }
     },
     "main": "./dist/index.cjs",
