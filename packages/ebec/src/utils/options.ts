@@ -9,15 +9,14 @@ import { merge } from 'smob';
 import type { Options } from '../type';
 
 /**
- * Deep merge two objects.
- * @param target
+ * Deep merge multiple options sources.
+ *
  * @param sources
  */
 export function mergeOptions(
-    target: Options,
     ...sources: Options[]
 ) : Options {
-    return merge(target, ...sources);
+    return merge(...sources);
 }
 
 export function buildOptions(
@@ -36,7 +35,7 @@ export function buildOptions(
         !(data instanceof Error) &&
         typeof data !== 'string'
     ) {
-        options = mergeOptions({}, data, { ...options });
+        options = mergeOptions(data, { ...options });
     }
 
     if (

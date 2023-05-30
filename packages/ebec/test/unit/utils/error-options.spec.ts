@@ -22,10 +22,10 @@ describe('src/utils/error-options.ts', () => {
             code: 'ERROR',
         } as Options);
 
-        options = mergeOptions({ }, { code: 'FOO' });
+        options = mergeOptions({ code: 'FOO' });
         expect(options).toEqual({ code: 'FOO' });
 
-        options = mergeOptions({}, { code: 'ERROR' });
+        options = mergeOptions({ code: 'ERROR' });
         expect(options).toEqual({ code: 'ERROR' } as Options);
 
         options = mergeOptions({ code: 'FOO' }, { code: 'BAR' });
