@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@1.0.0...@ebec/http@1.1.0) (2023-05-30)
+
+
+### Features
+
+* expose core package as package export in http package ([ac2fcfd](https://github.com/Tada5hi/ebec/commit/ac2fcfdb5303117f9d6b35fc2c9b2b5f1164c2ff))
+
+
+
+
+
 # [1.0.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@0.2.2...@ebec/http@1.0.0) (2023-03-20)
 
 **Note:** Version bump only for package @ebec/http

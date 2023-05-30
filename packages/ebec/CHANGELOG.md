@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/Tada5hi/ebec/compare/ebec@1.0.0...ebec@1.1.0) (2023-05-30)
+
+
+### Features
+
+* simplify and enhance options merging ([5364b20](https://github.com/Tada5hi/ebec/commit/5364b20fe7633e4a57fa7e276df522464d0966a3))
+
+
+
+
+
 # [1.0.0](https://github.com/Tada5hi/ebec/compare/ebec@0.2.1...ebec@1.0.0) (2023-03-20)
 
 
