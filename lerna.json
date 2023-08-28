@@ -9,8 +9,7 @@
         "publish": {
             "ignoreChanges": [
                 "*.md",
-                ".eslintrc",
-                "package.json"
+                ".eslintrc"
             ]
         },
         "version": {
