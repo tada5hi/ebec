@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/Tada5hi/ebec/compare/@ebec/http@1.1.0...@ebec/http@1.1.1) (2023-08-28)
+
+
+### Bug Fixes
+
+* set ebec as dependency instead of peer-dependency ([08429f5](https://github.com/Tada5hi/ebec/commit/08429f51250232dabf0ef952f0673b7c597fe7fb))
+
+
+
+
+
 # [1.1.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@1.0.0...@ebec/http@1.1.0) (2023-05-30)
 
 

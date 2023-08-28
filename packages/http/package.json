@@ -1,6 +1,6 @@
 {
     "name": "@ebec/http",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Extendable base error classes for http.",
     "files": [
         "core",
@@ -63,7 +63,7 @@
         "yargs": "^17.7.2"
     },
     "dependencies": {
-        "ebec": "^1.1.0"
+        "ebec": "^1.1.1"
     },
     "publishConfig": {
         "access": "public"

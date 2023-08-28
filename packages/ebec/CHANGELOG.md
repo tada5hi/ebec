@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/Tada5hi/ebec/compare/ebec@1.1.0...ebec@1.1.1) (2023-08-28)
+
+**Note:** Version bump only for package ebec
+
+
+
+
+
 # [1.1.0](https://github.com/Tada5hi/ebec/compare/ebec@1.0.0...ebec@1.1.0) (2023-05-30)
 
 
