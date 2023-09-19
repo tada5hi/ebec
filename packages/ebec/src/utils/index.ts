@@ -6,6 +6,5 @@
  */
 
 export * from './is';
-export * from './has-own-property';
 export * from './options';
 export * from './message';
