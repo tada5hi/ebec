@@ -37,13 +37,13 @@ import {
 
 const clientError = new NotFoundError();
 
-console.log(clientError.getOption('statusCode'));
+console.log(clientError.statusCode);
 // 404
 
-console.log(clientError.getOption('logMessage'));
+console.log(clientError.logMessage);
 // false
 
-console.log(clientError.getOption('code'));
+console.log(clientError.code);
 // NOT_FOUND
 
 // ------------------------------------
@@ -52,16 +52,16 @@ const serverError = new InternalServerError({
     logLevel: 'warning'
 });
 
-console.log(serverError.getOption('statusCode'));
+console.log(clientError.statusCode);
 // 500
 
-console.log(serverError.getOption('logMessage'));
+console.log(clientError.logMessage);
 // true
 
-console.log(serverError.getOption('code'));
+console.log(clientError.code);
 // INTERNAL_SERVER_ERROR
 
-console.log(serverError.getOption('logLevel'));
+console.log(clientError.logLevel);
 // warning
 ```
 
@@ -78,14 +78,11 @@ import {
 } from "@ebec/http";
 
 class UserNotFound extends NotFoundError {
-    constructor(options?: Options) {
-        super(mergeOptions(
-            {
-                message: 'The user was not found.',
-                code: 'USER_NOT_FOUND'
-            },
-            ...(options ? options : {})
-        ));
+    constructor() {
+        super({
+            statusMessage: 'The user was not found.',
+            code: 'USER_NOT_FOUND'
+        });
     }
 }
 ```
