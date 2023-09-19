@@ -7,7 +7,9 @@
 
 import { BaseError, isOptions as isBaseOptions } from 'ebec';
 import type { Input } from '../../types';
-import { extractOptions, isOptions } from '../../utils';
+import {
+    extractOptions, isOptions, sanitizeStatusCode, sanitizeStatusMessage,
+} from '../../utils';
 
 export class HTTPError extends BaseError {
     /**
@@ -30,8 +32,14 @@ export class HTTPError extends BaseError {
 
         const options = extractOptions(...input);
 
-        this.statusCode = options.statusCode || 500;
-        this.statusMessage = options.statusMessage;
+        this.statusCode = options.statusCode ?
+            sanitizeStatusCode(options.statusCode) :
+            500;
+
+        this.statusMessage = options.statusMessage ?
+            sanitizeStatusMessage(options.statusMessage) :
+            undefined;
+
         this.redirectURL = options.redirectURL;
     }
 }
