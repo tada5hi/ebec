@@ -1,31 +1,14 @@
-import {
-    buildOptions,
-    buildMessage,
-    Options,
-    mergeOptions
-} from 'ebec';
 import { ClientError } from '../base';
+import { Input } from '../../types';
 
 export const NotFoundErrorOptions = {
     code: `NOT_FOUND`,
     statusCode: 404,
-    decorateMessage: false,
-    logMessage: false,
-    message: `Not Found`
+    statusMessage: `Not Found`
 } as const;
 
 export class NotFoundError extends ClientError {
-    constructor(data?: string | Error | Options, options?: Options) {
-        options = mergeOptions(
-            buildOptions(data, options),
-            NotFoundErrorOptions
-        );
-
-        let message = buildMessage(data, options);
-        if (!message) {
-            message = `Not Found`;
-        }
-
-        super(message, options);
+    constructor(...input: Input[]) {
+        super(NotFoundErrorOptions, ...input);
     }
 }

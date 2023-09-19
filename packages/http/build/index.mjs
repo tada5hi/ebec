@@ -44,8 +44,6 @@ import url from "node:url";
 
         const content = mustache.render(tpl, {
             namespaceFile: 'index.ts',
-            decorateMessage: isServerError,
-            logMessage: isServerError,
             class: className,
             baseClass: baseClassName,
             ...settings[key],

@@ -1,31 +1,14 @@
-import {
-    buildOptions,
-    buildMessage,
-    Options,
-    mergeOptions
-} from 'ebec';
 import { ServerError } from '../base';
+import { Input } from '../../types';
 
 export const InternalServerErrorOptions = {
     code: `INTERNAL_SERVER_ERROR`,
     statusCode: 500,
-    decorateMessage: true,
-    logMessage: true,
-    message: `Internal Server Error`
+    statusMessage: `Internal Server Error`
 } as const;
 
 export class InternalServerError extends ServerError {
-    constructor(data?: string | Error | Options, options?: Options) {
-        options = mergeOptions(
-            buildOptions(data, options),
-            InternalServerErrorOptions
-        );
-
-        let message = buildMessage(data, options);
-        if (!message) {
-            message = `Internal Server Error`;
-        }
-
-        super(message, options);
+    constructor(...input: Input[]) {
+        super(InternalServerErrorOptions, ...input);
     }
 }

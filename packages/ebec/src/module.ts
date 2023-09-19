@@ -5,24 +5,44 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Options } from './type';
-import { buildMessage, buildOptions, hasOwnProperty } from './utils';
+import type { Input } from './types';
+import {
+    extractMessage,
+    extractOptions,
+    isOptions,
+} from './utils';
 
 export class BaseError extends Error {
-    public readonly options: Options;
+    /**
+     * The error code is either a short uppercase string identifier
+     * for the error or a numeric error code. For example: SERVER_ERROR
+     */
+    code?: string | number | null;
+
+    /**
+     * Mark this error as error which need to be logged.
+     */
+    logMessage?: boolean;
+
+    /**
+     * Set the log level for this error.
+     */
+    logLevel?: string | number;
+
+    /**
+     * A cause for the error.
+     */
+    override cause?: unknown;
 
     //--------------------------------------------------------------------
 
-    constructor(
-        data?: string | Error | Options,
-        options?: Options,
-    ) {
-        options = buildOptions(data, options);
-        const message = buildMessage(data, options);
+    constructor(...input: Input[]) {
+        const options = extractOptions(...input);
+        const message = extractMessage(...input);
 
-        super(message);
+        super(message, { cause: options.cause });
 
-        if (this.name === undefined || this.name === 'Error') {
+        if (typeof this.name === 'undefined' || this.name === 'Error') {
             Object.defineProperty(this, 'name', {
                 configurable: true,
                 enumerable: false,
@@ -40,40 +60,18 @@ export class BaseError extends Error {
             this.stack = new Error(message).stack;
         }
 
-        this.options = {};
-        this.setOptions(options);
+        this.code = options.code;
+        this.logMessage = options.logMessage;
+        this.logLevel = options.logLevel;
+    }
+}
+
+export function isBaseError(
+    error: unknown,
+): error is BaseError {
+    if (error instanceof BaseError) {
+        return true;
     }
 
-    //--------------------------------------------------------------------
-
-    public getOptions(): Options {
-        return this.options;
-    }
-
-    public getOption<T extends keyof Options>(key: T): Options[T] | undefined {
-        return this.options[key];
-    }
-
-    //--------------------------------------------------------------------
-
-    setOptions(options?: Options): void {
-        if (typeof options === 'undefined') {
-            options = {};
-        }
-
-        const keys = Object.keys(options);
-        for (let i = 0; i < keys.length; i++) {
-            this.setOption(keys[i], options[keys[i]]);
-        }
-    }
-
-    public setOption<T extends keyof Options>(key: T, value: Options[T]) {
-        Object.assign(this.options, { [key]: value });
-    }
-
-    public unsetOption<T extends keyof Options>(key: T) {
-        if (hasOwnProperty(this.options, key)) {
-            delete this.options[key];
-        }
-    }
+    return isOptions(error);
 }

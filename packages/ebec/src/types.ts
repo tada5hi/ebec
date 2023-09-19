@@ -28,28 +28,9 @@ export type Options = {
     logLevel?: string | number,
 
     /**
-     * Specify if the error message should be decorated for public view
-     * or already provide a decoration message.
+     * A cause for the error.
      */
-    decorateMessage?: boolean | string,
-
-    /**
-     * Specify a previous error.
-     */
-    previous?: Error,
-
-    /**
-     * In case of a http error provide a numeric Status Code between 400-599.
-     */
-    statusCode?: number,
-
-    /**
-     * Specify a redirect URL in case of a http error.
-     */
-    redirectURL?: string,
-
-    /**
-     * Additional options.
-     */
-    [key: string]: any
+    cause?: unknown,
 };
+
+export type Input = Options | Error | string;

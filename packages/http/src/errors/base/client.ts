@@ -5,8 +5,22 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { BaseError } from 'ebec';
+import { isOptions as isBaseOptions } from 'ebec';
+import { isOptions } from '../../utils';
+import { HTTPError } from './http';
 
-export class ClientError extends BaseError {
+export class ClientError extends HTTPError {
 
+}
+
+export function isClientError(error: unknown): error is ClientError {
+    if (error instanceof ClientError) {
+        return true;
+    }
+
+    if (!isOptions(error) || !isBaseOptions(error)) {
+        return false;
+    }
+
+    return typeof error.statusCode === 'number';
 }

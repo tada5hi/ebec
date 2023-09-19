@@ -1,31 +1,14 @@
-import {
-    buildOptions,
-    buildMessage,
-    Options,
-    mergeOptions
-} from 'ebec';
 import { ClientError } from '../base';
+import { Input } from '../../types';
 
 export const RequestedRangeNotSatisfiableErrorOptions = {
     code: `REQUESTED_RANGE_NOT_SATISFIABLE`,
     statusCode: 416,
-    decorateMessage: false,
-    logMessage: false,
-    message: `Requested Range Not Satisfiable`
+    statusMessage: `Requested Range Not Satisfiable`
 } as const;
 
 export class RequestedRangeNotSatisfiableError extends ClientError {
-    constructor(data?: string | Error | Options, options?: Options) {
-        options = mergeOptions(
-            buildOptions(data, options),
-            RequestedRangeNotSatisfiableErrorOptions
-        );
-
-        let message = buildMessage(data, options);
-        if (!message) {
-            message = `Requested Range Not Satisfiable`;
-        }
-
-        super(message, options);
+    constructor(...input: Input[]) {
+        super(RequestedRangeNotSatisfiableErrorOptions, ...input);
     }
 }

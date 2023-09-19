@@ -1,31 +1,14 @@
-import {
-    buildOptions,
-    buildMessage,
-    Options,
-    mergeOptions
-} from 'ebec';
 import { ServerError } from '../base';
+import { Input } from '../../types';
 
 export const BadGatewayErrorOptions = {
     code: `BAD_GATEWAY`,
     statusCode: 502,
-    decorateMessage: true,
-    logMessage: true,
-    message: `Bad Gateway`
+    statusMessage: `Bad Gateway`
 } as const;
 
 export class BadGatewayError extends ServerError {
-    constructor(data?: string | Error | Options, options?: Options) {
-        options = mergeOptions(
-            buildOptions(data, options),
-            BadGatewayErrorOptions
-        );
-
-        let message = buildMessage(data, options);
-        if (!message) {
-            message = `Bad Gateway`;
-        }
-
-        super(message, options);
+    constructor(...input: Input[]) {
+        super(BadGatewayErrorOptions, ...input);
     }
 }

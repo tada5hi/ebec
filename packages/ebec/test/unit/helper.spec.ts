@@ -6,7 +6,7 @@
  */
 
 // eslint-disable-next-line max-classes-per-file
-import { BaseError, extendsBaseError } from '../../src';
+import { BaseError, isBaseError } from '../../src';
 
 describe('src/utils/extends.ts', () => {
     it('should determine inheritance', () => {
@@ -14,33 +14,17 @@ describe('src/utils/extends.ts', () => {
 
         }();
 
-        expect(extendsBaseError(error)).toBeTruthy();
+        expect(isBaseError(error)).toBeTruthy();
 
         const secondError = new class extends Error {
 
         }();
-        expect(extendsBaseError(secondError)).toBeFalsy();
+        expect(isBaseError(secondError)).toBeTruthy();
 
         try {
             throw error;
         } catch (e) {
-            expect(extendsBaseError(e)).toBeTruthy();
+            expect(isBaseError(e)).toBeTruthy();
         }
-    });
-
-    it('should (not) determine lazy inheritance', () => {
-        let ob : Record<string, any> = {
-            options: {},
-            getOption: null,
-            getOptions: null,
-        };
-        expect(extendsBaseError(ob)).toBeFalsy();
-
-        ob = {
-            options: {},
-            getOption: () => null,
-            getOptions: () => null,
-        };
-        expect(extendsBaseError(ob)).toBeTruthy();
     });
 });

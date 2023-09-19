@@ -1,49 +1,75 @@
 /*
- * Copyright (c) 2021-2022.
+ * Copyright (c) 2021-2023.
  * Author Peter Placzek (tada5hi)
  * For the full copyright and license information,
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { merge } from 'smob';
-import type { Options } from '../type';
+import { isObject } from './is';
+import type { Input, Options } from '../types';
 
-/**
- * Deep merge multiple options sources.
- *
- * @param sources
- */
-export function mergeOptions(
-    ...sources: Options[]
-) : Options {
-    return merge(...sources);
+type CheckFn<T> = (input: unknown) => input is T;
+export function createExtractOptionsFn<T>(fn: CheckFn<T>) {
+    return (...input: Input[]) : T => {
+        let output : Options = {};
+        for (let i = 0; i < input.length; i++) {
+            const element = input[i];
+
+            if (
+                typeof output.cause === 'undefined' &&
+                element instanceof Error
+            ) {
+                output.cause = element;
+
+                continue;
+            }
+
+            if (fn(element)) {
+                output = {
+                    ...output,
+                    ...input[i] as Options,
+                };
+            }
+        }
+
+        return output as T;
+    };
 }
 
-export function buildOptions(
-    data?: string | Error | Options,
-    options?: Options,
-) : Options {
-    if (typeof data === 'undefined') {
-        data = {};
-    }
-
-    if (typeof options === 'undefined') {
-        options = {};
+export function isOptions(input: unknown) : input is Options {
+    if (!isObject(input)) {
+        return false;
     }
 
     if (
-        !(data instanceof Error) &&
-        typeof data !== 'string'
+        typeof input.code !== 'undefined' &&
+        typeof input.code !== 'number' &&
+        typeof input.code !== 'string' &&
+        input.code !== null
     ) {
-        options = mergeOptions(data, { ...options });
+        return false;
     }
 
     if (
-        !options.previous &&
-        data instanceof Error
+        typeof input.message !== 'undefined' &&
+        typeof input.message !== 'string'
     ) {
-        options.previous = data;
+        return false;
     }
 
-    return options;
+    if (
+        typeof input.logMessage !== 'undefined' &&
+        typeof input.logMessage !== 'boolean'
+    ) {
+        return false;
+    }
+
+    return !(typeof input.logLevel !== 'undefined' &&
+        typeof input.logLevel !== 'string' &&
+        typeof input.logLevel !== 'number');
+}
+
+const check = createExtractOptionsFn(isOptions);
+export function extractOptions(...input: Input[]) {
+    return check(...input);
 }

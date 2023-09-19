@@ -5,22 +5,11 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { buildMessage } from '../../../src';
+import { extractMessage } from '../../../src';
 
 describe('src/utils/message.ts', () => {
-    it('should inherit message from previous', () => {
-        let message = buildMessage({}, new Error('foo'));
+    it('should extract message', () => {
+        const message = extractMessage({}, new Error('foo'), 'foo');
         expect(message).toEqual('foo');
-
-        message = buildMessage({}, {
-            previous: new Error('bar'),
-        });
-
-        expect(message).toEqual('bar');
-    });
-
-    it('should build message from previous error', () => {
-        const message = buildMessage(new Error('abc'));
-        expect(message).toEqual('abc');
     });
 });

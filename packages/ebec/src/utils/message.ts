@@ -5,44 +5,23 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Options } from '../type';
+import { isObject } from 'smob';
 
-export function buildMessage(
-    data?: string | Error | Options,
-    options?: Options,
-) : string | undefined {
-    if (typeof data === 'undefined') {
-        data = {};
-    }
+export function extractMessage(...input: unknown[]) : string | undefined {
+    for (let i = 0; i < input.length; i++) {
+        const item = input[i];
+        if (typeof item === 'string') {
+            return item;
+        }
 
-    if (typeof options === 'undefined') {
-        options = {};
-    }
+        if (!isObject(item)) {
+            continue;
+        }
 
-    let message : string | undefined;
-
-    if (typeof data === 'string') {
-        message = data;
-    }
-
-    if (
-        !message &&
-        options.message
-    ) {
-        message = options.message;
-    }
-
-    if (
-        !message &&
-        !options.decorateMessage
-    ) {
-        if (data instanceof Error) {
-            /* istanbul ignore next */
-            message = data.message;
-        } else if (options.previous instanceof Error) {
-            message = options.previous.message;
+        if (typeof item.message === 'string') {
+            return item.message;
         }
     }
 
-    return message;
+    return undefined;
 }
