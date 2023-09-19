@@ -11,13 +11,28 @@
 **Table of Contents**
 
 - [Packages](#packages)
+  - [Core](#core-)
+  - [HTTP](#http-)
 - [License](#license)
 
 ## Packages
 The repository contains the following packages:
 
-- 🥋 **ebec**: The base package, which provides the base error class and utility functions to build, merge, set & unset options.
-- 🥁 **@ebec/http** : A package, which provides extendable HTTP base error classes.
+### Core 🥋
+
+**`ebec`**
+
+A package, which provides the base error class and utility functions to build, merge, set & unset options.
+
+[Documentation](./packages/ebec)
+
+### HTTP 🥁
+
+**`@ebec/http`** 
+
+A package, which provides extendable HTTP base error classes.
+
+[Documentation](./packages/http)
 
 ## License
 

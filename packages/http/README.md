@@ -5,8 +5,7 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-This library provides HTTP base error classes (`NotFoundError`, `InternalServerError`, ...), 
-which can simply be extended.
+A library that provides HTTP base error classes (`NotFoundError`, `InternalServerError`, ...).
 
 **Table of Contents**
 
