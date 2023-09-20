@@ -91,20 +91,26 @@ export class NotFoundError extends BaseError {
 ### Options
 
 ```typescript
-export type Options = {
-    /**
-     * The error code is either a short uppercase string identifier 
-     * for the error or a numeric error code. For example: SERVER_ERROR
-     */
-    code?: string | number,
-
+type Options = {
     /**
      * The actual error message, if not provided on another way.
      */
     message?: string,
 
     /**
-     * Mark this error as error which need to be logged.
+     * The error code is either a short uppercase string identifier
+     * for the error or a numeric error code. For example: SERVER_ERROR
+     */
+    code?: string | number | null,
+
+    /**
+     * Can the error message be exposed externally without hesitation
+     * or is it restricted for internal use?
+     */
+    expose?: boolean;
+
+    /**
+     * Should the error be logged?
      */
     logMessage?: boolean,
 
@@ -114,10 +120,10 @@ export type Options = {
     logLevel?: string | number,
 
     /**
-     * Specify a previous error.
+     * A cause for the error.
      */
     cause?: unknown,
-}
+};
 ```
 
 ## Utils

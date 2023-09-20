@@ -33,6 +33,9 @@ describe('src/utils/options.ts', () => {
         let options = isOptions({ code: () => 1 });
         expect(options).toBeFalsy();
 
+        options = isOptions({ expose: 1 });
+        expect(options).toBeFalsy();
+
         options = isOptions({ message: 1 });
         expect(options).toBeFalsy();
 

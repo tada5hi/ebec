@@ -44,6 +44,13 @@ export function isOptions(input: unknown) : input is Options {
     }
 
     if (
+        typeof input.expose !== 'undefined' &&
+        typeof input.expose !== 'boolean'
+    ) {
+        return false;
+    }
+
+    if (
         typeof input.message !== 'undefined' &&
         typeof input.message !== 'string'
     ) {

@@ -13,7 +13,13 @@ export class BaseError extends Error {
     code?: string | number | null;
 
     /**
-     * Mark this error as error which need to be logged.
+     * Can the error message be exposed externally without hesitation
+     * or is it restricted for internal use?
+     */
+    expose?: boolean;
+
+    /**
+     * Should the error be logged?
      */
     logMessage?: boolean;
 
@@ -54,6 +60,7 @@ export class BaseError extends Error {
         }
 
         this.code = options.code;
+        this.expose = options.expose;
         this.logMessage = options.logMessage;
         this.logLevel = options.logLevel;
     }

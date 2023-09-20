@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "dist",
         "declarationMap": true,
+        "moduleResolution": "node",
 
         "lib": ["ESNext"],
         "module": "ESNext",

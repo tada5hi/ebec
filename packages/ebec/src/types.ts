@@ -1,17 +1,23 @@
 export type Options = {
     /**
+     * The actual error message, if not provided on another way.
+     */
+    message?: string,
+
+    /**
      * The error code is either a short uppercase string identifier
      * for the error or a numeric error code. For example: SERVER_ERROR
      */
     code?: string | number | null,
 
     /**
-     * The actual error message, if not provided on another way.
+     * Can the error message be exposed externally without hesitation
+     * or is it restricted for internal use?
      */
-    message?: string,
+    expose?: boolean;
 
     /**
-     * Mark this error as error which need to be logged.
+     * Should the error be logged?
      */
     logMessage?: boolean,
 
