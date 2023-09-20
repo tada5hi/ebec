@@ -13,6 +13,7 @@
  * \x0B: Matches the vertical tab character.
  * \x0C: Matches the form feed character.
  */
+// eslint-disable-next-line no-control-regex
 const pattern = /[^\x20-\x7E\t\n\r\x0B\x0C]+/g;
 
 export function sanitizeStatusMessage(input: string) {
