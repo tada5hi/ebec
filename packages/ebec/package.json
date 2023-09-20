@@ -4,7 +4,7 @@
     "files": [
         "dist/"
     ],
-    "description": "",
+    "description": "A library that provides a basic ES6 error class.",
     "author": {
         "name": "Peter Placzek",
         "email": "contact@tada5hi.net",
