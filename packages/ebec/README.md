@@ -5,8 +5,8 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-A library that provides an extendable base error class and some utilities
-to simplify usage and interaction ⚡.
+A library that provides a basic error class and helper functions for extracting options and the error message
+from any number of constructor arguments.
 
 **Table of Contents**
 
@@ -15,6 +15,7 @@ to simplify usage and interaction ⚡.
     - [Simple](#simple)
     - [Inheritance](#inheritance)
 - [Types](#types)
+- [Utils](#utils)
 - [License](#license)
 
 ## Installation
@@ -117,6 +118,20 @@ export type Options = {
      */
     cause?: unknown,
 }
+```
+
+## Utils
+
+### isBaseError
+
+This method is used to determine if the error is a basic error or if the error extends this class.
+
+```typescript
+import { isBaseError, BaseError } from "ebec";
+
+const error = new BaseError();
+isBaseError(error);
+// true
 ```
 
 ## License

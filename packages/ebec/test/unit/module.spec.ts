@@ -5,7 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { BaseError } from '../../src';
+// eslint-disable-next-line max-classes-per-file
+import { BaseError, isBaseError } from '../../src';
 
 describe('src/module.ts', () => {
     it('should create instance with message', () => {
@@ -20,5 +21,24 @@ describe('src/module.ts', () => {
             code: 'bar',
         });
         expect(error.code).toEqual('bar');
+    });
+
+    it('should recognize instance', () => {
+        const error = new class extends BaseError {
+
+        }();
+
+        expect(isBaseError(error)).toBeTruthy();
+
+        const secondError = new class extends Error {
+
+        }();
+        expect(isBaseError(secondError)).toBeTruthy();
+
+        try {
+            throw error;
+        } catch (e) {
+            expect(isBaseError(e)).toBeTruthy();
+        }
     });
 });

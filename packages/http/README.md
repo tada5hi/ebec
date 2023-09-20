@@ -5,15 +5,16 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-A library that provides HTTP base error classes (`NotFoundError`, `InternalServerError`, ...).
+A library that provides extensible HTTP error classes that define basic information about the error.
 
 **Table of Contents**
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Types](#types)
+- [Classes](#classes)
   - [Client](#client)
   - [Server](#server)
+- [Utils](#utils)
 - [License](#license)
 
 ## Installation
@@ -86,7 +87,7 @@ class UserNotFound extends NotFoundError {
 }
 ```
 
-## Types
+## Classes
 
 The following HTTP classes are predefined:
 
@@ -138,6 +139,44 @@ The following HTTP classes are predefined:
 - 509 `BandwidthLimitExceededError`
 - 510 `NotExtendedError`
 - 511 `NetworkAuthenticationRequiredError`
+
+## Utils
+
+### isHTTPError
+
+This method determines whether it is a client or server error.
+
+```typescript
+import { isHTTPError, NotFoundError } from "@ebec/http";
+
+const error = new NotFoundError();
+isHTTPError(error);
+// true
+```
+
+### isClientError
+
+This method determines whether it is a client error.
+
+```typescript
+import { isClientError, NotFoundError } from "@ebec/http";
+
+const error = new NotFoundError();
+isClientError(error);
+// true
+```
+
+### isServerError
+
+This method determines whether it is a server error.
+
+```typescript
+import { isServerError, NotFoundError } from "@ebec/http";
+
+const error = new NotFoundError();
+isServerError(error);
+// false
+```
 
 ## License
 

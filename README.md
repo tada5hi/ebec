@@ -6,7 +6,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 ## What is it?
-**Ebec** is a collection of extendable base error classes.
+A collection of extensible error classes for different contexts.
 
 **Table of Contents**
 
@@ -22,7 +22,8 @@ The repository contains the following packages:
 
 **`ebec`**
 
-A package, which provides the base error class and utility functions to build, merge, set & unset options.
+A library that provides a basic error class and helper functions for extracting options and the error message
+from any number of constructor arguments.
 
 [Documentation](./packages/ebec)
 
@@ -30,7 +31,7 @@ A package, which provides the base error class and utility functions to build, m
 
 **`@ebec/http`** 
 
-A package, which provides extendable HTTP base error classes.
+A library that provides extensible HTTP error classes that define basic information about the error.
 
 [Documentation](./packages/http)
 
