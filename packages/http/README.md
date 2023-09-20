@@ -12,6 +12,7 @@ A library that provides extensible HTTP error classes that define basic informat
 - [Installation](#installation)
 - [Usage](#usage)
 - [Classes](#classes)
+  - [Base](#base) 
   - [Client](#client)
   - [Server](#server)
 - [Utils](#utils)
@@ -90,6 +91,12 @@ class UserNotFound extends NotFoundError {
 ## Classes
 
 The following HTTP classes are predefined:
+
+### Base
+
+- `HTTPError`
+- `ClientError`
+- `ServerError`
 
 ### Client
 
