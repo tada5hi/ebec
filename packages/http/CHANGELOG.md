@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@1.1.1...@ebec/http@2.0.0) (2023-09-20)
+
+
+### Bug Fixes
+
+* allow control regex for sanitizing status message ([dfcf2d4](https://github.com/Tada5hi/ebec/commit/dfcf2d4c7aa5cfc9b81050ee4c429c83e6fa86cb))
+
+
+### Features
+
+* refactored public api and utilities ([2204673](https://github.com/Tada5hi/ebec/commit/2204673780c2af564be6d8bf0479b6c710b47606))
+* sanitize status-{code,message} ([1856308](https://github.com/Tada5hi/ebec/commit/1856308a76897f25becae364afd98f440516c351))
+* stricter client, server & http error check ([9b421b2](https://github.com/Tada5hi/ebec/commit/9b421b2f90a282950a4801e09a86fcc61055a64c))
+
+
+### BREAKING CHANGES
+
+* public api changed
+
+
+
+
+
 ## [1.1.1](https://github.com/Tada5hi/ebec/compare/@ebec/http@1.1.0...@ebec/http@1.1.1) (2023-08-28)
 
 

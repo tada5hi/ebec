@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/Tada5hi/ebec/compare/ebec@1.1.1...ebec@2.0.0) (2023-09-20)
+
+
+### Bug Fixes
+
+* **deps:** bump smob from 1.4.0 to 1.4.1 ([#288](https://github.com/Tada5hi/ebec/issues/288)) ([b37d57c](https://github.com/Tada5hi/ebec/commit/b37d57c0ed0c159be7b6bfd56ccdc4e338d7834f))
+
+
+### Features
+
+* add expose property & option ([8479844](https://github.com/Tada5hi/ebec/commit/84798440ee8541dcb664817a9e3e459c9a035dd3))
+* refactored public api and utilities ([2204673](https://github.com/Tada5hi/ebec/commit/2204673780c2af564be6d8bf0479b6c710b47606))
+* stricter client, server & http error check ([9b421b2](https://github.com/Tada5hi/ebec/commit/9b421b2f90a282950a4801e09a86fcc61055a64c))
+
+
+### BREAKING CHANGES
+
+* public api changed
+
+
+
+
+
 ## [1.1.1](https://github.com/Tada5hi/ebec/compare/ebec@1.1.0...ebec@1.1.1) (2023-08-28)
 
 **Note:** Version bump only for package ebec
