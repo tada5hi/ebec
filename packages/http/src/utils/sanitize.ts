@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2023.
- * Author Peter Placzek (tada5hi)
- * For the full copyright and license information,
- * view the LICENSE file that was distributed with this source code.
- */
-
 /**
  * \x20-\x7E: This range represents printable ASCII characters. \x20 is the hexadecimal code for space, and \x7E is the code for tilde.
  * \t: Matches the tab character.
