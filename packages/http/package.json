@@ -52,7 +52,9 @@
         "build:js": "rollup -c",
         "build:classes": "node ./build/index.mjs generate",
         "build": "rimraf dist && npm run build:classes && npm run build:types && npm run build:js",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "test": "cross-env NODE_ENV=test jest --config ./test/jest.config.js",
+        "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage"
     },
     "devDependencies": {
         "@types/mustache": "^4.2.2",

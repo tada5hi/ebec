@@ -49,9 +49,12 @@ export function isHTTPError(error: unknown): error is HTTPError {
         return true;
     }
 
-    if (!isOptions(error) || !isBaseOptions(error)) {
+    if (!isOptions(error) || !error.statusCode || !isBaseOptions(error)) {
         return false;
     }
 
-    return typeof error.statusCode === 'number';
+    const statusCode = sanitizeStatusCode(error.statusCode);
+
+    return statusCode >= 400 &&
+        statusCode < 600;
 }

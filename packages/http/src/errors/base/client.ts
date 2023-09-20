@@ -6,7 +6,7 @@
  */
 
 import { isOptions as isBaseOptions } from 'ebec';
-import { isOptions } from '../../utils';
+import { isOptions, sanitizeStatusCode } from '../../utils';
 import { HTTPError } from './http';
 
 export class ClientError extends HTTPError {
@@ -18,9 +18,12 @@ export function isClientError(error: unknown): error is ClientError {
         return true;
     }
 
-    if (!isOptions(error) || !isBaseOptions(error)) {
+    if (!isOptions(error) || !error.statusCode || !isBaseOptions(error)) {
         return false;
     }
 
-    return typeof error.statusCode === 'number';
+    const statusCode = sanitizeStatusCode(error.statusCode);
+
+    return statusCode >= 400 &&
+        statusCode < 500;
 }

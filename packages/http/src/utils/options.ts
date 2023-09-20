@@ -15,7 +15,8 @@ export function isOptions(input: unknown) : input is Options {
 
     if (
         typeof input.statusCode !== 'undefined' &&
-        typeof input.statusCode !== 'number'
+        typeof input.statusCode !== 'number' &&
+        typeof input.statusCode !== 'string'
     ) {
         return false;
     }
