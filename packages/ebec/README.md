@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-A library that provides a basic error class and helper functions for extracting options and the error message
+A library that provides a basic ES6 error class and helper functions for extracting options and the error message
 from any number of constructor arguments.
 
 **Table of Contents**

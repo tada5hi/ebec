@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-A library that provides extensible HTTP error classes that define basic information about the error.
+A library that provides extensible ES6 HTTP error classes that define basic information about the error.
 
 **Table of Contents**
 
