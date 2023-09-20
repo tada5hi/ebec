@@ -58,11 +58,7 @@
     },
     "devDependencies": {
         "@types/mustache": "^4.2.2",
-        "@types/yargs": "^17.0.24",
-        "ebec": "^1.1.0",
-        "mustache": "^4.2.0",
-        "ts-node": "^10.4.0",
-        "yargs": "^17.7.2"
+        "mustache": "^4.2.0"
     },
     "dependencies": {
         "ebec": "^1.1.1"

@@ -52,14 +52,6 @@
         "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage",
         "prepublishOnly": "npm run build"
     },
-    "dependencies": {
-        "smob": "^1.4.1"
-    },
-    "devDependencies": {
-        "@types/jest": "^29.5.5",
-        "jest": "^29.7.0",
-        "ts-jest": "^29.1.1"
-    },
     "publishConfig": {
         "access": "public"
     },

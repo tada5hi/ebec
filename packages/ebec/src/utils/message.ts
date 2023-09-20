@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { isObject } from 'smob';
+import { isObject } from './is';
 import type { Input } from '../types';
 
 export function extractMessage(...input: Input[]) : string | undefined {
