@@ -137,7 +137,8 @@ import { isBaseError, BaseError } from "ebec";
 
 const error = new BaseError();
 
-console.log(isBaseError(error)); // true
+console.log(isBaseError(error));
+// true
 ```
 
 ## License
