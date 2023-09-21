@@ -78,8 +78,7 @@ export class NotFoundError extends BaseError {
         super({
             logMessage: true,
             logLevel: 'warning',
-            statusCode: 404,
-            statusMessage: message || 'NotFound'
+            code: 'NOT_FOUND'
         });
     }
 

@@ -157,7 +157,7 @@ This method determines whether it is a client or server error.
 import { isHTTPError, NotFoundError } from "@ebec/http";
 
 const error = new NotFoundError();
-isHTTPError(error);
+console.log(isHTTPError(error));
 // true
 ```
 
@@ -169,7 +169,7 @@ This method determines whether it is a client error.
 import { isClientError, NotFoundError } from "@ebec/http";
 
 const error = new NotFoundError();
-isClientError(error);
+console.log(isClientError(error));
 // true
 ```
 
@@ -181,7 +181,7 @@ This method determines whether it is a server error.
 import { isServerError, NotFoundError } from "@ebec/http";
 
 const error = new NotFoundError();
-isServerError(error);
+console.log(isServerError(error));
 // false
 ```
 
