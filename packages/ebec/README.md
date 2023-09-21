@@ -38,7 +38,7 @@ import { BaseError } from 'ebec';
 const error = new BaseError('An error occurred.');
 
 console.log(error.message);
-// An error is occurred.
+// An error occurred.
 ```
 
 **Example #2**
@@ -136,7 +136,8 @@ This method is used to determine if the error is a basic error or if the error e
 import { isBaseError, BaseError } from "ebec";
 
 const error = new BaseError();
-isBaseError(error);
+
+console.log(isBaseError(error));
 // true
 ```
 

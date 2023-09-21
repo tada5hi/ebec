@@ -107,7 +107,7 @@ The following HTTP classes are predefined:
 - 405 `MethodNotAllowedError`
 - 406 `NotAcceptableError`
 - 407 `ProxyAuthenticationRequiredError`
-- 408 `RequesTimeoutError`
+- 408 `RequestTimeoutError`
 - 409 `ConflictError`
 - 410 `GoneError`
 - 411 `LengthRequiredError`
