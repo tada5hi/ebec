@@ -136,8 +136,8 @@ This method is used to determine if the error is a basic error or if the error e
 import { isBaseError, BaseError } from "ebec";
 
 const error = new BaseError();
-isBaseError(error);
-// true
+
+console.log(isBaseError(error)); // true
 ```
 
 ## License
