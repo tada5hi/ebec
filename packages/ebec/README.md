@@ -38,7 +38,7 @@ import { BaseError } from 'ebec';
 const error = new BaseError('An error occurred.');
 
 console.log(error.message);
-// An error is occurred.
+// An error occurred.
 ```
 
 **Example #2**
