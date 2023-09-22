@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/Tada5hi/ebec/compare/ebec@2.0.0...ebec@2.1.0) (2023-09-22)
+
+
+### Features
+
+* use duck typing for error recognition ([213d6f7](https://github.com/Tada5hi/ebec/commit/213d6f7356df7ddf6e1bb8985b7e42149d33d617))
+
+
+
+
+
 # [2.0.0](https://github.com/Tada5hi/ebec/compare/ebec@1.1.1...ebec@2.0.0) (2023-09-20)
 
 
