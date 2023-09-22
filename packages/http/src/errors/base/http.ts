@@ -1,7 +1,12 @@
-import { BaseError, isOptions as isBaseOptions } from 'ebec';
+import { BaseError, hasOwnProperty, isBaseError } from 'ebec';
 import type { Input } from '../../types';
 import {
-    extractOptions, isOptions, sanitizeStatusCode, sanitizeStatusMessage,
+    extractOptions,
+    isErrorRedirectURL,
+    isErrorStatusCode,
+    isErrorStatusMessage,
+    sanitizeStatusCode,
+    sanitizeStatusMessage,
 } from '../../utils';
 
 export class HTTPError extends BaseError {
@@ -38,11 +43,30 @@ export class HTTPError extends BaseError {
 }
 
 export function isHTTPError(error: unknown): error is HTTPError {
-    if (error instanceof HTTPError) {
-        return true;
+    if (!isBaseError(error)) {
+        return false;
     }
 
-    if (!isOptions(error) || !error.statusCode || !isBaseOptions(error)) {
+    if (
+        !hasOwnProperty(error, 'statusCode') ||
+        !isErrorStatusCode(error.statusCode)
+    ) {
+        return false;
+    }
+
+    if (
+        hasOwnProperty(error, 'statusMessage') &&
+        typeof error.statusMessage !== 'undefined' &&
+        !isErrorStatusMessage(error.statusMessage)
+    ) {
+        return false;
+    }
+
+    if (
+        hasOwnProperty(error, 'redirectURL') &&
+        typeof error.redirectURL !== 'undefined' &&
+        !isErrorRedirectURL(error.redirectURL)
+    ) {
         return false;
     }
 

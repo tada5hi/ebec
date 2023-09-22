@@ -16,22 +16,50 @@ describe('src/module.ts', () => {
         expect(error.code).toEqual('bar');
     });
 
-    it('should recognize instance', () => {
-        const error = new class extends BaseError {
+    it('should recognize error', () => {
+        const t1 = new class extends BaseError {
 
         }();
 
-        expect(isBaseError(error)).toBeTruthy();
+        expect(isBaseError(t1)).toBeTruthy();
 
-        const secondError = new class extends Error {
+        const t2 = new class extends Error {
 
         }();
-        expect(isBaseError(secondError)).toBeTruthy();
+        expect(isBaseError(t2)).toBeTruthy();
+    });
 
-        try {
-            throw error;
-        } catch (e) {
-            expect(isBaseError(e)).toBeTruthy();
-        }
+    it('should not recognize error', () => {
+        let is = isBaseError(undefined);
+        expect(is).toBeFalsy();
+
+        const props = {
+            message: 'foo',
+            stack: 'bar',
+        };
+
+        is = isBaseError({
+            ...props,
+            code: () => undefined,
+        });
+        expect(is).toBeFalsy();
+
+        is = isBaseError({
+            ...props,
+            expose: '',
+        });
+        expect(is).toBeFalsy();
+
+        is = isBaseError({
+            ...props,
+            logMessage: '',
+        });
+        expect(is).toBeFalsy();
+
+        is = isBaseError({
+            ...props,
+            logLevel: null,
+        });
+        expect(is).toBeFalsy();
     });
 });

@@ -1,5 +1,8 @@
 import { createExtractOptionsFn, isObject } from 'ebec';
 import type { Input, Options } from '../types';
+import {
+    isErrorRedirectURL, isErrorStatusCodeInput, isErrorStatusMessage,
+} from './is';
 
 export function isOptions(input: unknown) : input is Options {
     if (!isObject(input)) {
@@ -8,21 +11,20 @@ export function isOptions(input: unknown) : input is Options {
 
     if (
         typeof input.statusCode !== 'undefined' &&
-        typeof input.statusCode !== 'number' &&
-        typeof input.statusCode !== 'string'
+        !isErrorStatusCodeInput(input.statusCode)
     ) {
         return false;
     }
 
     if (
         typeof input.statusMessage !== 'undefined' &&
-        typeof input.statusMessage !== 'string'
+        !isErrorStatusMessage(input.statusMessage)
     ) {
         return false;
     }
 
-    return !(typeof input.redirectURL !== 'undefined' &&
-        typeof input.redirectURL !== 'string');
+    return typeof input.redirectURL === 'undefined' ||
+        isErrorRedirectURL(input.redirectURL);
 }
 
 const check = createExtractOptionsFn(isOptions);

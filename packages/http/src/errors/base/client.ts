@@ -1,22 +1,14 @@
-import { isOptions as isBaseOptions } from 'ebec';
-import { isOptions, sanitizeStatusCode } from '../../utils';
-import { HTTPError } from './http';
+import { HTTPError, isHTTPError } from './http';
 
 export class ClientError extends HTTPError {
 
 }
 
-export function isClientError(error: unknown): error is ClientError {
-    if (error instanceof ClientError) {
-        return true;
-    }
-
-    if (!isOptions(error) || !error.statusCode || !isBaseOptions(error)) {
+export function isClientError(input: unknown): input is ClientError {
+    if (!isHTTPError(input)) {
         return false;
     }
 
-    const statusCode = sanitizeStatusCode(error.statusCode);
-
-    return statusCode >= 400 &&
-        statusCode < 500;
+    return input.statusCode >= 400 &&
+        input.statusCode < 500;
 }

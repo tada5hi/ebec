@@ -1,4 +1,6 @@
-import { isObject } from './is';
+import {
+    isErrorCode, isErrorExpose, isErrorLogLevel, isErrorLogMessage, isErrorMessage, isObject,
+} from './is';
 import type { Input, Options } from '../types';
 
 type CheckFn<T> = (input: unknown) => input is T;
@@ -35,38 +37,35 @@ export function isOptions(input: unknown) : input is Options {
     }
 
     if (
+        typeof input.message !== 'undefined' &&
+        !isErrorMessage(input.message)
+    ) {
+        return false;
+    }
+
+    if (
         typeof input.code !== 'undefined' &&
-        typeof input.code !== 'number' &&
-        typeof input.code !== 'string' &&
-        input.code !== null
+        !isErrorCode(input.code)
     ) {
         return false;
     }
 
     if (
         typeof input.expose !== 'undefined' &&
-        typeof input.expose !== 'boolean'
-    ) {
-        return false;
-    }
-
-    if (
-        typeof input.message !== 'undefined' &&
-        typeof input.message !== 'string'
+        !isErrorExpose(input.expose)
     ) {
         return false;
     }
 
     if (
         typeof input.logMessage !== 'undefined' &&
-        typeof input.logMessage !== 'boolean'
+        !isErrorLogMessage(input.logMessage)
     ) {
         return false;
     }
 
-    return !(typeof input.logLevel !== 'undefined' &&
-        typeof input.logLevel !== 'string' &&
-        typeof input.logLevel !== 'number');
+    return typeof input.logLevel === 'undefined' ||
+        isErrorLogLevel(input.logLevel);
 }
 
 const check = createExtractOptionsFn(isOptions);

@@ -2,7 +2,12 @@ import type { Input } from './types';
 import {
     extractMessage,
     extractOptions,
-    isOptions,
+    hasOwnProperty,
+    isError,
+    isErrorCode,
+    isErrorExpose,
+    isErrorLogLevel,
+    isErrorLogMessage,
 } from './utils';
 
 export class BaseError extends Error {
@@ -55,7 +60,7 @@ export class BaseError extends Error {
         }
 
         /* istanbul ignore next */
-        if (typeof this.stack === 'undefined' || this.stack === '') {
+        if (typeof this.stack === 'undefined' || this.stack.length === 0) {
             this.stack = new Error(message).stack;
         }
 
@@ -67,11 +72,37 @@ export class BaseError extends Error {
 }
 
 export function isBaseError(
-    error: unknown,
-): error is BaseError {
-    if (error instanceof BaseError) {
-        return true;
+    input: unknown,
+): input is BaseError {
+    if (!isError(input)) {
+        return false;
     }
 
-    return isOptions(error);
+    if (
+        hasOwnProperty(input, 'code') &&
+        typeof input.code !== 'undefined' &&
+        !isErrorCode(input.code)
+    ) {
+        return false;
+    }
+
+    if (
+        hasOwnProperty(input, 'expose') &&
+        typeof input.expose !== 'undefined' &&
+        !isErrorExpose(input.expose)
+    ) {
+        return false;
+    }
+
+    if (
+        hasOwnProperty(input, 'logMessage') &&
+        typeof input.logMessage !== 'undefined' &&
+        !isErrorLogMessage(input.logMessage)
+    ) {
+        return false;
+    }
+
+    return !hasOwnProperty(input, 'logLevel') ||
+        typeof input.logLevel === 'undefined' ||
+        isErrorLogLevel(input.logLevel);
 }

@@ -35,17 +35,28 @@ describe('src/module.ts', () => {
     });
 
     it('should recognize http error', () => {
-        const error = new HTTPError({
-            statusCode: 300,
+        const t1 = new HTTPError({
+            statusCode: 400,
         });
-        expect(isClientError(error)).toBeFalsy();
-        expect(isServerError(error)).toBeFalsy();
-        expect(isHTTPError(error)).toBeTruthy();
+
+        expect(isClientError(t1)).toBeTruthy();
+        expect(isServerError(t1)).toBeFalsy();
+        expect(isHTTPError(t1)).toBeTruthy();
 
         const t2 = new Error();
         (t2 as Record<string, any>).statusCode = 500;
         expect(isClientError(t2)).toBeFalsy();
         expect(isServerError(t2)).toBeTruthy();
         expect(isHTTPError(t2)).toBeTruthy();
+    });
+
+    it('should not recognize http error', () => {
+        const error = new HTTPError({
+            statusCode: 300,
+        });
+
+        expect(isClientError(error)).toBeFalsy();
+        expect(isServerError(error)).toBeFalsy();
+        expect(isHTTPError(error)).toBeFalsy();
     });
 });
