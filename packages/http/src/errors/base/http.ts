@@ -1,10 +1,8 @@
 import { BaseError, isBaseError } from 'ebec';
 import type { Input } from '../../types';
 import {
-    extractOptions, hasOwnProperty,
-    isErrorRedirectURL,
-    isErrorStatusCode,
-    isErrorStatusMessage,
+    extractOptions,
+    isOptions,
     sanitizeStatusCode,
     sanitizeStatusMessage,
 } from '../../utils';
@@ -43,35 +41,17 @@ export class HTTPError extends BaseError {
 }
 
 export function isHTTPError(error: unknown): error is HTTPError {
-    if (!isBaseError(error)) {
+    if (!isOptions(error)) {
         return false;
     }
 
     if (
-        !hasOwnProperty(error, 'statusCode') ||
-        !isErrorStatusCode(error.statusCode)
+        typeof error.statusCode !== 'number' ||
+        error.statusCode < 400 ||
+        error.statusCode > 599
     ) {
         return false;
     }
 
-    if (
-        hasOwnProperty(error, 'statusMessage') &&
-        typeof error.statusMessage !== 'undefined' &&
-        !isErrorStatusMessage(error.statusMessage)
-    ) {
-        return false;
-    }
-
-    if (
-        hasOwnProperty(error, 'redirectURL') &&
-        typeof error.redirectURL !== 'undefined' &&
-        !isErrorRedirectURL(error.redirectURL)
-    ) {
-        return false;
-    }
-
-    const statusCode = sanitizeStatusCode(error.statusCode);
-
-    return statusCode >= 400 &&
-        statusCode < 600;
+    return isBaseError(error);
 }

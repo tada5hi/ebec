@@ -4,7 +4,7 @@ export type Options = BaseOptions & {
     /**
      * A numeric Status Code between 400-599.
      */
-    statusCode?: number,
+    statusCode?: number | string,
 
     /**
      * A status message.

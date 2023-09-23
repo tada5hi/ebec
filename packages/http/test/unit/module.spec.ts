@@ -20,6 +20,11 @@ describe('src/module.ts', () => {
         expect(error.statusMessage).toEqual('Foo bar');
     });
 
+    it('should sanitize status code', () => {
+        const error = new HTTPError({ statusCode: 999 });
+        expect(error.statusCode).toEqual(500);
+    });
+
     it('should recognize client error', () => {
         const error = new NotFoundError();
         expect(isClientError(error)).toBeTruthy();
@@ -58,5 +63,7 @@ describe('src/module.ts', () => {
         expect(isClientError(error)).toBeFalsy();
         expect(isServerError(error)).toBeFalsy();
         expect(isHTTPError(error)).toBeFalsy();
+
+        expect(isHTTPError(undefined)).toBeFalsy();
     });
 });
