@@ -58,25 +58,29 @@ import url from "node:url";
     }
 
     // default
-    const lines = [
-        'export * from \'./base\';',
-    ];
+    const clientExports = [];
+    const serverExports = [];
 
-    items.map((item) => {
-        const parts = item.fileName.split('.');
+    for(let i=0; i<items.length; i++) {
+        const parts = items[i].fileName.split('.');
         parts.pop();
 
-        const relativeDirectory = item.isServerError ? 'server' : 'client';
-        lines.push(`export * from './${relativeDirectory}/${parts.join('.')}';`);
-
-        return item;
-    });
+        if(items[i].isServerError) {
+            serverExports.push(`export * from './${parts.join('.')}';`);
+        } else {
+            clientExports.push(`export * from './${parts.join('.')}';`);
+        }
+    }
 
     // eof ;)
-    lines.push('');
+    clientExports.push('');
+    serverExports.push('');
 
-    const content = lines.join('\n');
+    const clientContent = clientExports.join('\n');
+    const clientPath = path.join(`${destDirPath}/client/index.ts`);
+    await saveFile(clientContent, clientPath);
 
-    const destFilePath = path.join(`${destDirPath}/index.ts`);
-    await saveFile(content, destFilePath);
+    const serverContent = serverExports.join('\n');
+    const serverPath = path.join(`${destDirPath}/server/index.ts`);
+    await saveFile(serverContent, serverPath);
 })();
