@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/Tada5hi/ebec/compare/ebec@2.1.0...ebec@2.2.0) (2023-09-23)
+
+
+### Features
+
+* simplify options extraction ([9e9a1c4](https://github.com/Tada5hi/ebec/commit/9e9a1c4c4ad50df92c7c9feaf43d1e5dda58642c))
+
+
+
+
+
 # [2.1.0](https://github.com/Tada5hi/ebec/compare/ebec@2.0.0...ebec@2.1.0) (2023-09-22)
 
 

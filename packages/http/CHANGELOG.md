@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@2.1.0...@ebec/http@2.2.0) (2023-09-23)
+
+
+### Bug Fixes
+
+* options status-code type ([30d7965](https://github.com/Tada5hi/ebec/commit/30d79655564efba02b28c1f9655b5691d724fab0))
+* reorganize client & server errors exports ([10591d8](https://github.com/Tada5hi/ebec/commit/10591d88aca3cf36bbc10bb55cbae45b628b58bf))
+
+
+### Features
+
+* simplify options extraction ([9e9a1c4](https://github.com/Tada5hi/ebec/commit/9e9a1c4c4ad50df92c7c9feaf43d1e5dda58642c))
+
+
+
+
+
 # [2.1.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@2.0.0...@ebec/http@2.1.0) (2023-09-22)
 
 
