@@ -1,6 +1,7 @@
 import type { Options } from '../../../src';
 import {
-    BaseError, extractOptions, isOptions,
+    BaseError,
+    extractOptions, isOptions,
 } from '../../../src';
 
 describe('src/utils/options.ts', () => {
@@ -23,10 +24,13 @@ describe('src/utils/options.ts', () => {
     });
 
     it('should set input error as cause option', () => {
-        const error = new BaseError();
-        const options = extractOptions(error, {});
+        const baseError = new BaseError('foo', { stack: 'myStack' });
+        const options = extractOptions(baseError, { code: 'BAR' });
 
-        expect(options.cause).toEqual(error);
+        expect(options.message).toEqual('foo');
+        expect(options.code).toEqual('BAR');
+        expect(options.cause).toEqual(baseError);
+        expect(options.stack).toEqual('myStack');
     });
 
     it('should identify input as options', () => {
@@ -43,6 +47,9 @@ describe('src/utils/options.ts', () => {
         expect(options).toBeFalsy();
 
         options = isOptions({ logLevel: () => 1 });
+        expect(options).toBeFalsy();
+
+        options = isOptions({ stack: 1 });
         expect(options).toBeFalsy();
     });
 });

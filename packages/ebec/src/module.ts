@@ -1,13 +1,7 @@
 import type { Input } from './types';
 import {
-    extractMessage,
     extractOptions,
-    hasOwnProperty,
-    isError,
-    isErrorCode,
-    isErrorExpose,
-    isErrorLogLevel,
-    isErrorLogMessage,
+    isOptions,
 } from './utils';
 
 export class BaseError extends Error {
@@ -42,9 +36,8 @@ export class BaseError extends Error {
 
     constructor(...input: Input[]) {
         const options = extractOptions(...input);
-        const message = extractMessage(...input);
 
-        super(message, { cause: options.cause });
+        super(options.message, { cause: options.cause });
 
         if (typeof this.name === 'undefined' || this.name === 'Error') {
             Object.defineProperty(this, 'name', {
@@ -59,9 +52,17 @@ export class BaseError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
+        // override existing stack
+        if (options.stack) {
+            this.stack = options.stack;
+        }
+
         /* istanbul ignore next */
-        if (typeof this.stack === 'undefined' || this.stack.length === 0) {
-            this.stack = new Error(message).stack;
+        if (
+            typeof this.stack === 'undefined' ||
+            this.stack.length === 0
+        ) {
+            this.stack = new Error(options.message).stack;
         }
 
         this.code = options.code;
@@ -74,35 +75,9 @@ export class BaseError extends Error {
 export function isBaseError(
     input: unknown,
 ): input is BaseError {
-    if (!isError(input)) {
+    if (!isOptions(input)) {
         return false;
     }
 
-    if (
-        hasOwnProperty(input, 'code') &&
-        typeof input.code !== 'undefined' &&
-        !isErrorCode(input.code)
-    ) {
-        return false;
-    }
-
-    if (
-        hasOwnProperty(input, 'expose') &&
-        typeof input.expose !== 'undefined' &&
-        !isErrorExpose(input.expose)
-    ) {
-        return false;
-    }
-
-    if (
-        hasOwnProperty(input, 'logMessage') &&
-        typeof input.logMessage !== 'undefined' &&
-        !isErrorLogMessage(input.logMessage)
-    ) {
-        return false;
-    }
-
-    return !hasOwnProperty(input, 'logLevel') ||
-        typeof input.logLevel === 'undefined' ||
-        isErrorLogLevel(input.logLevel);
+    return typeof input.message === 'string';
 }

@@ -5,6 +5,11 @@ export type Options = {
     message?: string,
 
     /**
+     * Trace of which functions were called.
+     */
+    stack?: string
+
+    /**
      * The error code is either a short uppercase string identifier
      * for the error or a numeric error code. For example: SERVER_ERROR
      */
@@ -29,7 +34,7 @@ export type Options = {
     /**
      * A cause for the error.
      */
-    cause?: unknown,
+    cause?: unknown
 };
 
 export type Input = Options | Error | string;

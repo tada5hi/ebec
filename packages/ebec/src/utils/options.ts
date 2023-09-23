@@ -1,33 +1,38 @@
 import {
-    isErrorCode, isErrorExpose, isErrorLogLevel, isErrorLogMessage, isErrorMessage, isObject,
+    isObject,
 } from './is';
 import type { Input, Options } from '../types';
 
 type CheckFn<T> = (input: unknown) => input is T;
-export function createExtractOptionsFn<T>(fn: CheckFn<T>) {
+export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
     return (...input: Input[]) : T => {
-        let output : Options = {};
+        const output : T = {} as T;
         for (let i = 0; i < input.length; i++) {
             const element = input[i];
 
-            if (
-                typeof output.cause === 'undefined' &&
-                element instanceof Error
-            ) {
-                output.cause = element;
-
+            if (typeof element === 'string') {
+                output.message = element;
                 continue;
             }
 
+            // message,stack & cause are not enumerable
+            if (element instanceof Error) {
+                output.message = element.message;
+                output.stack = element.stack;
+                output.cause = element;
+            }
+
+            // if element prototype is not of instance Error,
+            // then message, stack & cause get extracted here.
             if (fn(element)) {
-                output = {
-                    ...output,
-                    ...input[i] as Options,
-                };
+                const keys = Object.keys(element);
+                for (let i = 0; i < keys.length; i++) {
+                    output[keys[i] as keyof T] = element[keys[i] as keyof T];
+                }
             }
         }
 
-        return output as T;
+        return output;
     };
 }
 
@@ -38,34 +43,44 @@ export function isOptions(input: unknown) : input is Options {
 
     if (
         typeof input.message !== 'undefined' &&
-        !isErrorMessage(input.message)
+        typeof input.message !== 'string'
+    ) {
+        return false;
+    }
+
+    if (
+        typeof input.stack !== 'undefined' &&
+        typeof input.stack !== 'string'
     ) {
         return false;
     }
 
     if (
         typeof input.code !== 'undefined' &&
-        !isErrorCode(input.code)
+        typeof input.code !== 'number' &&
+        typeof input.code !== 'string' &&
+        input.code !== null
     ) {
         return false;
     }
 
     if (
         typeof input.expose !== 'undefined' &&
-        !isErrorExpose(input.expose)
+        typeof input.expose !== 'boolean'
     ) {
         return false;
     }
 
     if (
         typeof input.logMessage !== 'undefined' &&
-        !isErrorLogMessage(input.logMessage)
+        typeof input.logMessage !== 'boolean'
     ) {
         return false;
     }
 
     return typeof input.logLevel === 'undefined' ||
-        isErrorLogLevel(input.logLevel);
+        typeof input.logLevel === 'number' ||
+        typeof input.logLevel === 'string';
 }
 
 const check = createExtractOptionsFn(isOptions);

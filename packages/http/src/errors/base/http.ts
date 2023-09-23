@@ -1,7 +1,7 @@
-import { BaseError, hasOwnProperty, isBaseError } from 'ebec';
+import { BaseError, isBaseError } from 'ebec';
 import type { Input } from '../../types';
 import {
-    extractOptions,
+    extractOptions, hasOwnProperty,
     isErrorRedirectURL,
     isErrorStatusCode,
     isErrorStatusMessage,
