@@ -57,14 +57,6 @@ export class BaseError extends Error {
             this.stack = options.stack;
         }
 
-        /* istanbul ignore next */
-        if (
-            typeof this.stack === 'undefined' ||
-            this.stack.length === 0
-        ) {
-            this.stack = new Error(options.message).stack;
-        }
-
         this.code = options.code;
         this.expose = options.expose;
         this.logMessage = options.logMessage;
