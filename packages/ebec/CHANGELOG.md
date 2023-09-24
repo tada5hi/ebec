@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/Tada5hi/ebec/compare/ebec@2.2.0...ebec@2.2.1) (2023-09-24)
+
+
+### Performance Improvements
+
+* speed up error construction ([cc183f7](https://github.com/Tada5hi/ebec/commit/cc183f7dcfc79bebb8dc7db4c5f1424e2e2042fa))
+
+
+
+
+
 # [2.2.0](https://github.com/Tada5hi/ebec/compare/ebec@2.1.0...ebec@2.2.0) (2023-09-23)
 
 
