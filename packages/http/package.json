@@ -1,6 +1,6 @@
 {
     "name": "@ebec/http",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "A library that provides extensible ES6 HTTP error classes.",
     "files": [
         "core",
@@ -61,7 +61,7 @@
         "mustache": "^4.2.0"
     },
     "dependencies": {
-        "ebec": "^2.2.1"
+        "ebec": "^2.3.0"
     },
     "publishConfig": {
         "access": "public"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/Tada5hi/ebec/compare/ebec@2.2.1...ebec@2.3.0) (2023-10-03)
+
+
+### Features
+
+* additional property/option to provide context to the error ([576e4da](https://github.com/Tada5hi/ebec/commit/576e4da6c7adc154058908b871720107770edbcc))
+
+
+
+
+
 ## [2.2.1](https://github.com/Tada5hi/ebec/compare/ebec@2.2.0...ebec@2.2.1) (2023-09-24)
 
 
