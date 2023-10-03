@@ -57,7 +57,7 @@
         "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage"
     },
     "devDependencies": {
-        "@types/mustache": "^4.2.2",
+        "@types/mustache": "^4.2.3",
         "mustache": "^4.2.0"
     },
     "dependencies": {
