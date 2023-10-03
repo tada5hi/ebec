@@ -10,7 +10,8 @@
             ]
         },
         "version": {
-            "message": "build(release): publish"
+            "message": "build(release): publish",
+            "createRelease": "github"
         }
     },
     "npmClient": "npm",

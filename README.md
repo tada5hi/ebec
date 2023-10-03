@@ -22,8 +22,8 @@ The repository contains the following packages:
 
 **`ebec`**
 
-A library that provides a basic ES6 error class and helper functions for extracting options and the error message
-from any number of constructor arguments.
+A library that simplifies error handling by providing an ES6 error class and utility functions. 
+This library facilitates the extraction of options and error messages from constructor arguments.
 
 [Documentation](./packages/ebec)
 
