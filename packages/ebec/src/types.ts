@@ -10,29 +10,35 @@ export type Options = {
     stack?: string
 
     /**
-     * The error code is either a short uppercase string identifier
-     * for the error or a numeric error code. For example: SERVER_ERROR
+     * A unique identifier for the error,
+     * which can be a short uppercase string or a numeric code.
      */
     code?: string | number | null,
 
     /**
-     * Can the error message be exposed externally without hesitation
-     * or is it restricted for internal use?
+     * Additional data associated with the error. This property can hold
+     * unstructured information or supplementary details that provide context
+     * to the error.
+     */
+    data?: unknown,
+
+    /**
+     * Determines whether the error message can be safely exposed externally.
      */
     expose?: boolean;
 
     /**
-     * Should the error be logged?
+     * Indicates whether the error should be logged in the application's logs.
      */
     logMessage?: boolean,
 
     /**
-     * Set the log level for this error.
+     * Specifies the log level at which this error should be recorded.
      */
     logLevel?: string | number,
 
     /**
-     * A cause for the error.
+     * Represents the underlying cause or source of the error.
      */
     cause?: unknown
 };

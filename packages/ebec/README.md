@@ -5,8 +5,8 @@
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-A library that provides a basic ES6 error class and helper functions for extracting options and the error message
-from any number of constructor arguments.
+A library that simplifies error handling by providing an ES6 error class and utility functions.
+This library facilitates the extraction of options and error messages from constructor arguments.
 
 **Table of Contents**
 
@@ -26,12 +26,15 @@ npm install ebec --save
 
 ## Usage
 
+The **BaseError** class accepts various constructor arguments of type [Input](#input) and any
+[Options](#options) specified during initialization are automatically assigned as attributes.
+
 ### Simple
-The `BaseError` class can be initialized on different ways, like demonstrated by the following examples:
+
+Create error instances in different ways, as demonstrated in the following examples:
 
 **Example #1**
 
-In this example no options are specified on class instantiation, but afterward.
 ```typescript
 import { BaseError } from 'ebec';
 
@@ -43,10 +46,10 @@ console.log(error.message);
 
 **Example #2**
 
-In the following example only the error options are passed as single argument to the error constructor.
+In this example, only error options are passed as a single argument to the error constructor.
 
 ```typescript
-import { BaseError, Options } from 'ebec';
+import { BaseError } from 'ebec';
 
 const error = new BaseError({
     message: 'The entity could not be found',
@@ -56,16 +59,40 @@ const error = new BaseError({
 console.log(error.message);
 // The entity could not be found
 
-// access the option values
 console.log(error.code);
 // BAD_REQUEST
 ```
 
+**Example #3**
+
+In this example, multiple arguments are passed to the error constructor.
+
+```typescript
+import { BaseError } from 'ebec';
+
+const cause = new Error('foo');
+
+const error = new BaseError(
+    'The entity could not be found',
+    {
+        code: 'BAD_REQUEST'
+    },
+    cause
+);
+
+console.log(error.message);
+// The entity could not be found
+
+console.log(error.code);
+// BAD_REQUEST
+
+console.log(error.cause);
+// { message: 'foo', ... }
+```
 
 ### Inheritance
 
-Besides, using only the BaseError class, own classes which inherit the BaseError class,
-can simply be created and provide a better way to handle errors more differentiated.
+Custom error classes that inherit from BaseError allow for more specific error handling.
 
 ```typescript
 import {
@@ -76,6 +103,7 @@ import {
 export class NotFoundError extends BaseError {
     constructor(message?: string) {
         super({
+            message,
             logMessage: true,
             logLevel: 'warning',
             code: 'NOT_FOUND'
@@ -87,6 +115,12 @@ export class NotFoundError extends BaseError {
 
 ## Types
 
+### Input
+
+```typescript
+type Input = Options | Error | string;
+```
+
 ### Options
 
 ```typescript
@@ -97,31 +131,42 @@ type Options = {
     message?: string,
 
     /**
-     * The error code is either a short uppercase string identifier
-     * for the error or a numeric error code. For example: SERVER_ERROR
+     * Trace of which functions were called.
+     */
+    stack?: string
+
+    /**
+     * A unique identifier for the error,
+     * which can be a short uppercase string or a numeric code.
      */
     code?: string | number | null,
 
     /**
-     * Can the error message be exposed externally without hesitation
-     * or is it restricted for internal use?
+     * Additional data associated with the error. This property can hold
+     * unstructured information or supplementary details that provide context
+     * to the error.
+     */
+    data?: unknown,
+
+    /**
+     * Determines whether the error message can be safely exposed externally.
      */
     expose?: boolean;
 
     /**
-     * Should the error be logged?
+     * Indicates whether the error should be logged in the application's logs.
      */
     logMessage?: boolean,
 
     /**
-     * Set the log level for this error.
+     * Specifies the log level at which this error should be recorded.
      */
     logLevel?: string | number,
 
     /**
-     * A cause for the error.
+     * Represents the underlying cause or source of the error.
      */
-    cause?: unknown,
+    cause?: unknown
 };
 ```
 
