@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/Tada5hi/ebec/compare/@ebec/http@2.2.2...@ebec/http@2.3.0) (2023-10-07)
+
+
+### Features
+
+* set default expose option for client- & server-error ([4baf64d](https://github.com/Tada5hi/ebec/commit/4baf64d27ed90e49ef6ab06d6c8ada3bab295996))
+
+
+
+
+
 ## [2.2.2](https://github.com/Tada5hi/ebec/compare/@ebec/http@2.2.1...@ebec/http@2.2.2) (2023-10-03)
 
 **Note:** Version bump only for package @ebec/http
