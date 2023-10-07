@@ -10,7 +10,7 @@
             ]
         },
         "version": {
-            "message": "build(release): publish",
+            "message": "chore(release): %s",
             "createRelease": "github"
         }
     },
