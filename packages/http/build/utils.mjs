@@ -20,6 +20,7 @@ export async function saveFile(content, filePath) {
 /**
  * Load template (.tpl) file from disk.
  * @param file
+ * @return Promise<string>
  */
 export async function loadTemplate(file) {
     const tplPath = path.isAbsolute(file) ?

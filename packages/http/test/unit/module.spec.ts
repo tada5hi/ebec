@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import {
-    HTTPError, InternalServerError, NotFoundError, isClientError, isHTTPError, isServerError,
+    ClientError, HTTPError, InternalServerError, NotFoundError, ServerError, isClientError, isHTTPError, isServerError,
 } from '../../src';
 
 describe('src/module.ts', () => {
@@ -25,11 +25,21 @@ describe('src/module.ts', () => {
         expect(error.statusCode).toEqual(500);
     });
 
+    it('should create client error with default props', () => {
+        const error = new ClientError();
+        expect(error.expose).toBeTruthy();
+    });
+
     it('should recognize client error', () => {
         const error = new NotFoundError();
         expect(isClientError(error)).toBeTruthy();
         expect(isServerError(error)).toBeFalsy();
         expect(isHTTPError(error)).toBeTruthy();
+    });
+
+    it('should create server error with default props', () => {
+        const error = new ServerError();
+        expect(error.expose).toBeFalsy();
     });
 
     it('should recognize server error', () => {
