@@ -1,0 +1,17 @@
+{
+    "release-type": "node",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "initial-version": "0.1.0",
+    "packages": {
+        "packages/ebec": {"component": "core"},
+        "packages/http": {"component": "http"}
+    },
+    "plugins": [
+        {
+            "type": "node-workspace",
+            "updatePeerDependencies": true
+        }
+    ],
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}

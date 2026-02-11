@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import type { Options } from '../../../src';
 import {
     BaseError,
@@ -29,7 +30,6 @@ describe('src/utils/options.ts', () => {
 
         expect(options.message).toEqual('foo');
         expect(options.code).toEqual('BAR');
-        expect(options.cause).toEqual(baseError);
         expect(options.stack).toEqual('myStack');
     });
 

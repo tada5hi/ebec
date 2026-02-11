@@ -1,5 +1,8 @@
 // eslint-disable-next-line max-classes-per-file
 import {
+    describe, expect, it,
+} from 'vitest';
+import {
     ClientError, HTTPError, InternalServerError, NotFoundError, ServerError, isClientError, isHTTPError, isServerError,
 } from '../../src';
 

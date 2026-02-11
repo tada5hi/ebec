@@ -2,7 +2,7 @@ import type { Input } from './types';
 import {
     extractOptions,
     isOptions,
-} from './utils';
+} from './helpers';
 
 export class BaseError extends Error {
     /**

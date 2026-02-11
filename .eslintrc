@@ -5,21 +5,29 @@
     "parserOptions": {
         "project": "./tsconfig.json"
     },
-    "ignorePatterns": [
-        "**/dist/*",
-        "**/*.d.ts",
-        "**/errors/client/**",
-        "**/errors/server/**"
-    ],
+    "ignorePatterns": ["**/dist/*", "**/*.d.ts"],
     "globals": {
         "NodeJS": true
     },
     "rules": {
         "class-methods-use-this": "off",
-        "dot-notation": "off",
+        "import/no-cycle": [2, {
+            "maxDepth": 1
+        }],
+        "import/no-extraneous-dependencies": [
+            "error", {
+                "devDependencies": [
+                    "**/test/**/*.js",
+                    "**/test/**/*.ts",
+                    "**/test/**/*.spec.js",
+                    "**/test/**/*.spec.ts",
+                    "**/rollup.config.mjs"
+                ]
+            }
+        ],
+        "no-shadow": "off",
         "no-use-before-define": "off",
 
-        "@typescript-eslint/no-throw-literal": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-use-before-define": "off"
     }

@@ -2,8 +2,8 @@
 import mustache from 'mustache';
 import path from 'node:path';
 import { loadTemplate, saveFile } from './utils.mjs';
-import ClientErrorSettings from './client.json' assert { type: 'json' };
-import ServerErrorSettings from './server.json' assert { type: 'json' };
+import ClientErrorSettings from './client.json' with { type: 'json' };
+import ServerErrorSettings from './server.json' with { type: 'json' };
 import url from "node:url";
 
 

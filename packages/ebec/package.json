@@ -48,12 +48,15 @@
         "build:types": "tsc  -p tsconfig.build.json --emitDeclarationOnly",
         "build:js": "rollup -c",
         "build": "rimraf dist && npm run build:types && npm run build:js",
-        "test": "cross-env NODE_ENV=test jest --config ./test/jest.config.js",
-        "test:coverage": "cross-env NODE_ENV=test jest --config ./test/jest.config.js --coverage",
+        "test": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts",
+        "test:coverage": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts --coverage",
         "prepublishOnly": "npm run build"
     },
     "publishConfig": {
         "access": "public"
+    },
+    "devDependencies": {
+        "vitest": "^4.0.18"
     },
     "gitHead": "4fe0d852781a31e00f67fb909eb268357da6cdf6"
 }

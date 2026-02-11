@@ -1,7 +1,15 @@
+/*
+ * Copyright (c) 2026.
+ *  Author Peter Placzek (tada5hi)
+ *  For the full copyright and license information,
+ *  view the LICENSE file that was distributed with this source code.
+ */
+
 import {
     isObject,
-} from './is';
+} from './object';
 import type { Input, Options } from '../types';
+import { isError } from './check';
 
 type CheckFn<T> = (input: unknown) => input is T;
 export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
@@ -16,7 +24,7 @@ export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
             }
 
             // message,stack & cause are not enumerable
-            if (element instanceof Error) {
+            if (isError(element)) {
                 output.message = element.message;
                 output.stack = element.stack;
                 output.cause = element;

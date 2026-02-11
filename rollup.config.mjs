@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
-import { transform } from "@swc/core";
 import { builtinModules } from 'node:module';
+import swc from 'unplugin-swc';
 
 const extensions = [
     '.js', '.cjs', '.mjs', '.ts',
@@ -20,33 +20,19 @@ export function createConfig({ pkg, external = [] }) {
                 format: 'cjs',
                 file: pkg.main,
                 exports: 'named',
-                sourcemap: true
+                sourcemap: true,
             },
             {
                 format: 'es',
                 file: pkg.module,
-                sourcemap: true
-            }
+                sourcemap: true,
+            },
         ],
         plugins: [
             // Allows node_modules resolution
-            resolve({ extensions}),
+            resolve({ extensions }),
 
-            {
-                name: 'swc',
-                transform(code) {
-                    return transform(code, {
-                        jsc: {
-                            target: 'es2016',
-                            parser: {
-                                syntax: 'typescript'
-                            },
-                            loose: true
-                        },
-                        sourceMaps: true
-                    });
-                }
-            },
-        ]
+            swc.rollup(),
+        ],
     };
 }
