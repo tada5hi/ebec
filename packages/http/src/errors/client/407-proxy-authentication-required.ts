@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ProxyAuthenticationRequiredErrorOptions = {
-    code: `PROXY_AUTHENTICATION_REQUIRED`,
+    code: 'PROXY_AUTHENTICATION_REQUIRED',
     statusCode: 407,
-    statusMessage: `Proxy Authentication Required`
+    statusMessage: 'Proxy Authentication Required',
 } as const;
 
 export class ProxyAuthenticationRequiredError extends ClientError {

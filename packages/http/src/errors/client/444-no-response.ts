@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NoResponseErrorOptions = {
-    code: `NO_RESPONSE`,
+    code: 'NO_RESPONSE',
     statusCode: 444,
-    statusMessage: `No Response`
+    statusMessage: 'No Response',
 } as const;
 
 export class NoResponseError extends ClientError {

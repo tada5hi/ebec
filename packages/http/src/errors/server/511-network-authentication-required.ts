@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NetworkAuthenticationRequiredErrorOptions = {
-    code: `NETWORK_AUTHENTICATION_REQUIRED`,
+    code: 'NETWORK_AUTHENTICATION_REQUIRED',
     statusCode: 511,
-    statusMessage: `Network Authentication Required`
+    statusMessage: 'Network Authentication Required',
 } as const;
 
 export class NetworkAuthenticationRequiredError extends ServerError {

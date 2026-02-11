@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NotAcceptableErrorOptions = {
-    code: `NOT_ACCEPTABLE`,
+    code: 'NOT_ACCEPTABLE',
     statusCode: 406,
-    statusMessage: `Not Acceptable`
+    statusMessage: 'Not Acceptable',
 } as const;
 
 export class NotAcceptableError extends ClientError {

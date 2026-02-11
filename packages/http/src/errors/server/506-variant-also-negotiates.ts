@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const VariantAlsoNegotiatesErrorOptions = {
-    code: `VARIANT_ALSO_NEGOTIATES`,
+    code: 'VARIANT_ALSO_NEGOTIATES',
     statusCode: 506,
-    statusMessage: `Variant Also Negotiates`
+    statusMessage: 'Variant Also Negotiates',
 } as const;
 
 export class VariantAlsoNegotiatesError extends ServerError {

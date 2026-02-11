@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const RequestEntityTooLargeErrorOptions = {
-    code: `REQUEST_ENTITY_TOO_LARGE`,
+    code: 'REQUEST_ENTITY_TOO_LARGE',
     statusCode: 413,
-    statusMessage: `REQUEST_ENTITY_TOO_LARGE`
+    statusMessage: 'REQUEST_ENTITY_TOO_LARGE',
 } as const;
 
 export class RequestEntityTooLargeError extends ClientError {

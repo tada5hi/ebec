@@ -2,7 +2,7 @@
     "release-type": "node",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
-    "initial-version": "0.1.0",
+    "initial-version": "2.3.0",
     "packages": {
         "packages/ebec": {"component": "core"},
         "packages/http": {"component": "http"}

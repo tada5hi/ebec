@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const InternalServerErrorOptions = {
-    code: `INTERNAL_SERVER_ERROR`,
+    code: 'INTERNAL_SERVER_ERROR',
     statusCode: 500,
-    statusMessage: `Internal Server Error`
+    statusMessage: 'Internal Server Error',
 } as const;
 
 export class InternalServerError extends ServerError {

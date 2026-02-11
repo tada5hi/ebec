@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const LockedErrorOptions = {
-    code: `LOCKED`,
+    code: 'LOCKED',
     statusCode: 423,
-    statusMessage: `Locked`
+    statusMessage: 'Locked',
 } as const;
 
 export class LockedError extends ClientError {

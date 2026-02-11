@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const UnorderedCollectionErrorOptions = {
-    code: `UNORDERED_COLLECTION`,
+    code: 'UNORDERED_COLLECTION',
     statusCode: 425,
-    statusMessage: `Unordered Collection`
+    statusMessage: 'Unordered Collection',
 } as const;
 
 export class UnorderedCollectionError extends ClientError {

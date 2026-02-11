@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ServiceUnavailableErrorOptions = {
-    code: `SERVICE_UNAVAILABLE`,
+    code: 'SERVICE_UNAVAILABLE',
     statusCode: 503,
-    statusMessage: `Service Unavailable`
+    statusMessage: 'Service Unavailable',
 } as const;
 
 export class ServiceUnavailableError extends ServerError {

@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const PreconditionRequiredErrorOptions = {
-    code: `PRECONDITION_REQUIRED`,
+    code: 'PRECONDITION_REQUIRED',
     statusCode: 428,
-    statusMessage: `Precondition Required`
+    statusMessage: 'Precondition Required',
 } as const;
 
 export class PreconditionRequiredError extends ClientError {

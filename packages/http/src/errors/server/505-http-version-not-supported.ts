@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const HTTPVersionNotSupportedErrorOptions = {
-    code: `HTTP_VERSION_NOT_SUPPORTED`,
+    code: 'HTTP_VERSION_NOT_SUPPORTED',
     statusCode: 505,
-    statusMessage: `HTTP Version Not Supported`
+    statusMessage: 'HTTP Version Not Supported',
 } as const;
 
 export class HTTPVersionNotSupportedError extends ServerError {

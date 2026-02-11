@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const RequestTimeoutErrorOptions = {
-    code: `REQUEST_TIMEOUT`,
+    code: 'REQUEST_TIMEOUT',
     statusCode: 408,
-    statusMessage: `Request Timeout`
+    statusMessage: 'Request Timeout',
 } as const;
 
 export class RequestTimeoutError extends ClientError {

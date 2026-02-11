@@ -1,37 +1,43 @@
-import type { Input } from './types';
+/*
+ * Copyright (c) 2026.
+ *  Author Peter Placzek (tada5hi)
+ *  For the full copyright and license information,
+ *  view the LICENSE file that was distributed with this source code.
+ */
+
+import type { ErrorInput, ObjectLiteral } from './types';
 import {
     extractOptions,
-    isOptions,
-} from './helpers';
+} from './options';
 
 export class BaseError extends Error {
     /**
      * A unique identifier for the error,
      * which can be a short uppercase string or a numeric code.
      */
-    code?: string | number | null;
+    readonly code?: string | number | null;
 
     /**
      * Additional data associated with the error. This property can hold
      * unstructured information or supplementary details that provide context
      * to the error.
      */
-    data?: unknown;
+    readonly data: ObjectLiteral;
 
     /**
      * Determines whether the error message can be safely exposed externally.
      */
-    expose?: boolean;
+    readonly expose?: boolean;
 
     /**
      * Indicates whether the error should be logged in the application's logs.
      */
-    logMessage?: boolean;
+    readonly logMessage?: boolean;
 
     /**
      * Specifies the log level at which this error should be recorded.
      */
-    logLevel?: string | number;
+    readonly logLevel?: string | number;
 
     /**
      * Represents the underlying cause or source of the error.
@@ -40,7 +46,7 @@ export class BaseError extends Error {
 
     //--------------------------------------------------------------------
 
-    constructor(...input: Input[]) {
+    constructor(...input: ErrorInput[]) {
         const options = extractOptions(...input);
 
         super(options.message, { cause: options.cause });
@@ -67,16 +73,6 @@ export class BaseError extends Error {
         this.expose = options.expose;
         this.logMessage = options.logMessage;
         this.logLevel = options.logLevel;
-        this.data = options.data;
+        this.data = options.data || {};
     }
-}
-
-export function isBaseError(
-    input: unknown,
-): input is BaseError {
-    if (!isOptions(input)) {
-        return false;
-    }
-
-    return typeof input.message === 'string';
 }

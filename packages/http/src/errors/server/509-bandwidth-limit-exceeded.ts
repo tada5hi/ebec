@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const BandwidthLimitExceededErrorOptions = {
-    code: `BANDWIDTH_LIMIT_EXCEEDED`,
+    code: 'BANDWIDTH_LIMIT_EXCEEDED',
     statusCode: 509,
-    statusMessage: `Bandwidth Limit Exceeded`
+    statusMessage: 'Bandwidth Limit Exceeded',
 } as const;
 
 export class BandwidthLimitExceededError extends ServerError {

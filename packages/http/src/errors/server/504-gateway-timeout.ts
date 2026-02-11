@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const GatewayTimeoutErrorOptions = {
-    code: `GATEWAY_TIMEOUT`,
+    code: 'GATEWAY_TIMEOUT',
     statusCode: 504,
-    statusMessage: `Gateway Timeout`
+    statusMessage: 'Gateway Timeout',
 } as const;
 
 export class GatewayTimeoutError extends ServerError {

@@ -1,10 +1,10 @@
 import { {{baseClass}} } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const {{{class}}}Options = {
-    code: `{{code}}`,
+    code: '{{code}}',
     statusCode: {{statusCode}},
-    statusMessage: `{{statusMessage}}`
+    statusMessage: '{{statusMessage}}',
 } as const;
 
 export class {{{class}}} extends {{baseClass}} {

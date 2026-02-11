@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const GoneErrorOptions = {
-    code: `GONE`,
+    code: 'GONE',
     statusCode: 410,
-    statusMessage: `Gone`
+    statusMessage: 'Gone',
 } as const;
 
 export class GoneError extends ClientError {

@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const UnprocessableEntityErrorOptions = {
-    code: `UNPROCESSABLE_ENTITY`,
+    code: 'UNPROCESSABLE_ENTITY',
     statusCode: 422,
-    statusMessage: `Unprocessable Entity`
+    statusMessage: 'Unprocessable Entity',
 } as const;
 
 export class UnprocessableEntityError extends ClientError {

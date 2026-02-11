@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NotImplementedErrorOptions = {
-    code: `NOT_IMPLEMENTED`,
+    code: 'NOT_IMPLEMENTED',
     statusCode: 501,
-    statusMessage: `Not Implemented`
+    statusMessage: 'Not Implemented',
 } as const;
 
 export class NotImplementedError extends ServerError {

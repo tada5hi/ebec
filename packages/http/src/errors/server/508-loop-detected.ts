@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const LoopDetectedErrorOptions = {
-    code: `LOOP_DETECTED`,
+    code: 'LOOP_DETECTED',
     statusCode: 508,
-    statusMessage: `Loop Detected`
+    statusMessage: 'Loop Detected',
 } as const;
 
 export class LoopDetectedError extends ServerError {

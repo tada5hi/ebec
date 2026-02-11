@@ -6,5 +6,5 @@
  */
 
 export * from './check';
-export * from './object';
-export * from './options';
+export * from './module';
+export * from './types';

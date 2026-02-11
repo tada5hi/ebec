@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ClientClosedRequestErrorOptions = {
-    code: `CLIENT_CLOSED_REQUEST`,
+    code: 'CLIENT_CLOSED_REQUEST',
     statusCode: 499,
-    statusMessage: `Client Closed Request`
+    statusMessage: 'Client Closed Request',
 } as const;
 
 export class ClientClosedRequestError extends ClientError {

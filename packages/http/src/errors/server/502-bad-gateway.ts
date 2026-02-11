@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const BadGatewayErrorOptions = {
-    code: `BAD_GATEWAY`,
+    code: 'BAD_GATEWAY',
     statusCode: 502,
-    statusMessage: `Bad Gateway`
+    statusMessage: 'Bad Gateway',
 } as const;
 
 export class BadGatewayError extends ServerError {

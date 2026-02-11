@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const LengthRequiredErrorOptions = {
-    code: `LENGTH_REQUIRED`,
+    code: 'LENGTH_REQUIRED',
     statusCode: 411,
-    statusMessage: `Length Required`
+    statusMessage: 'Length Required',
 } as const;
 
 export class LengthRequiredError extends ClientError {

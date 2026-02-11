@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NotFoundErrorOptions = {
-    code: `NOT_FOUND`,
+    code: 'NOT_FOUND',
     statusCode: 404,
-    statusMessage: `Not Found`
+    statusMessage: 'Not Found',
 } as const;
 
 export class NotFoundError extends ClientError {

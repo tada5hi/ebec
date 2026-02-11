@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const RequestedRangeNotSatisfiableErrorOptions = {
-    code: `REQUESTED_RANGE_NOT_SATISFIABLE`,
+    code: 'REQUESTED_RANGE_NOT_SATISFIABLE',
     statusCode: 416,
-    statusMessage: `Requested Range Not Satisfiable`
+    statusMessage: 'Requested Range Not Satisfiable',
 } as const;
 
 export class RequestedRangeNotSatisfiableError extends ClientError {

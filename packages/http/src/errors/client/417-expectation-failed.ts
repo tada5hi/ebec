@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ExpectationFailedErrorOptions = {
-    code: `EXPECTATION_FAILED`,
+    code: 'EXPECTATION_FAILED',
     statusCode: 417,
-    statusMessage: `Expectation Failed`
+    statusMessage: 'Expectation Failed',
 } as const;
 
 export class ExpectationFailedError extends ClientError {

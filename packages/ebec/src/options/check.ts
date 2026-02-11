@@ -5,7 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import { isObject } from './object';
+import { isObject } from '../utils/object';
 
 export function isError(input: unknown) : input is Error & { [key: string]: any } {
     if (!isObject(input)) {

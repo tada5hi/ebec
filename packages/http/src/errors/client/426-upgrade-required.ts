@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const UpgradeRequiredErrorOptions = {
-    code: `UPGRADE_REQUIRED`,
+    code: 'UPGRADE_REQUIRED',
     statusCode: 426,
-    statusMessage: `Upgrade Required`
+    statusMessage: 'Upgrade Required',
 } as const;
 
 export class UpgradeRequiredError extends ClientError {

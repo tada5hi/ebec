@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ConflictErrorOptions = {
-    code: `CONFLICT`,
+    code: 'CONFLICT',
     statusCode: 409,
-    statusMessage: `Conflict`
+    statusMessage: 'Conflict',
 } as const;
 
 export class ConflictError extends ClientError {

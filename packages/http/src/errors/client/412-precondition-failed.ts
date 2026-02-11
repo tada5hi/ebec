@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const PreconditionFailedErrorOptions = {
-    code: `PRECONDITION_FAILED`,
+    code: 'PRECONDITION_FAILED',
     statusCode: 412,
-    statusMessage: `Precondition Failed`
+    statusMessage: 'Precondition Failed',
 } as const;
 
 export class PreconditionFailedError extends ClientError {

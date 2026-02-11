@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const EnhanceYourCalmErrorOptions = {
-    code: `ENHANCE_YOUR_CALM`,
+    code: 'ENHANCE_YOUR_CALM',
     statusCode: 420,
-    statusMessage: `Enhance Your Calm`
+    statusMessage: 'Enhance Your Calm',
 } as const;
 
 export class EnhanceYourCalmError extends ClientError {

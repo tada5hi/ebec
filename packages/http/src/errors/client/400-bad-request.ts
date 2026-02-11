@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const BadRequestErrorOptions = {
-    code: `BAD_REQUEST`,
+    code: 'BAD_REQUEST',
     statusCode: 400,
-    statusMessage: `Bad Request`
+    statusMessage: 'Bad Request',
 } as const;
 
 export class BadRequestError extends ClientError {

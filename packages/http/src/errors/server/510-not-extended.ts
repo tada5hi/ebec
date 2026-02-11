@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const NotExtendedErrorOptions = {
-    code: `NOT_EXTENDED`,
+    code: 'NOT_EXTENDED',
     statusCode: 510,
-    statusMessage: `Not Extended`
+    statusMessage: 'Not Extended',
 } as const;
 
 export class NotExtendedError extends ServerError {

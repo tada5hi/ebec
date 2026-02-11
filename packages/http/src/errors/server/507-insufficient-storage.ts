@@ -1,10 +1,10 @@
 import { ServerError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const InsufficientStorageErrorOptions = {
-    code: `INSUFFICIENT_STORAGE`,
+    code: 'INSUFFICIENT_STORAGE',
     statusCode: 507,
-    statusMessage: `Insufficient Storage`
+    statusMessage: 'Insufficient Storage',
 } as const;
 
 export class InsufficientStorageError extends ServerError {

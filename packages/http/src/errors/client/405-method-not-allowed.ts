@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const MethodNotAllowedErrorOptions = {
-    code: `METHOD_NOT_ALLOWED`,
+    code: 'METHOD_NOT_ALLOWED',
     statusCode: 405,
-    statusMessage: `Method Not Allowed`
+    statusMessage: 'Method Not Allowed',
 } as const;
 
 export class MethodNotAllowedError extends ClientError {

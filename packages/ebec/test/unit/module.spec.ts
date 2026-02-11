@@ -17,6 +17,15 @@ describe('src/module.ts', () => {
         expect(error.code).toEqual('bar');
     });
 
+    it('should create instance with data', () => {
+        const error = new BaseError({
+            data: {
+                foo: 'bar',
+            },
+        });
+        expect(error.code).toEqual('bar');
+    });
+
     it('should recognize error', () => {
         const t1 = new class extends BaseError {
 

@@ -7,13 +7,14 @@
 
 import {
     isObject,
-} from './object';
-import type { Input, Options } from '../types';
+} from '../utils';
+import type { ErrorInput } from '../types';
 import { isError } from './check';
+import type { Options } from './types';
 
 type CheckFn<T> = (input: unknown) => input is T;
 export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
-    return (...input: Input[]) : T => {
+    return (...input: ErrorInput[]) : T => {
         const output : T = {} as T;
         for (let i = 0; i < input.length; i++) {
             const element = input[i];
@@ -92,6 +93,6 @@ export function isOptions(input: unknown) : input is Options {
 }
 
 const check = createExtractOptionsFn(isOptions);
-export function extractOptions(...input: Input[]) {
+export function extractOptions(...input: ErrorInput[]) {
     return check(...input);
 }

@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const ForbiddenErrorOptions = {
-    code: `FORBIDDEN`,
+    code: 'FORBIDDEN',
     statusCode: 403,
-    statusMessage: `Forbidden`
+    statusMessage: 'Forbidden',
 } as const;
 
 export class ForbiddenError extends ClientError {

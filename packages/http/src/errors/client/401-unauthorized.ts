@@ -1,10 +1,10 @@
 import { ClientError } from '../base';
-import { Input } from '../../types';
+import type { Input } from '../../types';
 
 export const UnauthorizedErrorOptions = {
-    code: `UNAUTHORIZED`,
+    code: 'UNAUTHORIZED',
     statusCode: 401,
-    statusMessage: `Unauthorized`
+    statusMessage: 'Unauthorized',
 } as const;
 
 export class UnauthorizedError extends ClientError {
