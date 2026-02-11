@@ -1,8 +1,8 @@
 # ebec 🎉
 
-[![main](https://github.com/Tada5hi/typescript-error/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/typescript-error/actions/workflows/main.yml)
+[![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
-[![Known Vulnerabilities](https://snyk.io/test/github/Tada5hi/typescript-error/badge.svg)](https://snyk.io/test/github/Tada5hi/typescript-error)
+[![Known Vulnerabilities](https://snyk.io/test/github/tada5hi/ebec/badge.svg)](https://snyk.io/test/github/tada5hi/ebec)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 ## What is it?
