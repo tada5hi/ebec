@@ -38,6 +38,7 @@
         "@tada5hi/eslint-config-typescript": "^1.2.18",
         "@tada5hi/tsconfig": "^0.7.0",
         "@types/node": "^25.2.3",
+        "@vitest/coverage-v8": "^4.0.18",
         "codecov": "^3.8.3",
         "cross-env": "^10.1.0",
         "eslint": "^8.57.1",
@@ -52,6 +53,7 @@
     "scripts": {
         "build": "npx nx run-many -t build",
         "test": "npx nx run-many -t test",
+        "test:coverage": "npx nx run-many -t test:coverage",
         "lint": "eslint --ext .ts ./packages",
         "lint:fix": "npm run lint -- --fix",
         "prepare": "husky install"
