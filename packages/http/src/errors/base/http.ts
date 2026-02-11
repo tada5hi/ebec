@@ -11,17 +11,17 @@ export class HTTPError extends BaseError {
     /**
      * A numeric Status Code between 400-599.
      */
-    statusCode: number;
+    readonly statusCode: number;
 
     /**
      * A status message.
      */
-    statusMessage?: string;
+    readonly statusMessage?: string;
 
     /**
      * Specify a redirect URL in case of a http error.
      */
-    redirectURL?: string;
+    readonly redirectURL?: string;
 
     constructor(...input: Input[]) {
         super(...input);
