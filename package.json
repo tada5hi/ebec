@@ -46,7 +46,8 @@
         "rimraf": "^6.1.2",
         "rollup": "^4.57.1",
         "unplugin-swc": "^1.5.9",
-        "vitest": "^4.0.18"
+        "vitest": "^4.0.18",
+        "workspaces-publish": "^1.5.0"
     },
     "scripts": {
         "build": "npx nx run-many -t build",
