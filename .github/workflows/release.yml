@@ -14,6 +14,7 @@ permissions:
     packages: write
     contents: write
     pull-requests: write
+    id-token: write
 
 defaults:
     run:
@@ -49,5 +50,3 @@ jobs:
             -   name: Publish
                 if: steps.release.outputs.releases_created == 'true'
                 run: npx workspaces-publish
-                env:
-                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
