@@ -23,9 +23,5 @@ export function isBaseError(
         return false;
     }
 
-    if (!isObject(input.data)) {
-        return false;
-    }
-
     return typeof input.message === 'string';
 }

@@ -23,7 +23,7 @@ describe('src/module.ts', () => {
                 foo: 'bar',
             },
         });
-        expect(error.code).toEqual('bar');
+        expect(error.data).toEqual({ foo: 'bar' });
     });
 
     it('should recognize error', () => {

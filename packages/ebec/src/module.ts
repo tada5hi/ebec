@@ -22,7 +22,7 @@ export class BaseError extends Error {
      * unstructured information or supplementary details that provide context
      * to the error.
      */
-    readonly data: ObjectLiteral;
+    readonly data?: ObjectLiteral;
 
     /**
      * Determines whether the error message can be safely exposed externally.
@@ -73,6 +73,6 @@ export class BaseError extends Error {
         this.expose = options.expose;
         this.logMessage = options.logMessage;
         this.logLevel = options.logLevel;
-        this.data = options.data || {};
+        this.data = options.data;
     }
 }
