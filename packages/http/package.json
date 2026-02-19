@@ -57,7 +57,7 @@
         "test:coverage": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts --coverage"
     },
     "devDependencies": {
-        "@types/mustache": "^4.2.3",
+        "@types/mustache": "^4.2.6",
         "mustache": "^4.2.0",
         "vitest": "^4.0.18"
     },
