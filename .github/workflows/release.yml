@@ -2,29 +2,21 @@ name: Release
 
 on:
     push:
-        branches:
-            - master
+        branches: [master]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-env:
-    NODE_VERSION: 20
-
 permissions:
-    packages: write
     contents: write
     pull-requests: write
-    id-token: write
 
-defaults:
-    run:
-        shell: bash
+env:
+    PRIMARY_NODE_VERSION: 22
 
 jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
-
         steps:
             -   uses: googleapis/release-please-action@v4
                 id: release
@@ -34,14 +26,12 @@ jobs:
             -   name: Checkout
                 if: steps.release.outputs.releases_created == 'true'
                 uses: actions/checkout@v6
-                with:
-                    fetch-depth: 0
 
             -   name: Install
                 if: steps.release.outputs.releases_created == 'true'
                 uses: ./.github/actions/install
                 with:
-                    node-version: ${{ env.NODE_VERSION }}
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
             -   name: Build
                 if: steps.release.outputs.releases_created == 'true'
@@ -49,4 +39,6 @@ jobs:
 
             -   name: Publish
                 if: steps.release.outputs.releases_created == 'true'
-                run: npx workspaces-publish
+                uses: tada5hi/monoship@v2
+                with:
+                    token: ${{ secrets.NPM_TOKEN }}

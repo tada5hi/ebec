@@ -28,7 +28,9 @@ export async function loadTemplate(file) {
         path.join(__dirname, '..', 'template', file);
 
     return new Promise((resolve, reject) => {
-        fs.readFile(tplPath, ({ encoding: 'utf-8' }), (err, data) => {
+        fs.readFile(tplPath, ({
+            encoding: 'utf-8' 
+        }), (err, data) => {
             if (err) reject(err);
 
             resolve(data);

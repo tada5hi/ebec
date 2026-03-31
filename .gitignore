@@ -1,8 +1,12 @@
 .DS_Store
 dist
 node_modules
-*.log
-npm-debug.log*
+.vscode
 .idea
 coverage
 .nx
+*.log
+.env
+cache
+.claude/settings.local.json
+.agents/plans

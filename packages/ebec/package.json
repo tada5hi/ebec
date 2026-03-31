@@ -1,6 +1,7 @@
 {
     "name": "ebec",
     "version": "2.3.0",
+    "type": "module",
     "files": [
         "dist/"
     ],
@@ -19,11 +20,9 @@
         "exception",
         "debug",
         "error-handling",
-        "error",
         "options",
         "merge",
-        "build",
-        "options"
+        "build"
     ],
     "repository": {
         "type": "git",
@@ -36,27 +35,20 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.ts",
+            "types": "./dist/index.d.mts",
             "import": "./dist/index.mjs",
             "require": "./dist/index.cjs"
         }
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/index.d.mts",
     "scripts": {
-        "build:types": "tsc  -p tsconfig.build.json --emitDeclarationOnly",
-        "build:js": "rollup -c",
-        "build": "rimraf dist && npm run build:types && npm run build:js",
-        "test": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts",
-        "test:coverage": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts --coverage",
-        "prepublishOnly": "npm run build"
+        "build": "tsdown",
+        "test": "vitest run --config ./test/vitest.config.ts",
+        "test:coverage": "vitest run --config ./test/vitest.config.ts --coverage"
     },
     "publishConfig": {
         "access": "public"
-    },
-    "devDependencies": {
-        "vitest": "^4.0.18"
-    },
-    "gitHead": "4fe0d852781a31e00f67fb909eb268357da6cdf6"
+    }
 }

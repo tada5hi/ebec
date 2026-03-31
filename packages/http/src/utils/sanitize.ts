@@ -14,7 +14,7 @@ export function sanitizeStatusMessage(input: string) {
 }
 
 export function sanitizeStatusCode(input: string | number) {
-    const code = parseInt(`${input}`, 10);
+    const code = Number.parseInt(`${input}`, 10);
 
     if (!Number.isInteger(code) || code < 100 || code > 599) {
         return 500;

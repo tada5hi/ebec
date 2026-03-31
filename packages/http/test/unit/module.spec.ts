@@ -1,9 +1,13 @@
-// eslint-disable-next-line max-classes-per-file
+import { describe, expect, it } from 'vitest';
 import {
-    describe, expect, it,
-} from 'vitest';
-import {
-    ClientError, HTTPError, InternalServerError, NotFoundError, ServerError, isClientError, isHTTPError, isServerError,
+    ClientError,
+    HTTPError,
+    InternalServerError,
+    NotFoundError,
+    ServerError,
+    isClientError,
+    isHTTPError,
+    isServerError,
 } from '../../src';
 
 describe('src/module.ts', () => {
@@ -24,7 +28,9 @@ describe('src/module.ts', () => {
     });
 
     it('should sanitize status code', () => {
-        const error = new HTTPError({ statusCode: 999 });
+        const error = new HTTPError({
+            statusCode: 999,
+        });
         expect(error.statusCode).toEqual(500);
     });
 

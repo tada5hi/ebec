@@ -1,10 +1,10 @@
 {
     "name": "@ebec/http",
     "version": "2.3.0",
+    "type": "module",
     "description": "A library that provides extensible ES6 HTTP error classes.",
     "files": [
-        "core",
-        "dist"
+        "dist/"
     ],
     "author": {
         "name": "Peter Placzek",
@@ -20,7 +20,6 @@
         "exception",
         "debug",
         "error-handling",
-        "error",
         "http"
     ],
     "repository": {
@@ -34,38 +33,33 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.ts",
+            "types": "./dist/index.d.mts",
             "import": "./dist/index.mjs",
             "require": "./dist/index.cjs"
         },
         "./core": {
-            "types": "./core/index.d.ts",
-            "import": "./core/index.mjs",
-            "require": "./core/index.cjs"
+            "types": "./dist/core/index.d.mts",
+            "import": "./dist/core/index.mjs",
+            "require": "./dist/core/index.cjs"
         }
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/index.d.mts",
     "scripts": {
-        "build:types": "tsc  -p tsconfig.build.json --emitDeclarationOnly",
-        "build:js": "rollup -c",
         "build:classes": "node ./build/index.mjs generate",
-        "build": "rimraf dist && npm run build:classes && npm run build:types && npm run build:js",
-        "prepublishOnly": "npm run build",
-        "test": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts",
-        "test:coverage": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts --coverage"
+        "build": "npm run build:classes && tsdown",
+        "test": "vitest run --config ./test/vitest.config.ts",
+        "test:coverage": "vitest run --config ./test/vitest.config.ts --coverage"
     },
     "devDependencies": {
         "@types/mustache": "^4.2.6",
-        "mustache": "^4.2.0",
-        "vitest": "^4.0.18"
+        "mustache": "^4.2.0"
     },
     "dependencies": {
         "ebec": "^2.3.0"
     },
     "publishConfig": {
         "access": "public"
-    },
-    "gitHead": "4fe0d852781a31e00f67fb909eb268357da6cdf6"
+    }
 }

@@ -1,10 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import mustache from 'mustache';
 import path from 'node:path';
 import { loadTemplate, saveFile } from './utils.mjs';
 import ClientErrorSettings from './client.json' with { type: 'json' };
 import ServerErrorSettings from './server.json' with { type: 'json' };
-import url from "node:url";
+import url from 'node:url';
 
 
 /**
@@ -24,8 +23,7 @@ import url from "node:url";
 
     const keys = Object.keys(settings);
 
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
+    for (const key of keys) {
         const isServerError = Object.prototype.hasOwnProperty.call(ServerErrorSettings, key);
 
         const pathSuffix = isServerError ? 'server' : 'client';
@@ -61,11 +59,11 @@ import url from "node:url";
     const clientExports = [];
     const serverExports = [];
 
-    for(let i=0; i<items.length; i++) {
-        const parts = items[i].fileName.split('.');
+    for(const item of items) {
+        const parts = item.fileName.split('.');
         parts.pop();
 
-        if(items[i].isServerError) {
+        if(item.isServerError) {
             serverExports.push(`export * from './${parts.join('.')}';`);
         } else {
             clientExports.push(`export * from './${parts.join('.')}';`);

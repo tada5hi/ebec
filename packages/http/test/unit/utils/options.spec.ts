@@ -5,7 +5,9 @@ import {
 
 describe('src/utils/options.ts', () => {
     it('should recognize input as options', () => {
-        const options = isOptions({ statusCode: 500 });
+        const options = isOptions({
+            statusCode: 500,
+        });
         expect(options).toBeTruthy();
     });
 
@@ -13,13 +15,21 @@ describe('src/utils/options.ts', () => {
         let is = isOptions(undefined);
         expect(is).toBeFalsy();
 
-        is = isOptions({ statusCode: () => 1 });
+        is = isOptions({
+            statusCode: () => 1,
+        });
         expect(is).toBeFalsy();
 
-        is = isOptions({ statusCode: { foo: 'bar' } });
+        is = isOptions({
+            statusCode: {
+                foo: 'bar',
+            },
+        });
         expect(is).toBeFalsy();
 
-        is = isOptions({ statusMessage: 1 });
+        is = isOptions({
+            statusMessage: 1,
+        });
         expect(is).toBeFalsy();
     });
 });

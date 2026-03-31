@@ -49,7 +49,9 @@ export class BaseError extends Error {
     constructor(...input: ErrorInput[]) {
         const options = extractOptions(...input);
 
-        super(options.message, { cause: options.cause });
+        super(options.message, {
+            cause: options.cause 
+        });
 
         if (typeof this.name === 'undefined' || this.name === 'Error') {
             Object.defineProperty(this, 'name', {

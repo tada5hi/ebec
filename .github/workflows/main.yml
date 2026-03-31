@@ -1,20 +1,21 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: CI
 
 on:
     push:
         branches: [develop, master, next, beta, alpha]
     pull_request:
+        branches: [develop, master, next, beta, alpha]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 env:
-    NODE_VERSION: 22
-    NODE_REGISTRY: 'https://registry.npmjs.org'
+    PRIMARY_NODE_VERSION: 22
 
 jobs:
     install:
-        name: Checkout and install
+        name: Checkout and Install
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
@@ -23,28 +24,11 @@ jobs:
             -   name: Install
                 uses: ./.github/actions/install
                 with:
-                    node-version: ${{ env.NODE_VERSION }}
-                    node-registry: ${{ env.NODE_REGISTRY }}
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
     build:
-        name: Build Packages
-        needs: [ install ]
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v6
-            -   name: Install
-                uses: ./.github/actions/install
-                with:
-                    node-version: ${{ env.NODE_VERSION }}
-                    node-registry: ${{ env.NODE_REGISTRY }}
-
-            -   name: Build
-                uses: ./.github/actions/build
-
-    tests:
-        name: Test Packages
-        needs: [build]
+        name: Build
+        needs: [install]
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
@@ -53,18 +37,13 @@ jobs:
             -   name: Install
                 uses: ./.github/actions/install
                 with:
-                    node-version: ${{ env.NODE_VERSION }}
-                    node-registry: ${{ env.NODE_REGISTRY }}
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
             -   name: Build
                 uses: ./.github/actions/build
-
-            -   name: Run tests
-                run: |
-                    npm run test
 
     lint:
-        name: lint Packages
+        name: Lint
         needs: [build]
         runs-on: ubuntu-latest
         steps:
@@ -74,21 +53,18 @@ jobs:
             -   name: Install
                 uses: ./.github/actions/install
                 with:
-                    node-version: ${{ env.NODE_VERSION }}
-                    node-registry: ${{ env.NODE_REGISTRY }}
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
             -   name: Build
                 uses: ./.github/actions/build
 
             -   name: Lint
-                run: |
-                    npm run lint
+                run: npm run lint
 
-    coverage:
-        name: Coverage
-        needs: [lint, tests]
+    tests:
+        name: Test
+        needs: [build]
         runs-on: ubuntu-latest
-        if: ${{ github.ref_name == 'master' }}
         steps:
             -   name: Checkout
                 uses: actions/checkout@v6
@@ -96,18 +72,10 @@ jobs:
             -   name: Install
                 uses: ./.github/actions/install
                 with:
-                    node-version: ${{ env.NODE_VERSION }}
-                    node-registry: ${{ env.NODE_REGISTRY }}
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
             -   name: Build
                 uses: ./.github/actions/build
 
-            -   name: Generate coverage
-                run: |
-                    npm run test:coverage --workspace=packages/ebec
-
-            -   name: Upload Code coverage report
-                uses: codecov/codecov-action@v3.1.4
-                with:
-                    token: ${{ secrets.codecov }}
-                    directory: ./packages/ebec/coverage/
+            -   name: Test
+                run: npm run test

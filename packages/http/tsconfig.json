@@ -3,8 +3,11 @@
     "compilerOptions": {
         "paths": {
             "ebec": [
-                "./packages/ebec/src"
+                "../ebec/src"
             ]
         }
-    }
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
 }

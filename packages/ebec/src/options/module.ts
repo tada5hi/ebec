@@ -16,9 +16,7 @@ type CheckFn<T> = (input: unknown) => input is T;
 export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
     return (...input: ErrorInput[]) : T => {
         const output : T = {} as T;
-        for (let i = 0; i < input.length; i++) {
-            const element = input[i];
-
+        for (const element of input) {
             if (typeof element === 'string') {
                 output.message = element;
                 continue;
@@ -34,9 +32,15 @@ export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
             // if element prototype is not of instance Error,
             // then message, stack & cause get extracted here.
             if (fn(element)) {
+                const isErr = element instanceof Error;
                 const keys = Object.keys(element);
-                for (let i = 0; i < keys.length; i++) {
-                    output[keys[i] as keyof T] = element[keys[i] as keyof T];
+                for (const key of keys) {
+                    // skip cause, message, stack for Error instances
+                    // since they are already handled above
+                    if (isErr && (key === 'cause' || key === 'message' || key === 'stack')) {
+                        continue;
+                    }
+                    output[key as keyof T] = element[key as keyof T];
                 }
             }
         }
