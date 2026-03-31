@@ -6,9 +6,7 @@
  */
 
 import type { ErrorInput, ObjectLiteral } from './types';
-import {
-    extractOptions,
-} from './options';
+import { extractOptions, } from './options';
 
 export class BaseError extends Error {
     /**

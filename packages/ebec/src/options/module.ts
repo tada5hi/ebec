@@ -5,9 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import {
-    isObject,
-} from '../utils';
+import { isObject, } from '../utils';
 import type { ErrorInput } from '../types';
 import { isError } from './check';
 import type { Options } from './types';

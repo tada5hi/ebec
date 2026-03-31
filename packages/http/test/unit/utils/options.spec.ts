@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-    isOptions,
-} from '../../../src';
+import { isOptions, } from '../../../src';
 
 describe('src/utils/options.ts', () => {
     it('should recognize input as options', () => {
