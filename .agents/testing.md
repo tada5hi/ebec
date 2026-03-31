@@ -11,11 +11,11 @@
 npm run test
 
 # Single package
-npm run test -w packages/ebec
+npm run test -w packages/core
 npm run test -w packages/http
 
 # With coverage
-npm run test:coverage -w packages/ebec
+npm run test:coverage -w packages/core
 ```
 
 ## Configuration

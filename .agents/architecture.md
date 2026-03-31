@@ -4,7 +4,7 @@
 
 ```
 Error (native)
-  └── BaseError (ebec)
+  └── BaseError (@ebec/core)
         └── HTTPError (@ebec/http)
               ├── ClientError (expose: true)
               │     └── BadRequestError, NotFoundError, ... (generated)
@@ -55,7 +55,7 @@ new BaseError(existingError, { code: 'WRAPPED' });
 2. Error instances → `message`, `stack`, `cause` (non-enumerable properties)
 3. Objects passing `checkFn` → merge all enumerable keys
 
-The `ebec` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isOptions()` that also validates `statusCode`, `statusMessage`, and `redirectURL`.
+The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isOptions()` that also validates `statusCode`, `statusMessage`, and `redirectURL`.
 
 ## Code Generation (HTTP Package)
 
@@ -74,7 +74,7 @@ Each level provides a type guard for duck-type checking:
 
 | Function | Package | Checks |
 |----------|---------|--------|
-| `isBaseError(x)` | ebec | Is object with valid Options shape + string message |
+| `isBaseError(x)` | @ebec/core | Is object with valid Options shape + string message |
 | `isHTTPError(x)` | @ebec/http | Is error with numeric statusCode 400-599 |
 | `isClientError(x)` | @ebec/http | isHTTPError + statusCode 400-499 |
 | `isServerError(x)` | @ebec/http | isHTTPError + statusCode 500-599 |

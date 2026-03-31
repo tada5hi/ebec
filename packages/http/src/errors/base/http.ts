@@ -1,4 +1,4 @@
-import { BaseError, isBaseError } from 'ebec';
+import { BaseError, isBaseError } from '@ebec/core';
 import type { Input } from '../../types';
 import {
     extractOptions,

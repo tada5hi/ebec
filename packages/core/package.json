@@ -1,11 +1,11 @@
 {
-    "name": "ebec",
-    "version": "2.3.0",
+    "name": "@ebec/core",
+    "version": "0.0.0",
     "type": "module",
     "files": [
         "dist/"
     ],
-    "description": "A library that provides a basic ES6 error class.",
+    "description": "Core ebec error class library.",
     "author": {
         "name": "Peter Placzek",
         "email": "contact@tada5hi.net",
@@ -43,11 +43,10 @@
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.mts",
-    "dependencies": {
-        "@ebec/core": "^0.0.0"
-    },
     "scripts": {
-        "build": "tsdown"
+        "build": "tsdown",
+        "test": "vitest run --config ./test/vitest.config.ts",
+        "test:coverage": "vitest run --config ./test/vitest.config.ts --coverage"
     },
     "publishConfig": {
         "access": "public"

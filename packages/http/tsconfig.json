@@ -2,8 +2,8 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "paths": {
-            "ebec": [
-                "../ebec/src"
+            "@ebec/core": [
+                "../core/src"
             ]
         }
     },

@@ -1,4 +1,4 @@
-import type { Options as BaseOptions } from 'ebec';
+import type { Options as BaseOptions } from '@ebec/core';
 
 export type Options = BaseOptions & {
     /**
