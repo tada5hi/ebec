@@ -47,8 +47,8 @@
     },
     "scripts": {
         "build": "npm run build --workspaces",
-        "test": "npm run test --workspaces",
-        "test:coverage": "npm run test:coverage --workspaces",
+        "test": "npm run test --workspaces --if-present",
+        "test:coverage": "npm run test:coverage --workspaces --if-present",
         "lint": "eslint packages/",
         "lint:fix": "eslint packages/ --fix",
         "prepare": "husky"

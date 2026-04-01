@@ -4,7 +4,8 @@
     "bump-patch-for-minor-pre-major": true,
     "initial-version": "2.3.0",
     "packages": {
-        "packages/ebec": {"component": "core"},
+        "packages/core": {"component": "core"},
+        "packages/ebec": {"component": "ebec"},
         "packages/http": {"component": "http"}
     },
     "plugins": [
@@ -13,6 +14,7 @@
             "updatePeerDependencies": true,
             "components": [
                 "core",
+                "ebec",
                 "http"
             ]
         }

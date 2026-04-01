@@ -1,1 +1,1 @@
-export * from 'ebec';
+export * from '@ebec/core';

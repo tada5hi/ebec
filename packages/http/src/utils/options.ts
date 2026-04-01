@@ -1,4 +1,4 @@
-import { createExtractOptionsFn, isObject } from 'ebec';
+import { createExtractOptionsFn, isObject } from '@ebec/core';
 import type { Input, Options } from '../types';
 
 export function isOptions(input: unknown) : input is Options {

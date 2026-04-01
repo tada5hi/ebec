@@ -2,7 +2,7 @@
 
 # ebec — Agent Guide
 
-Extensible ES6 error class library for TypeScript. Provides a `BaseError` with flexible constructor arguments and property merging, plus an HTTP layer with 46 generated status-code error classes. Monorepo with two packages: `ebec` (core) and `@ebec/http` (HTTP errors).
+Extensible ES6 error class library for TypeScript. Provides a `BaseError` with flexible constructor arguments and property merging, plus an HTTP layer with 46 generated status-code error classes. Monorepo with three packages: `@ebec/core` (implementation), `ebec` (backwards-compat re-export), and `@ebec/http` (HTTP errors).
 
 ## Quick Reference
 
@@ -24,16 +24,17 @@ npm run lint:fix
 
 | Package | Path | Description |
 |---------|------|-------------|
-| `ebec` | `packages/ebec` | Core error class with options extraction |
-| `@ebec/http` | `packages/http` | HTTP error classes (4xx/5xx) extending ebec |
+| `@ebec/core` | `packages/core` | Core error class with options extraction |
+| `ebec` | `packages/ebec` | Backwards-compat wrapper (re-exports @ebec/core) |
+| `@ebec/http` | `packages/http` | HTTP error classes (4xx/5xx) extending @ebec/core |
 
-`@ebec/http` depends on `ebec`. Build order matters — ebec must build first.
+`@ebec/http` and `ebec` depend on `@ebec/core`. Build order: core → ebec → http.
 
 ### Per-Package Commands
 
 ```bash
 # Build a single package
-npm run build -w packages/ebec
+npm run build -w packages/core
 
 # Test a single package
 npm run test -w packages/http

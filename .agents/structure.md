@@ -5,23 +5,33 @@
 ```
 ebec/
 ├── packages/
-│   ├── ebec/                  # Core error library
+│   ├── core/                  # Core error library (@ebec/core)
 │   │   ├── src/
 │   │   │   ├── index.ts       # Barrel export
-│   │   │   ├── module.ts      # BaseError class + isBaseError()
-│   │   │   ├── types.ts       # Options, Input types
+│   │   │   ├── module.ts      # BaseError class
+│   │   │   ├── check.ts       # isBaseError()
+│   │   │   ├── types.ts       # Options, ErrorInput types
+│   │   │   ├── options/       # Options extraction
+│   │   │   │   ├── check.ts   # isOptions(), isError()
+│   │   │   │   ├── module.ts  # createExtractOptionsFn(), extractOptions()
+│   │   │   │   └── types.ts   # Options type
 │   │   │   └── utils/
-│   │   │       ├── is.ts      # isObject() helper
-│   │   │       └── options.ts # extractOptions(), isOptions(), createExtractOptionsFn()
+│   │   │       └── object.ts  # isObject() helper
 │   │   ├── test/unit/
 │   │   ├── tsdown.config.ts
 │   │   └── package.json
 │   │
-│   └── http/                  # HTTP error classes
+│   ├── ebec/                  # Backwards-compat wrapper (re-exports @ebec/core)
+│   │   ├── src/
+│   │   │   └── index.ts       # export * from '@ebec/core'
+│   │   ├── tsdown.config.ts
+│   │   └── package.json
+│   │
+│   └── http/                  # HTTP error classes (@ebec/http)
 │       ├── src/
 │       │   ├── index.ts       # Barrel export
 │       │   ├── types.ts       # HTTP-specific Options (statusCode, statusMessage, redirectURL)
-│       │   ├── core-export.ts # Re-exports ebec for ./core subpath
+│       │   ├── core-export.ts # Re-exports @ebec/core for ./core subpath
 │       │   ├── utils/
 │       │   │   ├── options.ts # HTTP option validation + extractOptions()
 │       │   │   └── sanitize.ts# sanitizeStatusCode(), sanitizeStatusMessage()
@@ -57,10 +67,11 @@ ebec/
 ## Dependency Layer
 
 ```
-@ebec/http  →  ebec  →  (no runtime deps)
+@ebec/http  →  @ebec/core  →  (no runtime deps)
+ebec         →  @ebec/core  →  (no runtime deps)
 ```
 
-`ebec` has zero runtime dependencies. `@ebec/http` depends only on `ebec`.
+`@ebec/core` (packages/core) is the canonical implementation with zero runtime dependencies. `@ebec/http` depends on `@ebec/core`. `ebec` is a thin backwards-compat wrapper that re-exports `@ebec/core`.
 
 ## Generated Files
 
@@ -72,8 +83,9 @@ Both packages produce dual ESM + CJS outputs via tsdown:
 
 | Package | Export | Files |
 |---------|--------|-------|
+| `@ebec/core` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
 | `ebec` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
 | `@ebec/http` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
 | `@ebec/http` | `./core` | `dist/core/index.{mjs,cjs,d.mts,d.cts}` |
 
-The `./core` subpath re-exports everything from `ebec`, allowing consumers to use `@ebec/http/core` instead of depending on `ebec` directly.
+The `./core` subpath on `@ebec/http` re-exports everything from `@ebec/core`, allowing consumers to use `@ebec/http/core` instead of depending on `@ebec/core` directly. The `ebec` package is a thin backwards-compat wrapper that also re-exports `@ebec/core`.
