@@ -6,5 +6,5 @@
  */
 
 export function interpolate(template: string, data: Record<string, unknown>): string {
-    return template.replace(/\{(\w+)\}/g, (match, key) => key in data ? String(data[key]) : match);
+    return template.replace(/\{(\w+)\}/g, (match, key) => Object.hasOwn(data, key) ? String(data[key]) : match);
 }

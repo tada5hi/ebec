@@ -5,7 +5,6 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import { interpolate } from './helpers';
 import { BaseError } from './module';
 import type { Options } from './options';
 import type { ErrorInput, ObjectLiteral } from './types';
@@ -20,7 +19,7 @@ export type CatalogEntry = {
 export type ErrorCatalogDefinitions = Record<string, CatalogEntry>;
 
 export type ErrorFactory = (
-    data?: ObjectLiteral | undefined,
+    data?: ObjectLiteral,
     ...input: ErrorInput[]
 ) => BaseError;
 
@@ -35,18 +34,12 @@ export function defineErrorCatalog<T extends ErrorCatalogDefinitions>(
 
     for (const key of Object.keys(definitions) as Array<keyof T & string>) {
         const entry = definitions[key] as CatalogEntry;
-        catalog[key] = ((data: ObjectLiteral = {}, ...input: ErrorInput[]) => {
-            const message = entry.message ?
-                interpolate(entry.message, data) :
-                entry.message;
-
-            return new BaseError({
-                ...entry,
-                message,
-                code: entry.code ?? key,
-                data,
-            } as Options, ...input);
-        }) as ErrorFactory;
+        catalog[key] = ((data?: ObjectLiteral, ...input: ErrorInput[]) => new BaseError({
+            ...entry,
+            message: entry.message,
+            code: entry.code ?? key,
+            data,
+        } as Options, ...input)) as ErrorFactory;
     }
 
     return catalog;
