@@ -11,21 +11,13 @@ describe('src/module.ts', () => {
     });
 
     it('should create instance with options', () => {
-        const error = new BaseError({
-            code: 'bar',
-        });
+        const error = new BaseError({ code: 'bar' });
         expect(error.code).toEqual('bar');
     });
 
     it('should create instance with data', () => {
-        const error = new BaseError({
-            data: {
-                foo: 'bar',
-            },
-        });
-        expect(error.data).toEqual({
-            foo: 'bar' 
-        });
+        const error = new BaseError({ data: { foo: 'bar' } });
+        expect(error.data).toEqual({ foo: 'bar' });
     });
 
     it('should recognize error', () => {
