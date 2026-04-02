@@ -6,7 +6,8 @@
  */
 
 import type { ErrorInput, ObjectLiteral } from './types';
-import { extractOptions, } from './options';
+import { interpolate } from './helpers';
+import { extractOptions } from './options';
 
 export class BaseError extends Error {
     /**
@@ -47,9 +48,12 @@ export class BaseError extends Error {
     constructor(...input: ErrorInput[]) {
         const options = extractOptions(...input);
 
-        super(options.message, {
-            cause: options.cause 
-        });
+        let { message } = options;
+        if (message && options.data) {
+            message = interpolate(message, options.data);
+        }
+
+        super(message, { cause: options.cause });
 
         if (typeof this.name === 'undefined' || this.name === 'Error') {
             Object.defineProperty(this, 'name', {

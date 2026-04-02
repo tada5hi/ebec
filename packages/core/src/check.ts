@@ -5,7 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 import { isOptions } from './options';
-import { isObject } from './utils';
+import { isObject } from './helpers';
 import { BaseError } from './module';
 
 export function isBaseError(

@@ -9,4 +9,5 @@ export * from './types';
 export * from './check';
 export * from './module';
 export * from './options';
-export * from './utils';
+export * from './helpers';
+export * from './catalog';

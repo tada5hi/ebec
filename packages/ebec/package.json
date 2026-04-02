@@ -47,7 +47,9 @@
         "@ebec/core": "^0.0.0"
     },
     "scripts": {
-        "build": "tsdown"
+        "build": "npm run build:js && npm run build:types",
+        "build:js": "tsdown",
+        "build:types": "tsc -p tsconfig.build.json"
     },
     "publishConfig": {
         "access": "public"

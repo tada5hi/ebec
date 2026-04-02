@@ -28,9 +28,7 @@ describe('src/module.ts', () => {
     });
 
     it('should sanitize status code', () => {
-        const error = new HTTPError({
-            statusCode: 999,
-        });
+        const error = new HTTPError({ statusCode: 999 });
         expect(error.statusCode).toEqual(500);
     });
 
@@ -59,9 +57,7 @@ describe('src/module.ts', () => {
     });
 
     it('should recognize http error', () => {
-        const t1 = new HTTPError({
-            statusCode: 400,
-        });
+        const t1 = new HTTPError({ statusCode: 400 });
 
         expect(isClientError(t1)).toBeTruthy();
         expect(isServerError(t1)).toBeFalsy();
@@ -75,9 +71,7 @@ describe('src/module.ts', () => {
     });
 
     it('should not recognize http error', () => {
-        const error = new HTTPError({
-            statusCode: 300,
-        });
+        const error = new HTTPError({ statusCode: 300 });
 
         expect(isClientError(error)).toBeFalsy();
         expect(isServerError(error)).toBeFalsy();
