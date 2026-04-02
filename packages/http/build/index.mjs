@@ -5,6 +5,40 @@ import ClientErrorSettings from './client.json' with { type: 'json' };
 import ServerErrorSettings from './server.json' with { type: 'json' };
 import url from 'node:url';
 
+/**
+ * Derive a human-readable status message from a PascalCase key.
+ * e.g. "BadRequest" -> "Bad Request", "HTTPVersionNotSupported" -> "HTTP Version Not Supported"
+ */
+function deriveStatusMessage(key) {
+    return key
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+}
+
+/**
+ * Derive a CONSTANT_CASE code from a PascalCase key.
+ * e.g. "BadRequest" -> "BAD_REQUEST"
+ */
+function deriveCode(key) {
+    return key
+        .replace(/([a-z])([A-Z])/g, '$1_$2')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+        .toUpperCase();
+}
+
+/**
+ * Normalize a config entry. Accepts either a number (statusCode)
+ * or an object with optional overrides.
+ */
+function normalizeEntry(key, value) {
+    const entry = typeof value === 'number' ? { statusCode: value } : value;
+    const statusMessage = entry.statusMessage || deriveStatusMessage(key);
+    return {
+        statusCode: entry.statusCode,
+        statusMessage: statusMessage.replace(/'/g, "\\'"),
+        code: entry.code || deriveCode(key),
+    };
+}
 
 /**
  * Generate client and server errors.
@@ -25,10 +59,11 @@ import url from 'node:url';
 
     for (const key of keys) {
         const isServerError = Object.prototype.hasOwnProperty.call(ServerErrorSettings, key);
-
         const pathSuffix = isServerError ? 'server' : 'client';
 
-        const fileName = `${settings[key].statusCode}-${(settings[key].code).toLowerCase().replace(/_/g, '-')}.ts`;
+        const entry = normalizeEntry(key, settings[key]);
+
+        const fileName = `${entry.statusCode}-${entry.code.toLowerCase().replace(/_/g, '-')}.ts`;
         const destFilePath = path.join(destDirPath, pathSuffix, fileName);
 
         let className = key;
@@ -44,7 +79,7 @@ import url from 'node:url';
             namespaceFile: 'index.ts',
             class: className,
             baseClass: baseClassName,
-            ...settings[key],
+            ...entry,
         });
 
         await saveFile(content, destFilePath);

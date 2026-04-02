@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const BandwidthLimitExceededErrorOptions = {
     code: 'BANDWIDTH_LIMIT_EXCEEDED',
@@ -8,7 +8,8 @@ export const BandwidthLimitExceededErrorOptions = {
 } as const;
 
 export class BandwidthLimitExceededError extends ServerError {
-    constructor(...input: Input[]) {
-        super(BandwidthLimitExceededErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...BandwidthLimitExceededErrorOptions, ...options });
     }
 }

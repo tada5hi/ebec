@@ -4,9 +4,7 @@
  *  For the full copyright and license information,
  *  view the LICENSE file that was distributed with this source code.
  */
-import type { ObjectLiteral } from '../types';
-
-export type Options = {
+export type ErrorOptions = {
     /**
      * The actual error message, if not provided on another way.
      */
@@ -18,32 +16,15 @@ export type Options = {
     stack?: string
 
     /**
-     * A unique identifier for the error,
-     * which can be a short uppercase string or a numeric code.
+     * A unique identifier for the error.
      */
-    code?: string | number | null,
+    code?: string,
 
     /**
-     * Additional data associated with the error. This property can hold
-     * unstructured information or supplementary details that provide context
-     * to the error.
+     * Data used for message template interpolation.
+     * Not stored on the error instance.
      */
-    data?: ObjectLiteral,
-
-    /**
-     * Determines whether the error message can be safely exposed externally.
-     */
-    expose?: boolean;
-
-    /**
-     * Indicates whether the error should be logged in the application's logs.
-     */
-    logMessage?: boolean,
-
-    /**
-     * Specifies the log level at which this error should be recorded.
-     */
-    logLevel?: string | number,
+    messageData?: Record<string, unknown>,
 
     /**
      * Represents the underlying cause or source of the error.

@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const EnhanceYourCalmErrorOptions = {
     code: 'ENHANCE_YOUR_CALM',
@@ -8,7 +8,8 @@ export const EnhanceYourCalmErrorOptions = {
 } as const;
 
 export class EnhanceYourCalmError extends ClientError {
-    constructor(...input: Input[]) {
-        super(EnhanceYourCalmErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...EnhanceYourCalmErrorOptions, ...options });
     }
 }

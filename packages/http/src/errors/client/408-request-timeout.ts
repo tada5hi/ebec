@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const RequestTimeoutErrorOptions = {
     code: 'REQUEST_TIMEOUT',
@@ -8,7 +8,8 @@ export const RequestTimeoutErrorOptions = {
 } as const;
 
 export class RequestTimeoutError extends ClientError {
-    constructor(...input: Input[]) {
-        super(RequestTimeoutErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...RequestTimeoutErrorOptions, ...options });
     }
 }

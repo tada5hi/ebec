@@ -1,17 +1,18 @@
-import type { Input } from '../../types';
+import type { ErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
+import type { IServerError } from './types';
 
 export class ServerError extends HTTPError {
-    constructor(...input: Input[]) {
-        super({ expose: false }, ...input);
+    constructor(input: ErrorInput = {}) {
+        super(input);
     }
 }
 
-export function isServerError(error: unknown): error is ServerError {
-    if (!isHTTPError(error)) {
+export function isServerError(input: unknown): input is IServerError {
+    if (!isHTTPError(input)) {
         return false;
     }
 
-    return error.statusCode >= 500 &&
-        error.statusCode < 600;
+    return input.statusCode >= 500 &&
+        input.statusCode < 600;
 }

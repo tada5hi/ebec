@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const PreconditionFailedErrorOptions = {
     code: 'PRECONDITION_FAILED',
@@ -8,7 +8,8 @@ export const PreconditionFailedErrorOptions = {
 } as const;
 
 export class PreconditionFailedError extends ClientError {
-    constructor(...input: Input[]) {
-        super(PreconditionFailedErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...PreconditionFailedErrorOptions, ...options });
     }
 }

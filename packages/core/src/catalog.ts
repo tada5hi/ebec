@@ -6,21 +6,18 @@
  */
 
 import { BaseError } from './module';
-import type { Options } from './options';
-import type { ErrorInput, ObjectLiteral } from './types';
+import type { ErrorOptions } from './options';
 
-export type CatalogEntry = {
+export type ErrorCatalogEntry = {
     message?: string;
-    code?: string | number;
-    expose?: boolean;
-    logLevel?: string | number;
+    code?: string;
 };
 
-export type ErrorCatalogDefinitions = Record<string, CatalogEntry>;
+export type ErrorCatalogDefinitions = Record<string, ErrorCatalogEntry>;
 
 export type ErrorFactory = (
-    data?: ObjectLiteral,
-    ...input: ErrorInput[]
+    messageData?: Record<string, unknown>,
+    overrides?: ErrorOptions,
 ) => BaseError;
 
 export type ErrorCatalog<T extends ErrorCatalogDefinitions> = {
@@ -33,13 +30,13 @@ export function defineErrorCatalog<T extends ErrorCatalogDefinitions>(
     const catalog = {} as ErrorCatalog<T>;
 
     for (const key of Object.keys(definitions) as Array<keyof T & string>) {
-        const entry = definitions[key] as CatalogEntry;
-        catalog[key] = ((data?: ObjectLiteral, ...input: ErrorInput[]) => new BaseError({
+        const entry = definitions[key] as ErrorCatalogEntry;
+        catalog[key] = ((messageData?: Record<string, unknown>, overrides?: ErrorOptions) => new BaseError({
             ...entry,
-            message: entry.message,
             code: entry.code ?? key,
-            data,
-        } as Options, ...input)) as ErrorFactory;
+            messageData,
+            ...overrides,
+        })) as ErrorFactory;
     }
 
     return catalog;

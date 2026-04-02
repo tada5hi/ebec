@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ForbiddenErrorOptions = {
     code: 'FORBIDDEN',
@@ -8,7 +8,8 @@ export const ForbiddenErrorOptions = {
 } as const;
 
 export class ForbiddenError extends ClientError {
-    constructor(...input: Input[]) {
-        super(ForbiddenErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...ForbiddenErrorOptions, ...options });
     }
 }

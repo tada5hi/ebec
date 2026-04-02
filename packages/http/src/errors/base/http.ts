@@ -1,11 +1,11 @@
 import { BaseError, isBaseError } from '@ebec/core';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 import {
-    extractOptions,
-    isOptions,
+    isErrorOptions,
     sanitizeStatusCode,
     sanitizeStatusMessage,
 } from '../../utils';
+import type { IHTTPError } from './types';
 
 export class HTTPError extends BaseError {
     /**
@@ -23,10 +23,10 @@ export class HTTPError extends BaseError {
      */
     readonly redirectURL?: string;
 
-    constructor(...input: Input[]) {
-        super(...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
 
-        const options = extractOptions(...input);
+        super(options);
 
         this.statusCode = options.statusCode ?
             sanitizeStatusCode(options.statusCode) :
@@ -40,18 +40,18 @@ export class HTTPError extends BaseError {
     }
 }
 
-export function isHTTPError(error: unknown): error is HTTPError {
-    if (!isOptions(error)) {
+export function isHTTPError(input: unknown): input is IHTTPError {
+    if (!isErrorOptions(input)) {
         return false;
     }
 
     if (
-        typeof error.statusCode !== 'number' ||
-        error.statusCode < 400 ||
-        error.statusCode > 599
+        typeof input.statusCode !== 'number' ||
+        input.statusCode < 400 ||
+        input.statusCode >= 600
     ) {
         return false;
     }
 
-    return isBaseError(error);
+    return isBaseError(input);
 }

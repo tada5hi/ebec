@@ -1,157 +1,39 @@
 {
-    "BadRequest": {
-        "statusCode": 400,
-        "statusMessage": "Bad Request",
-        "code": "BAD_REQUEST"
-    },
-    "Unauthorized": {
-        "statusCode": 401,
-        "statusMessage": "Unauthorized",
-        "code": "UNAUTHORIZED"
-    },
-    "Forbidden": {
-        "statusCode": 403,
-        "statusMessage": "Forbidden",
-        "code": "FORBIDDEN"
-    },
-    "NotFound": {
-        "statusCode": 404,
-        "statusMessage": "Not Found",
-        "code": "NOT_FOUND"
-    },
-    "MethodNotAllowed": {
-        "statusCode": 405,
-        "statusMessage": "Method Not Allowed",
-        "code": "METHOD_NOT_ALLOWED"
-    },
-    "NotAcceptable": {
-        "statusCode": 406,
-        "statusMessage": "Not Acceptable",
-        "code": "NOT_ACCEPTABLE"
-    },
-    "ProxyAuthenticationRequired": {
-        "statusCode": 407,
-        "statusMessage": "Proxy Authentication Required",
-        "code": "PROXY_AUTHENTICATION_REQUIRED"
-    },
-    "RequestTimeout": {
-        "statusCode": 408,
-        "statusMessage": "Request Timeout",
-        "code": "REQUEST_TIMEOUT"
-    },
-    "Conflict": {
-        "statusCode": 409,
-        "statusMessage": "Conflict",
-        "code": "CONFLICT"
-    },
-    "Gone": {
-        "statusCode": 410,
-        "statusMessage": "Gone",
-        "code": "GONE"
-    },
-    "LengthRequired": {
-        "statusCode": 411,
-        "statusMessage": "Length Required",
-        "code": "LENGTH_REQUIRED"
-    },
-    "PreconditionFailed": {
-        "statusCode": 412,
-        "statusMessage": "Precondition Failed",
-        "code": "PRECONDITION_FAILED"
-    },
-    "RequestEntityTooLarge": {
-        "statusCode": 413,
-        "statusMessage": "REQUEST_ENTITY_TOO_LARGE",
-        "code": "REQUEST_ENTITY_TOO_LARGE"
-    },
+    "BadRequest": 400,
+    "Unauthorized": 401,
+    "Forbidden": 403,
+    "NotFound": 404,
+    "MethodNotAllowed": 405,
+    "NotAcceptable": 406,
+    "ProxyAuthenticationRequired": 407,
+    "RequestTimeout": 408,
+    "Conflict": 409,
+    "Gone": 410,
+    "LengthRequired": 411,
+    "PreconditionFailed": 412,
+    "RequestEntityTooLarge": 413,
     "RequestURITooLong": {
         "statusCode": 414,
-        "statusMessage": "Request-URI Too Long",
-        "code": "REQUEST_URI_TOO_LONG"
+        "statusMessage": "Request-URI Too Long"
     },
-    "UnsupportedMediaType": {
-        "statusCode": 415,
-        "statusMessage": "Unsupported Media Type",
-        "code": "UNSUPPORTED_MEDIA_TYPE"
-    },
-    "RequestedRangeNotSatisfiable": {
-        "statusCode": 416,
-        "statusMessage": "Requested Range Not Satisfiable",
-        "code": "REQUESTED_RANGE_NOT_SATISFIABLE"
-    },
-    "ExpectationFailed": {
-        "statusCode": 417,
-        "statusMessage": "Expectation Failed",
-        "code": "EXPECTATION_FAILED"
-    },
+    "UnsupportedMediaType": 415,
+    "RequestedRangeNotSatisfiable": 416,
+    "ExpectationFailed": 417,
     "ImATeapot": {
         "statusCode": 418,
-        "statusMessage": "I'm a Teapot",
-        "code": "IM_A_TEAPOT"
+        "statusMessage": "I'm a Teapot"
     },
-    "EnhanceYourCalm": {
-        "statusCode": 420,
-        "statusMessage": "Enhance Your Calm",
-        "code": "ENHANCE_YOUR_CALM"
-    },
-    "UnprocessableEntity": {
-        "statusCode": 422,
-        "statusMessage": "Unprocessable Entity",
-        "code": "UNPROCESSABLE_ENTITY"
-    },
-    "Locked": {
-        "statusCode": 423,
-        "statusMessage": "Locked",
-        "code": "LOCKED"
-    },
-    "FailedDependency": {
-        "statusCode": 424,
-        "statusMessage": "Failed Dependency",
-        "code": "FAILED_DEPENDENCY"
-    },
-    "UnorderedCollection": {
-        "statusCode": 425,
-        "statusMessage": "Unordered Collection",
-        "code": "UNORDERED_COLLECTION"
-    },
-    "UpgradeRequired": {
-        "statusCode": 426,
-        "statusMessage": "Upgrade Required",
-        "code": "UPGRADE_REQUIRED"
-    },
-    "PreconditionRequired": {
-        "statusCode": 428,
-        "statusMessage": "Precondition Required",
-        "code": "PRECONDITION_REQUIRED"
-    },
-    "TooManyRequests": {
-        "statusCode": 429,
-        "statusMessage": "Too Many Requests",
-        "code": "TOO_MANY_REQUESTS"
-    },
-    "RequestHeaderFieldsTooLarge": {
-        "statusCode": 431,
-        "statusMessage": "Request Header Fields Too Large",
-        "code": "REQUEST_HEADER_FIELDS_TOO_LARGE"
-    },
-    "NoResponse": {
-        "statusCode": 444,
-        "statusMessage": "No Response",
-        "code": "NO_RESPONSE"
-    },
-    "RetryWith": {
-        "statusCode": 449,
-        "statusMessage": "Retry With",
-        "code": "RETRY_WITH"
-    },
-    "BlockedByWindowsParentalControls": {
-        "statusCode": 450,
-        "statusMessage": "Blocked By Windows Parental Controls",
-        "code": "BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS"
-    },
-    "ClientClosedRequest": {
-        "statusCode": 499,
-        "statusMessage": "Client Closed Request",
-        "code": "CLIENT_CLOSED_REQUEST"
-    }
+    "EnhanceYourCalm": 420,
+    "UnprocessableEntity": 422,
+    "Locked": 423,
+    "FailedDependency": 424,
+    "UnorderedCollection": 425,
+    "UpgradeRequired": 426,
+    "PreconditionRequired": 428,
+    "TooManyRequests": 429,
+    "RequestHeaderFieldsTooLarge": 431,
+    "NoResponse": 444,
+    "RetryWith": 449,
+    "BlockedByWindowsParentalControls": 450,
+    "ClientClosedRequest": 499
 }

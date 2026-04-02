@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ExpectationFailedErrorOptions = {
     code: 'EXPECTATION_FAILED',
@@ -8,7 +8,8 @@ export const ExpectationFailedErrorOptions = {
 } as const;
 
 export class ExpectationFailedError extends ClientError {
-    constructor(...input: Input[]) {
-        super(ExpectationFailedErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...ExpectationFailedErrorOptions, ...options });
     }
 }

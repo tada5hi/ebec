@@ -13,11 +13,6 @@ describe('src/check.ts', () => {
             expect(isErrorWithCode(error, 'BAR')).toBe(false);
         });
 
-        it('should match numeric code', () => {
-            const error = new BaseError({ code: 42 });
-            expect(isErrorWithCode(error, 42)).toBe(true);
-        });
-
         it('should match code in array', () => {
             const error = new BaseError({ code: 'A' });
             expect(isErrorWithCode(error, ['A', 'B'])).toBe(true);

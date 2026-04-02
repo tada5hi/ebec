@@ -32,9 +32,27 @@ describe('src/module.ts', () => {
         expect(error.statusCode).toEqual(500);
     });
 
-    it('should create client error with default props', () => {
-        const error = new ClientError();
-        expect(error.expose).toBeTruthy();
+    it('should allow status code override', () => {
+        const error = new NotFoundError({ statusCode: 422 });
+        expect(error.statusCode).toEqual(422);
+    });
+
+    it('should sanitize status message to ASCII only', () => {
+        const error = new HTTPError({
+            statusCode: 400,
+            statusMessage: 'Bad\u00A0Request\u200B',
+        });
+        expect(error.statusMessage).toEqual('BadRequest');
+    });
+
+    it('should trim and cap status message length', () => {
+        const longMessage = 'A'.repeat(300);
+        const error = new HTTPError({
+            statusCode: 400,
+            statusMessage: `  ${longMessage}  `,
+        });
+        expect(error.statusMessage!.length).toBeLessThanOrEqual(256);
+        expect(error.statusMessage).toEqual('A'.repeat(256));
     });
 
     it('should recognize client error', () => {
@@ -42,11 +60,6 @@ describe('src/module.ts', () => {
         expect(isClientError(error)).toBeTruthy();
         expect(isServerError(error)).toBeFalsy();
         expect(isHTTPError(error)).toBeTruthy();
-    });
-
-    it('should create server error with default props', () => {
-        const error = new ServerError();
-        expect(error.expose).toBeFalsy();
     });
 
     it('should recognize server error', () => {
@@ -64,7 +77,8 @@ describe('src/module.ts', () => {
         expect(isHTTPError(t1)).toBeTruthy();
 
         const t2 = new Error();
-        (t2 as Record<string, any>).statusCode = 500;
+        (t2 as Record<string, unknown>).statusCode = 500;
+        (t2 as Record<string, unknown>).code = 'SERVER_ERROR';
         expect(isClientError(t2)).toBeFalsy();
         expect(isServerError(t2)).toBeTruthy();
         expect(isHTTPError(t2)).toBeTruthy();

@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const UpgradeRequiredErrorOptions = {
     code: 'UPGRADE_REQUIRED',
@@ -8,7 +8,8 @@ export const UpgradeRequiredErrorOptions = {
 } as const;
 
 export class UpgradeRequiredError extends ClientError {
-    constructor(...input: Input[]) {
-        super(UpgradeRequiredErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...UpgradeRequiredErrorOptions, ...options });
     }
 }

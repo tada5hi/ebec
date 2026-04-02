@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ProxyAuthenticationRequiredErrorOptions = {
     code: 'PROXY_AUTHENTICATION_REQUIRED',
@@ -8,7 +8,8 @@ export const ProxyAuthenticationRequiredErrorOptions = {
 } as const;
 
 export class ProxyAuthenticationRequiredError extends ClientError {
-    constructor(...input: Input[]) {
-        super(ProxyAuthenticationRequiredErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...ProxyAuthenticationRequiredErrorOptions, ...options });
     }
 }

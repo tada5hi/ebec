@@ -8,7 +8,7 @@
 import type { IBaseError } from '../types';
 import { isBaseError } from './check';
 
-export function isErrorWithCode<C extends string | number>(
+export function isErrorWithCode<C extends string>(
     error: unknown,
     code: C | C[],
 ): error is IBaseError & { code: C } {

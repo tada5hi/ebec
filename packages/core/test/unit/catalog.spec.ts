@@ -32,33 +32,11 @@ describe('src/catalog.ts', () => {
         expect(error.message).toEqual('Missing {field}');
     });
 
-    it('should pass data through to error instance', () => {
-        const catalog = defineErrorCatalog({ ERR: { message: 'fail' } });
-
-        const data = { userId: 1, action: 'delete' };
-        const error = catalog.ERR(data);
-        expect(error.data).toEqual(data);
-    });
-
-    it('should allow overriding via ErrorInput', () => {
+    it('should allow overriding via options', () => {
         const catalog = defineErrorCatalog({ ERR: { message: 'original', code: 'ERR' } });
 
-        const error = catalog.ERR(undefined, 'overridden message');
+        const error = catalog.ERR(undefined, { message: 'overridden message' });
         expect(error.message).toEqual('overridden message');
-    });
-
-    it('should propagate expose and logLevel from entry', () => {
-        const catalog = defineErrorCatalog({
-            CLIENT_ERR: {
-                message: 'bad request', 
-                expose: true, 
-                logLevel: 'warn', 
-            }, 
-        });
-
-        const error = catalog.CLIENT_ERR();
-        expect(error.expose).toEqual(true);
-        expect(error.logLevel).toEqual('warn');
     });
 
     it('should handle empty catalog', () => {

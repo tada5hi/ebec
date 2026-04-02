@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const InternalServerErrorOptions = {
     code: 'INTERNAL_SERVER_ERROR',
@@ -8,7 +8,8 @@ export const InternalServerErrorOptions = {
 } as const;
 
 export class InternalServerError extends ServerError {
-    constructor(...input: Input[]) {
-        super(InternalServerErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...InternalServerErrorOptions, ...options });
     }
 }

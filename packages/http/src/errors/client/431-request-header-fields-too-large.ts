@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const RequestHeaderFieldsTooLargeErrorOptions = {
     code: 'REQUEST_HEADER_FIELDS_TOO_LARGE',
@@ -8,7 +8,8 @@ export const RequestHeaderFieldsTooLargeErrorOptions = {
 } as const;
 
 export class RequestHeaderFieldsTooLargeError extends ClientError {
-    constructor(...input: Input[]) {
-        super(RequestHeaderFieldsTooLargeErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...RequestHeaderFieldsTooLargeErrorOptions, ...options });
     }
 }

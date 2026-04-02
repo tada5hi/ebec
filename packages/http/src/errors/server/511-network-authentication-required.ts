@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const NetworkAuthenticationRequiredErrorOptions = {
     code: 'NETWORK_AUTHENTICATION_REQUIRED',
@@ -8,7 +8,8 @@ export const NetworkAuthenticationRequiredErrorOptions = {
 } as const;
 
 export class NetworkAuthenticationRequiredError extends ServerError {
-    constructor(...input: Input[]) {
-        super(NetworkAuthenticationRequiredErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...NetworkAuthenticationRequiredErrorOptions, ...options });
     }
 }

@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const GatewayTimeoutErrorOptions = {
     code: 'GATEWAY_TIMEOUT',
@@ -8,7 +8,8 @@ export const GatewayTimeoutErrorOptions = {
 } as const;
 
 export class GatewayTimeoutError extends ServerError {
-    constructor(...input: Input[]) {
-        super(GatewayTimeoutErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...GatewayTimeoutErrorOptions, ...options });
     }
 }

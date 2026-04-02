@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const UnauthorizedErrorOptions = {
     code: 'UNAUTHORIZED',
@@ -8,7 +8,8 @@ export const UnauthorizedErrorOptions = {
 } as const;
 
 export class UnauthorizedError extends ClientError {
-    constructor(...input: Input[]) {
-        super(UnauthorizedErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...UnauthorizedErrorOptions, ...options });
     }
 }

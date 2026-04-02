@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const BlockedByWindowsParentalControlsErrorOptions = {
     code: 'BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS',
@@ -8,7 +8,8 @@ export const BlockedByWindowsParentalControlsErrorOptions = {
 } as const;
 
 export class BlockedByWindowsParentalControlsError extends ClientError {
-    constructor(...input: Input[]) {
-        super(BlockedByWindowsParentalControlsErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...BlockedByWindowsParentalControlsErrorOptions, ...options });
     }
 }

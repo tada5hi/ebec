@@ -5,38 +5,15 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { ErrorInput, ObjectLiteral } from './types';
-import { interpolate } from './helpers';
-import { extractOptions } from './options';
+import type { ErrorInput } from './types';
+import { interpolate, sanitizeErrorCode } from './helpers';
+import { extractErrorOptions } from './options';
 
 export class BaseError extends Error {
     /**
-     * A unique identifier for the error,
-     * which can be a short uppercase string or a numeric code.
+     * A unique identifier for the error.
      */
-    readonly code?: string | number | null;
-
-    /**
-     * Additional data associated with the error. This property can hold
-     * unstructured information or supplementary details that provide context
-     * to the error.
-     */
-    readonly data?: ObjectLiteral;
-
-    /**
-     * Determines whether the error message can be safely exposed externally.
-     */
-    readonly expose?: boolean;
-
-    /**
-     * Indicates whether the error should be logged in the application's logs.
-     */
-    readonly logMessage?: boolean;
-
-    /**
-     * Specifies the log level at which this error should be recorded.
-     */
-    readonly logLevel?: string | number;
+    readonly code: string;
 
     /**
      * Represents the underlying cause or source of the error.
@@ -45,15 +22,19 @@ export class BaseError extends Error {
 
     //--------------------------------------------------------------------
 
-    constructor(...input: ErrorInput[]) {
-        const options = extractOptions(...input);
+    constructor(input: ErrorInput = {}) {
+        const options = extractErrorOptions(input);
 
-        let { message } = options;
-        if (message && options.data) {
-            message = interpolate(message, options.data);
+        let message = options.message || 'An error occurred';
+        if (options.messageData) {
+            message = interpolate(message, options.messageData);
         }
 
-        super(message, { cause: options.cause });
+        super(message);
+
+        if (options.cause !== undefined) {
+            this.cause = options.cause;
+        }
 
         if (typeof this.name === 'undefined' || this.name === 'Error') {
             Object.defineProperty(this, 'name', {
@@ -73,10 +54,26 @@ export class BaseError extends Error {
             this.stack = options.stack;
         }
 
-        this.code = options.code;
-        this.expose = options.expose;
-        this.logMessage = options.logMessage;
-        this.logLevel = options.logLevel;
-        this.data = options.data;
+        this.code = options.code || sanitizeErrorCode(this.constructor.name);
+    }
+
+    toJSON(): {
+        name: string;
+        message: string;
+        code: string;
+        cause?: unknown
+    } {
+        return {
+            name: this.name,
+            message: this.message,
+            code: this.code,
+            ...(
+                this.cause !== undefined && {
+                    cause: this.cause instanceof BaseError ?
+                        this.cause.toJSON() :
+                        this.cause,
+                }
+            ),
+        };
     }
 }

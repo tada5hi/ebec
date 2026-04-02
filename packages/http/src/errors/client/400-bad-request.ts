@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const BadRequestErrorOptions = {
     code: 'BAD_REQUEST',
@@ -8,7 +8,8 @@ export const BadRequestErrorOptions = {
 } as const;
 
 export class BadRequestError extends ClientError {
-    constructor(...input: Input[]) {
-        super(BadRequestErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...BadRequestErrorOptions, ...options });
     }
 }

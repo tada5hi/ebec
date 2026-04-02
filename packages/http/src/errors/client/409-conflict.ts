@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ConflictErrorOptions = {
     code: 'CONFLICT',
@@ -8,7 +8,8 @@ export const ConflictErrorOptions = {
 } as const;
 
 export class ConflictError extends ClientError {
-    constructor(...input: Input[]) {
-        super(ConflictErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({ ...ConflictErrorOptions, ...options });
     }
 }
