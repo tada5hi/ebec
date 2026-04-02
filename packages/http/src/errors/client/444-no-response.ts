@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const NoResponseErrorOptions = {
     code: 'NO_RESPONSE',
@@ -8,7 +8,13 @@ export const NoResponseErrorOptions = {
 } as const;
 
 export class NoResponseError extends ClientError {
-    constructor(...input: Input[]) {
-        super(NoResponseErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? NoResponseErrorOptions.code,
+            statusCode: options.statusCode ?? NoResponseErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NoResponseErrorOptions.statusMessage,
+        });
     }
 }

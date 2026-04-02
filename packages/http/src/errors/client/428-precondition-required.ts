@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const PreconditionRequiredErrorOptions = {
     code: 'PRECONDITION_REQUIRED',
@@ -8,7 +8,13 @@ export const PreconditionRequiredErrorOptions = {
 } as const;
 
 export class PreconditionRequiredError extends ClientError {
-    constructor(...input: Input[]) {
-        super(PreconditionRequiredErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? PreconditionRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? PreconditionRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? PreconditionRequiredErrorOptions.statusMessage,
+        });
     }
 }

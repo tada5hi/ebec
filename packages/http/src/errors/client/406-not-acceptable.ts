@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const NotAcceptableErrorOptions = {
     code: 'NOT_ACCEPTABLE',
@@ -8,7 +8,13 @@ export const NotAcceptableErrorOptions = {
 } as const;
 
 export class NotAcceptableError extends ClientError {
-    constructor(...input: Input[]) {
-        super(NotAcceptableErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? NotAcceptableErrorOptions.code,
+            statusCode: options.statusCode ?? NotAcceptableErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotAcceptableErrorOptions.statusMessage,
+        });
     }
 }

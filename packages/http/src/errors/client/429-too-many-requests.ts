@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const TooManyRequestsErrorOptions = {
     code: 'TOO_MANY_REQUESTS',
@@ -8,7 +8,13 @@ export const TooManyRequestsErrorOptions = {
 } as const;
 
 export class TooManyRequestsError extends ClientError {
-    constructor(...input: Input[]) {
-        super(TooManyRequestsErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? TooManyRequestsErrorOptions.code,
+            statusCode: options.statusCode ?? TooManyRequestsErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? TooManyRequestsErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,13 +10,17 @@ ebec/
 │   │   │   ├── index.ts       # Barrel export
 │   │   │   ├── module.ts      # BaseError class
 │   │   │   ├── check.ts       # isBaseError()
-│   │   │   ├── types.ts       # Options, ErrorInput types
+│   │   │   ├── catalog.ts     # defineErrorCatalog()
+│   │   │   ├── types.ts       # ErrorInput, IBaseError types
 │   │   │   ├── options/       # Options extraction
 │   │   │   │   ├── check.ts   # isOptions(), isError()
 │   │   │   │   ├── module.ts  # createExtractOptionsFn(), extractOptions()
 │   │   │   │   └── types.ts   # Options type
-│   │   │   └── utils/
-│   │   │       └── object.ts  # isObject() helper
+│   │   │   └── helpers/
+│   │   │       ├── check.ts       # isBaseError()
+│   │   │       ├── error-code.ts  # isErrorWithCode()
+│   │   │       ├── interpolate.ts # Message template interpolation
+│   │   │       └── object.ts      # isObject() helper
 │   │   ├── test/unit/
 │   │   ├── tsdown.config.ts
 │   │   └── package.json
@@ -42,8 +46,8 @@ ebec/
 │       ├── build/             # Code generation for error classes
 │       │   ├── index.mjs      # Generator script
 │       │   ├── utils.mjs      # File I/O helpers
-│       │   ├── client.json    # 4xx error definitions
-│       │   └── server.json    # 5xx error definitions
+│       │   ├── client.json    # 4xx error definitions (key: statusCode, with optional overrides)
+│       │   └── server.json    # 5xx error definitions (key: statusCode, with optional overrides)
 │       ├── template/
 │       │   └── error.tpl      # Mustache template for error classes
 │       ├── test/unit/
@@ -75,7 +79,7 @@ ebec         →  @ebec/core  →  (no runtime deps)
 
 ## Generated Files
 
-Files in `packages/http/src/errors/client/` and `packages/http/src/errors/server/` are **generated** by `npm run build:classes` in the http package. Do not edit these files directly — modify `build/client.json`, `build/server.json`, or `template/error.tpl` instead.
+Files in `packages/http/src/errors/client/` and `packages/http/src/errors/server/` are **generated** by `npm run build:classes` in the http package. Do not edit these files directly — modify `build/client.json`, `build/server.json`, or `template/error.tpl` instead. The JSON configs use a simplified format: `{ "ClassName": statusCode }` for simple cases, or `{ "ClassName": { "statusCode": N, "statusMessage": "..." } }` for edge cases requiring explicit overrides. The `code` and `statusMessage` are derived from the class name by default.
 
 ## Package Exports
 

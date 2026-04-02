@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ServiceUnavailableErrorOptions = {
     code: 'SERVICE_UNAVAILABLE',
@@ -8,7 +8,13 @@ export const ServiceUnavailableErrorOptions = {
 } as const;
 
 export class ServiceUnavailableError extends ServerError {
-    constructor(...input: Input[]) {
-        super(ServiceUnavailableErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? ServiceUnavailableErrorOptions.code,
+            statusCode: options.statusCode ?? ServiceUnavailableErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ServiceUnavailableErrorOptions.statusMessage,
+        });
     }
 }

@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const ClientClosedRequestErrorOptions = {
     code: 'CLIENT_CLOSED_REQUEST',
@@ -8,7 +8,13 @@ export const ClientClosedRequestErrorOptions = {
 } as const;
 
 export class ClientClosedRequestError extends ClientError {
-    constructor(...input: Input[]) {
-        super(ClientClosedRequestErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? ClientClosedRequestErrorOptions.code,
+            statusCode: options.statusCode ?? ClientClosedRequestErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ClientClosedRequestErrorOptions.statusMessage,
+        });
     }
 }

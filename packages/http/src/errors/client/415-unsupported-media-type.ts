@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const UnsupportedMediaTypeErrorOptions = {
     code: 'UNSUPPORTED_MEDIA_TYPE',
@@ -8,7 +8,13 @@ export const UnsupportedMediaTypeErrorOptions = {
 } as const;
 
 export class UnsupportedMediaTypeError extends ClientError {
-    constructor(...input: Input[]) {
-        super(UnsupportedMediaTypeErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? UnsupportedMediaTypeErrorOptions.code,
+            statusCode: options.statusCode ?? UnsupportedMediaTypeErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? UnsupportedMediaTypeErrorOptions.statusMessage,
+        });
     }
 }

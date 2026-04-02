@@ -1,7 +1,7 @@
-import { createExtractOptionsFn, isObject } from '@ebec/core';
-import type { Input, Options } from '../types';
+import { isObject } from '@ebec/core';
+import type { ErrorInput, ErrorOptions } from '../types';
 
-export function isOptions(input: unknown) : input is Options {
+export function isErrorOptions(input: unknown) : input is ErrorOptions {
     if (!isObject(input)) {
         return false;
     }
@@ -25,7 +25,10 @@ export function isOptions(input: unknown) : input is Options {
         typeof input.redirectURL === 'string';
 }
 
-const check = createExtractOptionsFn(isOptions);
-export function extractOptions(...input: Input[]) {
-    return check(...input);
+export function extractErrorOptions(input: ErrorInput = {}): ErrorOptions {
+    if (typeof input === 'string') {
+        return { message: input };
+    }
+
+    return input;
 }

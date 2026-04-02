@@ -1,75 +1,38 @@
 import { describe, expect, it } from 'vitest';
-import type { Options } from '../../../src';
+import type { ErrorOptions } from '../../../src';
 import {
-    BaseError,
-    extractOptions, 
-    isOptions,
+    extractErrorOptions,
+    isErrorOptions,
 } from '../../../src';
 
-describe('src/utils/options.ts', () => {
-    it('should extract options', () => {
-        let options : Options = { code: 'ERROR' };
-        expect(options).toEqual({ code: 'ERROR' } satisfies Options);
-
-        options = extractOptions(options, { code: 'FOO' });
-        expect(options).toEqual({ code: 'FOO' });
-
-        options = extractOptions({ code: 'FOO' }, { code: undefined });
-        expect(options).toEqual({ code: undefined });
-
-        options = extractOptions({ code: 'FOO' }, { code: 0 });
-        expect(options).toEqual({ code: 0 });
+describe('src/options/module.ts', () => {
+    it('should extract options from string', () => {
+        const options = extractErrorOptions('hello');
+        expect(options).toEqual({ message: 'hello' });
     });
 
-    it('should set input error as cause option', () => {
-        const baseError = new BaseError('foo', { stack: 'myStack' });
-        const options = extractOptions(baseError, { code: 'BAR' });
-
-        expect(options.message).toEqual('foo');
-        expect(options.code).toEqual('BAR');
-        expect(options.stack).toEqual('myStack');
+    it('should pass through options object', () => {
+        const input: ErrorOptions = { code: 'FOO', message: 'bar' };
+        const options = extractErrorOptions(input);
+        expect(options).toEqual({ code: 'FOO', message: 'bar' });
     });
 
-    it('should filter prototype pollution keys', () => {
-        const malicious = Object.create(null);
-        malicious.code = 'SAFE';
-        Object.defineProperty(malicious, '__proto__', {
-            value: { polluted: true },
-            enumerable: true,
-        });
-        Object.defineProperty(malicious, 'constructor', {
-            value: { polluted: true },
-            enumerable: true,
-        });
-        Object.defineProperty(malicious, 'prototype', {
-            value: { polluted: true },
-            enumerable: true,
-        });
-
-        const options = extractOptions(malicious);
-        expect(options.code).toEqual('SAFE');
-        expect(Object.prototype.hasOwnProperty.call(options, '__proto__')).toBe(false);
-        expect(Object.prototype.hasOwnProperty.call(options, 'constructor')).toBe(false);
-        expect(Object.prototype.hasOwnProperty.call(options, 'prototype')).toBe(false);
+    it('should default to empty object', () => {
+        const options = extractErrorOptions();
+        expect(options).toEqual({});
     });
 
-    it('should identify input as options', () => {
-        let options = isOptions({ code: () => 1 });
-        expect(options).toBeFalsy();
+    it('should identify valid options', () => {
+        expect(isErrorOptions({ code: 'FOO' })).toBeTruthy();
+        expect(isErrorOptions({ message: 'hello' })).toBeTruthy();
+        expect(isErrorOptions({})).toBeTruthy();
+    });
 
-        options = isOptions({ expose: 1 });
-        expect(options).toBeFalsy();
-
-        options = isOptions({ message: 1 });
-        expect(options).toBeFalsy();
-
-        options = isOptions({ logMessage: 1 });
-        expect(options).toBeFalsy();
-
-        options = isOptions({ logLevel: () => 1 });
-        expect(options).toBeFalsy();
-
-        options = isOptions({ stack: 1 });
-        expect(options).toBeFalsy();
+    it('should reject invalid options', () => {
+        expect(isErrorOptions({ code: () => 1 })).toBeFalsy();
+        expect(isErrorOptions({ message: 1 })).toBeFalsy();
+        expect(isErrorOptions({ stack: 1 })).toBeFalsy();
+        expect(isErrorOptions(undefined)).toBeFalsy();
+        expect(isErrorOptions(null)).toBeFalsy();
     });
 });

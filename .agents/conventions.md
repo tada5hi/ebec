@@ -6,6 +6,8 @@
 - Shared base config: `@tada5hi/tsconfig`
 - `noEmit: true` at root — tsdown handles compilation
 - Per-package `tsconfig.json` extends root, scoped to `src/**/*.ts`
+- **Interfaces** belong in a `types.ts` file within the same directory, not inline in implementation files
+- **Type guards** return I-prefixed interface types (e.g. `input is IClientError`) for duck typing, not class types
 
 ## Build
 

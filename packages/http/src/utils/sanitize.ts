@@ -1,16 +1,11 @@
-/**
- * \x20-\x7E: This range represents printable ASCII characters. \x20 is the hexadecimal code for space, and \x7E is the code for tilde.
- * \t: Matches the tab character.
- * \n: Matches the newline character.
- * \r: Matches the carriage return character.
- * \x0B: Matches the vertical tab character.
- * \x0C: Matches the form feed character.
- */
-// eslint-disable-next-line no-control-regex
-const pattern = /[^\x20-\x7E\t\n\r\x0B\x0C]+/g;
+// ASCII printable characters only (0x20 space through 0x7E tilde)
+ 
+const pattern = /[^\x20-\x7E]/g;
+
+const MAX_STATUS_MESSAGE_LENGTH = 256;
 
 export function sanitizeStatusMessage(input: string) {
-    return input.replace(pattern, '');
+    return input.replace(pattern, '').trim().slice(0, MAX_STATUS_MESSAGE_LENGTH);
 }
 
 export function sanitizeStatusCode(input: string | number) {

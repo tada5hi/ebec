@@ -30,11 +30,10 @@ describe('src/helpers/interpolate.ts', () => {
     it('should integrate with BaseError constructor', () => {
         const error = new BaseError({
             message: 'User {id} not found',
-            data: { id: 123 },
+            messageData: { id: 123 },
         });
 
         expect(error.message).toEqual('User 123 not found');
-        expect(error.data).toEqual({ id: 123 });
     });
 
     it('should not interpolate when no data is provided', () => {

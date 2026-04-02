@@ -1,13 +1,14 @@
-import type { Input } from '../../types';
+import type { ErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
+import type { IClientError } from './types';
 
 export class ClientError extends HTTPError {
-    constructor(...input: Input[]) {
-        super({ expose: true }, ...input);
+    constructor(input: ErrorInput = {}) {
+        super(input);
     }
 }
 
-export function isClientError(input: unknown): input is ClientError {
+export function isClientError(input: unknown): input is IClientError {
     if (!isHTTPError(input)) {
         return false;
     }

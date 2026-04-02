@@ -5,7 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 import type { IBaseError } from '../types';
-import { isOptions } from '../options';
+import { isErrorOptions } from '../options';
 import { isObject } from './object';
 
 export function isBaseError(
@@ -17,14 +17,15 @@ export function isBaseError(
 
     if (
         input instanceof Error &&
-        isOptions(input)
+        isErrorOptions(input)
     ) {
-        return true;
+        return typeof input.code === 'string';
     }
 
-    if (!isOptions(input)) {
+    if (!isErrorOptions(input)) {
         return false;
     }
 
-    return typeof input.message === 'string';
+    return typeof input.message === 'string' &&
+        typeof input.code === 'string';
 }

@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const RequestURITooLongErrorOptions = {
     code: 'REQUEST_URI_TOO_LONG',
@@ -8,7 +8,13 @@ export const RequestURITooLongErrorOptions = {
 } as const;
 
 export class RequestURITooLongError extends ClientError {
-    constructor(...input: Input[]) {
-        super(RequestURITooLongErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? RequestURITooLongErrorOptions.code,
+            statusCode: options.statusCode ?? RequestURITooLongErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RequestURITooLongErrorOptions.statusMessage,
+        });
     }
 }

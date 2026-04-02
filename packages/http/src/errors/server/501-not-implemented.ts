@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const NotImplementedErrorOptions = {
     code: 'NOT_IMPLEMENTED',
@@ -8,7 +8,13 @@ export const NotImplementedErrorOptions = {
 } as const;
 
 export class NotImplementedError extends ServerError {
-    constructor(...input: Input[]) {
-        super(NotImplementedErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? NotImplementedErrorOptions.code,
+            statusCode: options.statusCode ?? NotImplementedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotImplementedErrorOptions.statusMessage,
+        });
     }
 }

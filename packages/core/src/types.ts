@@ -5,19 +5,13 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { Options } from './options';
+import type { ErrorOptions } from './options';
 
-export type ObjectLiteral = Record<string, unknown>;
-
-export type ErrorInput = Options | Error | string;
+export type ErrorInput = string | ErrorOptions;
 
 export interface IBaseError {
     message: string;
     stack?: string;
     cause?: unknown;
-    code?: string | number | null;
-    data?: ObjectLiteral;
-    expose?: boolean;
-    logMessage?: boolean;
-    logLevel?: string | number;
+    code: string;
 }

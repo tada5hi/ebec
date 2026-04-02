@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const GoneErrorOptions = {
     code: 'GONE',
@@ -8,7 +8,13 @@ export const GoneErrorOptions = {
 } as const;
 
 export class GoneError extends ClientError {
-    constructor(...input: Input[]) {
-        super(GoneErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? GoneErrorOptions.code,
+            statusCode: options.statusCode ?? GoneErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? GoneErrorOptions.statusMessage,
+        });
     }
 }

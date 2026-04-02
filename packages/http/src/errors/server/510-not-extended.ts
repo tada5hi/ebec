@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { Input } from '../../types';
+import type { ErrorInput, ErrorOptions } from '../../types';
 
 export const NotExtendedErrorOptions = {
     code: 'NOT_EXTENDED',
@@ -8,7 +8,13 @@ export const NotExtendedErrorOptions = {
 } as const;
 
 export class NotExtendedError extends ServerError {
-    constructor(...input: Input[]) {
-        super(NotExtendedErrorOptions, ...input);
+    constructor(input: ErrorInput = {}) {
+        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+        super({
+            ...options,
+            code: options.code ?? NotExtendedErrorOptions.code,
+            statusCode: options.statusCode ?? NotExtendedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotExtendedErrorOptions.statusMessage,
+        });
     }
 }
