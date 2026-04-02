@@ -3,9 +3,7 @@ import { HTTPError, isHTTPError } from './http';
 
 export class ClientError extends HTTPError {
     constructor(...input: Input[]) {
-        super({
-            expose: true 
-        }, ...input);
+        super({ expose: true }, ...input);
     }
 }
 

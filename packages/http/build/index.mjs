@@ -59,11 +59,11 @@ import url from 'node:url';
     const clientExports = [];
     const serverExports = [];
 
-    for(const item of items) {
+    for (const item of items) {
         const parts = item.fileName.split('.');
         parts.pop();
 
-        if(item.isServerError) {
+        if (item.isServerError) {
             serverExports.push(`export * from './${parts.join('.')}';`);
         } else {
             clientExports.push(`export * from './${parts.join('.')}';`);
