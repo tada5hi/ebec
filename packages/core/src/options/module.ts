@@ -10,6 +10,8 @@ import type { ErrorInput } from '../types';
 import { isError } from './check';
 import type { Options } from './types';
 
+const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
 type CheckFn<T> = (input: unknown) => input is T;
 export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
     return (...input: ErrorInput[]) : T => {
@@ -33,6 +35,9 @@ export function createExtractOptionsFn<T extends Options>(fn: CheckFn<T>) {
                 const isErr = element instanceof Error;
                 const keys = Object.keys(element);
                 for (const key of keys) {
+                    if (UNSAFE_KEYS.has(key)) {
+                        continue;
+                    }
                     // skip cause, message, stack for Error instances
                     // since they are already handled above
                     if (isErr && (key === 'cause' || key === 'message' || key === 'stack')) {

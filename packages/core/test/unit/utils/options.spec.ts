@@ -30,6 +30,29 @@ describe('src/utils/options.ts', () => {
         expect(options.stack).toEqual('myStack');
     });
 
+    it('should filter prototype pollution keys', () => {
+        const malicious = Object.create(null);
+        malicious.code = 'SAFE';
+        Object.defineProperty(malicious, '__proto__', {
+            value: { polluted: true },
+            enumerable: true,
+        });
+        Object.defineProperty(malicious, 'constructor', {
+            value: { polluted: true },
+            enumerable: true,
+        });
+        Object.defineProperty(malicious, 'prototype', {
+            value: { polluted: true },
+            enumerable: true,
+        });
+
+        const options = extractOptions(malicious);
+        expect(options.code).toEqual('SAFE');
+        expect(Object.prototype.hasOwnProperty.call(options, '__proto__')).toBe(false);
+        expect(Object.prototype.hasOwnProperty.call(options, 'constructor')).toBe(false);
+        expect(Object.prototype.hasOwnProperty.call(options, 'prototype')).toBe(false);
+    });
+
     it('should identify input as options', () => {
         let options = isOptions({ code: () => 1 });
         expect(options).toBeFalsy();
