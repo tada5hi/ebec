@@ -7,7 +7,7 @@
 
 import type { Options } from './options';
 
-export type ObjectLiteral = Record<PropertyKey, any>;
+export type ObjectLiteral = Record<string, unknown>;
 
 export type ErrorInput = Options | Error | string;
 

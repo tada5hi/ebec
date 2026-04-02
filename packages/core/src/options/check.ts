@@ -7,7 +7,7 @@
 
 import { isObject } from '../helpers/object';
 
-export function isError(input: unknown) : input is Error & { [key: string]: any } {
+export function isError(input: unknown) : input is Error & Record<string, unknown> {
     if (!isObject(input)) {
         return false;
     }

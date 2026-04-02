@@ -5,6 +5,6 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-export function isObject(item: unknown) : item is Record<string, any> {
+export function isObject(item: unknown) : item is Record<string, unknown> {
     return (!!item && typeof item === 'object' && !Array.isArray(item));
 }
