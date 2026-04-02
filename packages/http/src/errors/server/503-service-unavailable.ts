@@ -10,6 +10,11 @@ export const ServiceUnavailableErrorOptions = {
 export class ServiceUnavailableError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ServiceUnavailableErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ServiceUnavailableErrorOptions.code,
+            statusCode: options.statusCode ?? ServiceUnavailableErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ServiceUnavailableErrorOptions.statusMessage,
+        });
     }
 }

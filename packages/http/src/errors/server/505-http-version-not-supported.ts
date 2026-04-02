@@ -10,6 +10,11 @@ export const HTTPVersionNotSupportedErrorOptions = {
 export class HTTPVersionNotSupportedError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...HTTPVersionNotSupportedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? HTTPVersionNotSupportedErrorOptions.code,
+            statusCode: options.statusCode ?? HTTPVersionNotSupportedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? HTTPVersionNotSupportedErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const FailedDependencyErrorOptions = {
 export class FailedDependencyError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...FailedDependencyErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? FailedDependencyErrorOptions.code,
+            statusCode: options.statusCode ?? FailedDependencyErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? FailedDependencyErrorOptions.statusMessage,
+        });
     }
 }

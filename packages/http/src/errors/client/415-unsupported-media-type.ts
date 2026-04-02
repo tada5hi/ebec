@@ -10,6 +10,11 @@ export const UnsupportedMediaTypeErrorOptions = {
 export class UnsupportedMediaTypeError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...UnsupportedMediaTypeErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? UnsupportedMediaTypeErrorOptions.code,
+            statusCode: options.statusCode ?? UnsupportedMediaTypeErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? UnsupportedMediaTypeErrorOptions.statusMessage,
+        });
     }
 }

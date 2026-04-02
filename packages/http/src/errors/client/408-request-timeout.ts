@@ -10,6 +10,11 @@ export const RequestTimeoutErrorOptions = {
 export class RequestTimeoutError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...RequestTimeoutErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? RequestTimeoutErrorOptions.code,
+            statusCode: options.statusCode ?? RequestTimeoutErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RequestTimeoutErrorOptions.statusMessage,
+        });
     }
 }

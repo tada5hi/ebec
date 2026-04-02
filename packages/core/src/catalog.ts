@@ -31,11 +31,12 @@ export function defineErrorCatalog<T extends ErrorCatalogDefinitions>(
 
     for (const key of Object.keys(definitions) as Array<keyof T & string>) {
         const entry = definitions[key] as ErrorCatalogEntry;
-        catalog[key] = ((messageData?: Record<string, unknown>, overrides?: ErrorOptions) => new BaseError({
+        catalog[key] = ((messageData?: Record<string, unknown>, overrides: ErrorOptions = {}) => new BaseError({
             ...entry,
-            code: entry.code ?? key,
-            messageData,
             ...overrides,
+            code: overrides.code ?? entry.code ?? key,
+            message: overrides.message ?? entry.message,
+            messageData: overrides.messageData ?? messageData,
         })) as ErrorFactory;
     }
 

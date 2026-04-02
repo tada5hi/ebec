@@ -10,6 +10,11 @@ export const LoopDetectedErrorOptions = {
 export class LoopDetectedError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...LoopDetectedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? LoopDetectedErrorOptions.code,
+            statusCode: options.statusCode ?? LoopDetectedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? LoopDetectedErrorOptions.statusMessage,
+        });
     }
 }

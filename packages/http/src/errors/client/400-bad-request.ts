@@ -10,6 +10,11 @@ export const BadRequestErrorOptions = {
 export class BadRequestError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...BadRequestErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? BadRequestErrorOptions.code,
+            statusCode: options.statusCode ?? BadRequestErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? BadRequestErrorOptions.statusMessage,
+        });
     }
 }

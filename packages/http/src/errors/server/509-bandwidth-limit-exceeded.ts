@@ -10,6 +10,11 @@ export const BandwidthLimitExceededErrorOptions = {
 export class BandwidthLimitExceededError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...BandwidthLimitExceededErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? BandwidthLimitExceededErrorOptions.code,
+            statusCode: options.statusCode ?? BandwidthLimitExceededErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? BandwidthLimitExceededErrorOptions.statusMessage,
+        });
     }
 }

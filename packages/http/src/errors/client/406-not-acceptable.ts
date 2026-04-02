@@ -10,6 +10,11 @@ export const NotAcceptableErrorOptions = {
 export class NotAcceptableError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...NotAcceptableErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? NotAcceptableErrorOptions.code,
+            statusCode: options.statusCode ?? NotAcceptableErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotAcceptableErrorOptions.statusMessage,
+        });
     }
 }

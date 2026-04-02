@@ -10,6 +10,11 @@ export const RetryWithErrorOptions = {
 export class RetryWithError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...RetryWithErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? RetryWithErrorOptions.code,
+            statusCode: options.statusCode ?? RetryWithErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RetryWithErrorOptions.statusMessage,
+        });
     }
 }

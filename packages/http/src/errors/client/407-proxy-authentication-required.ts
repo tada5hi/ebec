@@ -10,6 +10,11 @@ export const ProxyAuthenticationRequiredErrorOptions = {
 export class ProxyAuthenticationRequiredError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ProxyAuthenticationRequiredErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ProxyAuthenticationRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? ProxyAuthenticationRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ProxyAuthenticationRequiredErrorOptions.statusMessage,
+        });
     }
 }

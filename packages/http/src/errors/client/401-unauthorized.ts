@@ -10,6 +10,11 @@ export const UnauthorizedErrorOptions = {
 export class UnauthorizedError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...UnauthorizedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? UnauthorizedErrorOptions.code,
+            statusCode: options.statusCode ?? UnauthorizedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? UnauthorizedErrorOptions.statusMessage,
+        });
     }
 }

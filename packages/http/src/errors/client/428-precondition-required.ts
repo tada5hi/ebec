@@ -10,6 +10,11 @@ export const PreconditionRequiredErrorOptions = {
 export class PreconditionRequiredError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...PreconditionRequiredErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? PreconditionRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? PreconditionRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? PreconditionRequiredErrorOptions.statusMessage,
+        });
     }
 }

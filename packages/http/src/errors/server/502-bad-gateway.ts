@@ -10,6 +10,11 @@ export const BadGatewayErrorOptions = {
 export class BadGatewayError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...BadGatewayErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? BadGatewayErrorOptions.code,
+            statusCode: options.statusCode ?? BadGatewayErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? BadGatewayErrorOptions.statusMessage,
+        });
     }
 }

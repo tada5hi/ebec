@@ -10,6 +10,11 @@ export const NetworkAuthenticationRequiredErrorOptions = {
 export class NetworkAuthenticationRequiredError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...NetworkAuthenticationRequiredErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? NetworkAuthenticationRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? NetworkAuthenticationRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NetworkAuthenticationRequiredErrorOptions.statusMessage,
+        });
     }
 }

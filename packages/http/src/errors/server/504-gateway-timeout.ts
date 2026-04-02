@@ -10,6 +10,11 @@ export const GatewayTimeoutErrorOptions = {
 export class GatewayTimeoutError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...GatewayTimeoutErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? GatewayTimeoutErrorOptions.code,
+            statusCode: options.statusCode ?? GatewayTimeoutErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? GatewayTimeoutErrorOptions.statusMessage,
+        });
     }
 }

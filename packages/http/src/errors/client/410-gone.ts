@@ -10,6 +10,11 @@ export const GoneErrorOptions = {
 export class GoneError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...GoneErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? GoneErrorOptions.code,
+            statusCode: options.statusCode ?? GoneErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? GoneErrorOptions.statusMessage,
+        });
     }
 }

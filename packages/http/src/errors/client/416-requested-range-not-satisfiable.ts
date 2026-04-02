@@ -10,6 +10,11 @@ export const RequestedRangeNotSatisfiableErrorOptions = {
 export class RequestedRangeNotSatisfiableError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...RequestedRangeNotSatisfiableErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? RequestedRangeNotSatisfiableErrorOptions.code,
+            statusCode: options.statusCode ?? RequestedRangeNotSatisfiableErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RequestedRangeNotSatisfiableErrorOptions.statusMessage,
+        });
     }
 }

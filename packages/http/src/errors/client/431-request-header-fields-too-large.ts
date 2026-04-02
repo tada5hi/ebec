@@ -10,6 +10,11 @@ export const RequestHeaderFieldsTooLargeErrorOptions = {
 export class RequestHeaderFieldsTooLargeError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...RequestHeaderFieldsTooLargeErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? RequestHeaderFieldsTooLargeErrorOptions.code,
+            statusCode: options.statusCode ?? RequestHeaderFieldsTooLargeErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RequestHeaderFieldsTooLargeErrorOptions.statusMessage,
+        });
     }
 }

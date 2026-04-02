@@ -10,6 +10,11 @@ export const {{{class}}}Options = {
 export class {{{class}}} extends {{baseClass}} {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...{{{class}}}Options, ...options });
+        super({
+            ...options,
+            code: options.code ?? {{{class}}}Options.code,
+            statusCode: options.statusCode ?? {{{class}}}Options.statusCode,
+            statusMessage: options.statusMessage ?? {{{class}}}Options.statusMessage,
+        });
     }
 }

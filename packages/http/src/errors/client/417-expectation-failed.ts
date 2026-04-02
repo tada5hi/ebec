@@ -10,6 +10,11 @@ export const ExpectationFailedErrorOptions = {
 export class ExpectationFailedError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ExpectationFailedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ExpectationFailedErrorOptions.code,
+            statusCode: options.statusCode ?? ExpectationFailedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ExpectationFailedErrorOptions.statusMessage,
+        });
     }
 }

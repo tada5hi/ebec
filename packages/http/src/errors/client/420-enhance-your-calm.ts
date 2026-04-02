@@ -10,6 +10,11 @@ export const EnhanceYourCalmErrorOptions = {
 export class EnhanceYourCalmError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...EnhanceYourCalmErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? EnhanceYourCalmErrorOptions.code,
+            statusCode: options.statusCode ?? EnhanceYourCalmErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? EnhanceYourCalmErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const LengthRequiredErrorOptions = {
 export class LengthRequiredError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...LengthRequiredErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? LengthRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? LengthRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? LengthRequiredErrorOptions.statusMessage,
+        });
     }
 }

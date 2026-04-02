@@ -10,6 +10,11 @@ export const NotImplementedErrorOptions = {
 export class NotImplementedError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...NotImplementedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? NotImplementedErrorOptions.code,
+            statusCode: options.statusCode ?? NotImplementedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotImplementedErrorOptions.statusMessage,
+        });
     }
 }

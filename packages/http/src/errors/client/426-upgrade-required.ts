@@ -10,6 +10,11 @@ export const UpgradeRequiredErrorOptions = {
 export class UpgradeRequiredError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...UpgradeRequiredErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? UpgradeRequiredErrorOptions.code,
+            statusCode: options.statusCode ?? UpgradeRequiredErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? UpgradeRequiredErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const InternalServerErrorOptions = {
 export class InternalServerError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...InternalServerErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? InternalServerErrorOptions.code,
+            statusCode: options.statusCode ?? InternalServerErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? InternalServerErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const ClientClosedRequestErrorOptions = {
 export class ClientClosedRequestError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ClientClosedRequestErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ClientClosedRequestErrorOptions.code,
+            statusCode: options.statusCode ?? ClientClosedRequestErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ClientClosedRequestErrorOptions.statusMessage,
+        });
     }
 }

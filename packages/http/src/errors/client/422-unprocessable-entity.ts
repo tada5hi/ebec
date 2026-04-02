@@ -10,6 +10,11 @@ export const UnprocessableEntityErrorOptions = {
 export class UnprocessableEntityError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...UnprocessableEntityErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? UnprocessableEntityErrorOptions.code,
+            statusCode: options.statusCode ?? UnprocessableEntityErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? UnprocessableEntityErrorOptions.statusMessage,
+        });
     }
 }

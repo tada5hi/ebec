@@ -10,6 +10,11 @@ export const ForbiddenErrorOptions = {
 export class ForbiddenError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ForbiddenErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ForbiddenErrorOptions.code,
+            statusCode: options.statusCode ?? ForbiddenErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ForbiddenErrorOptions.statusMessage,
+        });
     }
 }

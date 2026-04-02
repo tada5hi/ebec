@@ -10,6 +10,11 @@ export const MethodNotAllowedErrorOptions = {
 export class MethodNotAllowedError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...MethodNotAllowedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? MethodNotAllowedErrorOptions.code,
+            statusCode: options.statusCode ?? MethodNotAllowedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? MethodNotAllowedErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const LockedErrorOptions = {
 export class LockedError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...LockedErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? LockedErrorOptions.code,
+            statusCode: options.statusCode ?? LockedErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? LockedErrorOptions.statusMessage,
+        });
     }
 }

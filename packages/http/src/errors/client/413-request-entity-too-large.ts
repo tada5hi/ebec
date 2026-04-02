@@ -10,6 +10,11 @@ export const RequestEntityTooLargeErrorOptions = {
 export class RequestEntityTooLargeError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...RequestEntityTooLargeErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? RequestEntityTooLargeErrorOptions.code,
+            statusCode: options.statusCode ?? RequestEntityTooLargeErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? RequestEntityTooLargeErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const ImATeapotErrorOptions = {
 export class ImATeapotError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...ImATeapotErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? ImATeapotErrorOptions.code,
+            statusCode: options.statusCode ?? ImATeapotErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? ImATeapotErrorOptions.statusMessage,
+        });
     }
 }

@@ -10,6 +10,11 @@ export const VariantAlsoNegotiatesErrorOptions = {
 export class VariantAlsoNegotiatesError extends ServerError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...VariantAlsoNegotiatesErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? VariantAlsoNegotiatesErrorOptions.code,
+            statusCode: options.statusCode ?? VariantAlsoNegotiatesErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? VariantAlsoNegotiatesErrorOptions.statusMessage,
+        });
     }
 }

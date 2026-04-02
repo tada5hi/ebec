@@ -10,6 +10,11 @@ export const NotFoundErrorOptions = {
 export class NotFoundError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...NotFoundErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? NotFoundErrorOptions.code,
+            statusCode: options.statusCode ?? NotFoundErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NotFoundErrorOptions.statusMessage,
+        });
     }
 }

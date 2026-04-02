@@ -10,6 +10,11 @@ export const BlockedByWindowsParentalControlsErrorOptions = {
 export class BlockedByWindowsParentalControlsError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...BlockedByWindowsParentalControlsErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? BlockedByWindowsParentalControlsErrorOptions.code,
+            statusCode: options.statusCode ?? BlockedByWindowsParentalControlsErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? BlockedByWindowsParentalControlsErrorOptions.statusMessage,
+        });
     }
 }

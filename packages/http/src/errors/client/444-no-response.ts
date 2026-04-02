@@ -10,6 +10,11 @@ export const NoResponseErrorOptions = {
 export class NoResponseError extends ClientError {
     constructor(input: ErrorInput = {}) {
         const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
-        super({ ...NoResponseErrorOptions, ...options });
+        super({
+            ...options,
+            code: options.code ?? NoResponseErrorOptions.code,
+            statusCode: options.statusCode ?? NoResponseErrorOptions.statusCode,
+            statusMessage: options.statusMessage ?? NoResponseErrorOptions.statusMessage,
+        });
     }
 }
