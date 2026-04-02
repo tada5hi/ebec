@@ -10,3 +10,14 @@ import type { Options } from './options';
 export type ObjectLiteral = Record<PropertyKey, any>;
 
 export type ErrorInput = Options | Error | string;
+
+export interface IBaseError {
+    message: string;
+    stack?: string;
+    cause?: unknown;
+    code?: string | number | null;
+    data?: ObjectLiteral;
+    expose?: boolean;
+    logMessage?: boolean;
+    logLevel?: string | number;
+}

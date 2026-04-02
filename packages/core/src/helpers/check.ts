@@ -4,18 +4,21 @@
  *  For the full copyright and license information,
  *  view the LICENSE file that was distributed with this source code.
  */
-import { isOptions } from './options';
-import { isObject } from './helpers';
-import { BaseError } from './module';
+import type { IBaseError } from '../types';
+import { isOptions } from '../options';
+import { isObject } from './object';
 
 export function isBaseError(
     input: unknown,
-): input is BaseError {
+): input is IBaseError {
     if (!isObject(input)) {
         return false;
     }
 
-    if (input instanceof BaseError) {
+    if (
+        input instanceof Error &&
+        isOptions(input)
+    ) {
         return true;
     }
 

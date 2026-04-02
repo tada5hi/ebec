@@ -6,7 +6,6 @@
  */
 
 export * from './types';
-export * from './check';
 export * from './module';
 export * from './options';
 export * from './helpers';
