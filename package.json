@@ -43,12 +43,13 @@
         "tsdown": "^0.21.5",
         "typescript": "^5.9.0",
         "typescript-eslint": "^8.57.0",
+        "nx": "^22.6.3",
         "vitest": "^4.0.18"
     },
     "scripts": {
-        "build": "npm run build --workspaces",
-        "test": "npm run test --workspaces --if-present",
-        "test:coverage": "npm run test:coverage --workspaces --if-present",
+        "build": "npx nx run-many -t build",
+        "test": "npx nx run-many -t test",
+        "test:coverage": "npx nx run-many -t test:coverage",
         "lint": "eslint packages/",
         "lint:fix": "eslint packages/ --fix",
         "prepare": "husky"

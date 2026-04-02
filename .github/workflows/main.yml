@@ -78,4 +78,4 @@ jobs:
                 uses: ./.github/actions/build
 
             -   name: Test
-                run: npm run test
+                run: npx nx run-many -t test
