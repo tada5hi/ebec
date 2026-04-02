@@ -2,7 +2,7 @@
 
 # ebec — Agent Guide
 
-Extensible ES6 error class library for TypeScript. Provides a `BaseError` with flexible constructor arguments and property merging, plus an HTTP layer with 46 generated status-code error classes. Monorepo with three packages: `@ebec/core` (implementation), `ebec` (backwards-compat re-export), and `@ebec/http` (HTTP errors).
+Extensible ES6 error class library for TypeScript. Provides a `BaseError` with single-input constructor, automatic code derivation, message interpolation, and JSON serialization, plus an HTTP layer with 43 generated status-code error classes. Monorepo with two packages: `@ebec/core` (implementation) and `@ebec/http` (HTTP errors).
 
 ## Quick Reference
 
@@ -24,11 +24,10 @@ npm run lint:fix
 
 | Package | Path | Description |
 |---------|------|-------------|
-| `@ebec/core` | `packages/core` | Core error class with options extraction |
-| `ebec` | `packages/ebec` | Backwards-compat wrapper (re-exports @ebec/core) |
+| `@ebec/core` | `packages/core` | Core error class with code derivation, message interpolation, catalog, and serialization |
 | `@ebec/http` | `packages/http` | HTTP error classes (4xx/5xx) extending @ebec/core |
 
-`@ebec/http` and `ebec` depend on `@ebec/core`. Build order: core → ebec → http.
+`@ebec/http` depends on `@ebec/core`. Build order: core → http.
 
 ### Per-Package Commands
 
@@ -43,6 +42,6 @@ npm run test -w packages/http
 ## Detailed Guides
 
 - **[Project Structure](.agents/structure.md)** — Source layout, modules, and dependency layers
-- **[Architecture](.agents/architecture.md)** — Class hierarchy, options extraction, code generation
+- **[Architecture](.agents/architecture.md)** — Class hierarchy, constructor pattern, code generation
 - **[Testing](.agents/testing.md)** — Vitest setup, test conventions
 - **[Conventions](.agents/conventions.md)** — ESLint, commits, CI/CD, release process

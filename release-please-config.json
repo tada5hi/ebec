@@ -5,7 +5,6 @@
     "initial-version": "2.3.0",
     "packages": {
         "packages/core": {"component": "core"},
-        "packages/ebec": {"component": "ebec"},
         "packages/http": {"component": "http"}
     },
     "plugins": [
@@ -14,7 +13,6 @@
             "updatePeerDependencies": true,
             "components": [
                 "core",
-                "ebec",
                 "http"
             ]
         }

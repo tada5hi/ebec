@@ -1,189 +1,220 @@
-# @ebec/http 🥁
+# @ebec/http
 
 [![npm version](https://badge.fury.io/js/@ebec%2Fhttp.svg)](https://badge.fury.io/js/@ebec%2Fhttp)
-[![main](https://github.com/Tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/ebec/actions/workflows/main.yml)
+[![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-A library that provides extensible ES6 HTTP error classes that define basic information about the error.
+HTTP error classes for TypeScript, extending [`@ebec/core`](../core). Provides 43 pre-built error classes for HTTP 4xx and 5xx status codes with duck-typed type guards.
 
 **Table of Contents**
 
 - [Installation](#installation)
-- [Usage](#usage)
-- [Classes](#classes)
-  - [Base](#base) 
-  - [Client](#client)
-  - [Server](#server)
-- [Utils](#utils)
+- [Quick Start](#quick-start)
+- [Custom Subclasses](#custom-subclasses)
+- [Type Guards](#type-guards)
+- [Error Classes](#error-classes)
+- [API Reference](#api-reference)
 - [License](#license)
 
 ## Installation
 
 ```bash
-npm install @ebec/http --save
+npm install @ebec/http
 ```
 
-## Usage
+This installs `@ebec/core` as a dependency automatically.
 
-The usage is pretty easy, just import one of the [client](#client) or [server](#server) error classes and use them
-in `throw-` & `catch-` statements.
+## Quick Start
 
-**Basic**
 ```typescript
-import {
-    InternalServerError,
-    NotFoundError
-} from "@ebec/http";
+import { NotFoundError, InternalServerError } from '@ebec/http';
 
-const clientError = new NotFoundError();
+// String message
+const error = new NotFoundError('user not found');
+console.log(error.statusCode);    // 404
+console.log(error.code);          // "NOT_FOUND"
+console.log(error.statusMessage); // "Not Found"
 
-console.log(clientError.statusCode);
-// 404
-
-console.log(clientError.logMessage);
-// false
-
-console.log(clientError.code);
-// NOT_FOUND
-
-// ------------------------------------
-
-const serverError = new InternalServerError({
-    logLevel: 'warning'
+// Options input
+const error = new InternalServerError({
+    message: 'database connection lost',
+    code: 'DB_CONN_LOST',
 });
-
-console.log(clientError.statusCode);
-// 500
-
-console.log(clientError.logMessage);
-// true
-
-console.log(clientError.code);
-// INTERNAL_SERVER_ERROR
-
-console.log(clientError.logLevel);
-// warning
+console.log(error.statusCode); // 500
+console.log(error.code);       // "DB_CONN_LOST"
 ```
 
-Another way to use the predefined error classes is to extend them,
-with own `options`.
-
-**Extend**
+Use in an Express-style error handler:
 
 ```typescript
-import {
-    Options,
-    mergeOptions,
-    NotFoundError
-} from "@ebec/http";
+import { isHTTPError } from '@ebec/http';
 
-class UserNotFound extends NotFoundError {
-    constructor() {
+app.use((err, req, res, next) => {
+    if (isHTTPError(err)) {
+        res.status(err.statusCode).json(err.toJSON());
+    } else {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+```
+
+## Custom Subclasses
+
+Extend any error class with your own defaults:
+
+```typescript
+import { NotFoundError } from '@ebec/http';
+
+class UserNotFoundError extends NotFoundError {
+    constructor(userId: number) {
         super({
-            statusMessage: 'The user was not found.',
-            code: 'USER_NOT_FOUND'
+            message: `User ${userId} not found`,
+            code: 'USER_NOT_FOUND',
         });
     }
 }
+
+throw new UserNotFoundError(42);
+// statusCode: 404, code: "USER_NOT_FOUND", message: "User 42 not found"
 ```
 
-## Classes
+## Type Guards
 
-The following HTTP classes are predefined:
+All type guards use duck typing and return interface types (`IHTTPError`, `IClientError`, `IServerError`). They work with any object that has the right shape, not just `instanceof` checks.
+
+```typescript
+import {
+    isHTTPError,
+    isClientError,
+    isServerError,
+} from '@ebec/http';
+
+if (isHTTPError(error)) {
+    // error has statusCode (400-599)
+    console.log(error.statusCode);
+}
+
+if (isClientError(error)) {
+    // error has statusCode 400-499
+}
+
+if (isServerError(error)) {
+    // error has statusCode 500-599
+}
+```
+
+### Accessing Core Exports
+
+Everything from `@ebec/core` is available via the `./core` subpath:
+
+```typescript
+import { BaseError, isBaseError } from '@ebec/http/core';
+```
+
+## Error Classes
 
 ### Base
 
-- `HTTPError`
-- `ClientError`
-- `ServerError`
+| Class | Description |
+|-------|-------------|
+| `HTTPError` | Base HTTP error, extends `BaseError`. Defaults to status 500. |
+| `ClientError` | Base for 4xx errors, extends `HTTPError`. |
+| `ServerError` | Base for 5xx errors, extends `HTTPError`. |
 
-### Client
+### Client (4xx)
 
-- 400 `BadRequestError`
-- 401 `UnauthorizedError`
-- 403 `ForbiddenError`
-- 404 `NotFoundError`
-- 405 `MethodNotAllowedError`
-- 406 `NotAcceptableError`
-- 407 `ProxyAuthenticationRequiredError`
-- 408 `RequestTimeoutError`
-- 409 `ConflictError`
-- 410 `GoneError`
-- 411 `LengthRequiredError`
-- 412 `PreconditionFailedError`
-- 413 `RequestEntityTooLargeError`
-- 414 `RequestUriTooLongError`
-- 415 `UnsupportedMediaTypeError`
-- 416 `RequestRangeNotSatisfiedError`
-- 417 `ExpectationFailedError`
-- 418 `ImATeapotError`
-- 420 `EnhanceYourCalmError`
-- 422 `UnprocessableEntityError`
-- 423 `LockedError`
-- 424 `FailedDependencyError`
-- 424 `UnorderedCollectionError`
-- 426 `UpgradeRequiredError`
-- 428 `PreconditionRequiredError`
-- 429 `TooManyRequestError`
-- 431 `RequestHeaderFieldsTooLargeError`
-- 444 `NoResponseError`
-- 449 `RetryWithError`
-- 450 `BlockedByWindowsParentError`
-- 499 `ClientClosedRequestError`
+| Status | Class | Code |
+|--------|-------|------|
+| 400 | `BadRequestError` | `BAD_REQUEST` |
+| 401 | `UnauthorizedError` | `UNAUTHORIZED` |
+| 403 | `ForbiddenError` | `FORBIDDEN` |
+| 404 | `NotFoundError` | `NOT_FOUND` |
+| 405 | `MethodNotAllowedError` | `METHOD_NOT_ALLOWED` |
+| 406 | `NotAcceptableError` | `NOT_ACCEPTABLE` |
+| 407 | `ProxyAuthenticationRequiredError` | `PROXY_AUTHENTICATION_REQUIRED` |
+| 408 | `RequestTimeoutError` | `REQUEST_TIMEOUT` |
+| 409 | `ConflictError` | `CONFLICT` |
+| 410 | `GoneError` | `GONE` |
+| 411 | `LengthRequiredError` | `LENGTH_REQUIRED` |
+| 412 | `PreconditionFailedError` | `PRECONDITION_FAILED` |
+| 413 | `RequestEntityTooLargeError` | `REQUEST_ENTITY_TOO_LARGE` |
+| 414 | `RequestURITooLongError` | `REQUEST_URI_TOO_LONG` |
+| 415 | `UnsupportedMediaTypeError` | `UNSUPPORTED_MEDIA_TYPE` |
+| 416 | `RequestedRangeNotSatisfiableError` | `REQUESTED_RANGE_NOT_SATISFIABLE` |
+| 417 | `ExpectationFailedError` | `EXPECTATION_FAILED` |
+| 418 | `ImATeapotError` | `IM_A_TEAPOT` |
+| 420 | `EnhanceYourCalmError` | `ENHANCE_YOUR_CALM` |
+| 422 | `UnprocessableEntityError` | `UNPROCESSABLE_ENTITY` |
+| 423 | `LockedError` | `LOCKED` |
+| 424 | `FailedDependencyError` | `FAILED_DEPENDENCY` |
+| 425 | `UnorderedCollectionError` | `UNORDERED_COLLECTION` |
+| 426 | `UpgradeRequiredError` | `UPGRADE_REQUIRED` |
+| 428 | `PreconditionRequiredError` | `PRECONDITION_REQUIRED` |
+| 429 | `TooManyRequestsError` | `TOO_MANY_REQUESTS` |
+| 431 | `RequestHeaderFieldsTooLargeError` | `REQUEST_HEADER_FIELDS_TOO_LARGE` |
+| 444 | `NoResponseError` | `NO_RESPONSE` |
+| 449 | `RetryWithError` | `RETRY_WITH` |
+| 450 | `BlockedByWindowsParentalControlsError` | `BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS` |
+| 499 | `ClientClosedRequestError` | `CLIENT_CLOSED_REQUEST` |
 
-### Server
+### Server (5xx)
 
-- 500 `InternalServerError`
-- 501 `NotImplementedError`
-- 502 `BadGatewayError`
-- 503 `ServiceUnavailableError`
-- 504 `GatewayTimeoutError`
-- 505 `HTTPVersionNotSupportedError`
-- 506 `VariantAlsoNegotiates`
-- 507 `InsufficientStorageError`
-- 508 `LoopDetectedError`
-- 509 `BandwidthLimitExceededError`
-- 510 `NotExtendedError`
-- 511 `NetworkAuthenticationRequiredError`
+| Status | Class | Code |
+|--------|-------|------|
+| 500 | `InternalServerError` | `INTERNAL_SERVER_ERROR` |
+| 501 | `NotImplementedError` | `NOT_IMPLEMENTED` |
+| 502 | `BadGatewayError` | `BAD_GATEWAY` |
+| 503 | `ServiceUnavailableError` | `SERVICE_UNAVAILABLE` |
+| 504 | `GatewayTimeoutError` | `GATEWAY_TIMEOUT` |
+| 505 | `HTTPVersionNotSupportedError` | `HTTP_VERSION_NOT_SUPPORTED` |
+| 506 | `VariantAlsoNegotiatesError` | `VARIANT_ALSO_NEGOTIATES` |
+| 507 | `InsufficientStorageError` | `INSUFFICIENT_STORAGE` |
+| 508 | `LoopDetectedError` | `LOOP_DETECTED` |
+| 509 | `BandwidthLimitExceededError` | `BANDWIDTH_LIMIT_EXCEEDED` |
+| 510 | `NotExtendedError` | `NOT_EXTENDED` |
+| 511 | `NetworkAuthenticationRequiredError` | `NETWORK_AUTHENTICATION_REQUIRED` |
 
-## Utils
+## API Reference
 
-### isHTTPError
-
-This method determines whether it is a client or server error.
-
-```typescript
-import { isHTTPError, NotFoundError } from "@ebec/http";
-
-const error = new NotFoundError();
-console.log(isHTTPError(error));
-// true
-```
-
-### isClientError
-
-This method determines whether it is a client error.
+### HTTPError
 
 ```typescript
-import { isClientError, NotFoundError } from "@ebec/http";
+class HTTPError extends BaseError {
+    readonly statusCode: number;       // defaults to 500
+    readonly statusMessage?: string;   // ASCII printable, max 256 chars
+    readonly redirectURL?: string;
 
-const error = new NotFoundError();
-console.log(isClientError(error));
-// true
+    constructor(input?: string | ErrorOptions);
+}
 ```
 
-### isServerError
+### ErrorOptions
 
-This method determines whether it is a server error.
+Extends core `ErrorOptions` with HTTP-specific fields:
 
-```typescript
-import { isServerError, NotFoundError } from "@ebec/http";
+| Property | Type | Description |
+|----------|------|-------------|
+| `statusCode` | `number \| string` | HTTP status code (100-599). Invalid values default to 500. |
+| `statusMessage` | `string` | Reason phrase. Sanitized to ASCII printable, max 256 chars. |
+| `redirectURL` | `string` | Redirect URL for 3xx-style responses. |
 
-const error = new NotFoundError();
-console.log(isServerError(error));
-// false
-```
+Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
+
+### Type Guards
+
+| Function | Returns | Checks |
+|----------|---------|--------|
+| `isHTTPError(input)` | `input is IHTTPError` | statusCode 400-599, passes `isBaseError` |
+| `isClientError(input)` | `input is IClientError` | `isHTTPError` + statusCode 400-499 |
+| `isServerError(input)` | `input is IServerError` | `isHTTPError` + statusCode 500-599 |
+| `isErrorOptions(input)` | `input is ErrorOptions` | Validates HTTP options shape |
+
+### Sanitization
+
+| Function | Description |
+|----------|-------------|
+| `sanitizeStatusCode(input)` | Parses and validates (100-599), defaults to 500 |
+| `sanitizeStatusMessage(input)` | Strips non-ASCII, trims, caps at 256 chars |
 
 ## License
 

@@ -25,7 +25,7 @@ class BaseError extends Error {
 
 - **`message`**: Defaults to `"An error occurred"` when not provided
 - **`code`**: Derived from class name via PascalCase → CONSTANT_CASE (e.g. `NotFoundError` → `NOT_FOUND_ERROR`). Explicit `code` in options takes priority.
-- **`data`**: Accepted in constructor options for message template interpolation only — not stored as a property
+- **`messageData`**: Accepted in constructor options for message template interpolation only — not stored as a property
 
 ### Serialization
 
@@ -44,7 +44,7 @@ class HTTPError extends BaseError {
 ### StatusCode Validation
 
 - Invalid status codes (outside 100-599) are sanitized to 500
-- Contradicting status codes are silently ignored: if a `ClientError` subclass receives a status code outside 400-499, it falls back to 400. Similarly, `ServerError` subclasses fall back to 500.
+- Generated subclasses use nullish coalescing (`??`) to preserve their default statusCode when the user passes `undefined`
 
 ### StatusMessage Sanitization
 

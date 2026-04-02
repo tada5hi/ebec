@@ -9,42 +9,35 @@ ebec/
 │   │   ├── src/
 │   │   │   ├── index.ts       # Barrel export
 │   │   │   ├── module.ts      # BaseError class
-│   │   │   ├── check.ts       # isBaseError()
 │   │   │   ├── catalog.ts     # defineErrorCatalog()
 │   │   │   ├── types.ts       # ErrorInput, IBaseError types
-│   │   │   ├── options/       # Options extraction
-│   │   │   │   ├── check.ts   # isOptions(), isError()
-│   │   │   │   ├── module.ts  # createExtractOptionsFn(), extractOptions()
-│   │   │   │   └── types.ts   # Options type
+│   │   │   ├── options/       # Options handling
+│   │   │   │   ├── module.ts  # isErrorOptions(), extractErrorOptions()
+│   │   │   │   └── types.ts   # ErrorOptions type
 │   │   │   └── helpers/
-│   │   │       ├── check.ts       # isBaseError()
-│   │   │       ├── error-code.ts  # isErrorWithCode()
-│   │   │       ├── interpolate.ts # Message template interpolation
-│   │   │       └── object.ts      # isObject() helper
+│   │   │       ├── check.ts        # isBaseError()
+│   │   │       ├── error-code.ts   # isErrorWithCode()
+│   │   │       ├── interpolate.ts  # Message template interpolation
+│   │   │       ├── object.ts       # isObject() helper
+│   │   │       └── sanitize-code.ts # sanitizeErrorCode()
 │   │   ├── test/unit/
-│   │   ├── tsdown.config.ts
-│   │   └── package.json
-│   │
-│   ├── ebec/                  # Backwards-compat wrapper (re-exports @ebec/core)
-│   │   ├── src/
-│   │   │   └── index.ts       # export * from '@ebec/core'
 │   │   ├── tsdown.config.ts
 │   │   └── package.json
 │   │
 │   └── http/                  # HTTP error classes (@ebec/http)
 │       ├── src/
 │       │   ├── index.ts       # Barrel export
-│       │   ├── types.ts       # HTTP-specific Options (statusCode, statusMessage, redirectURL)
+│       │   ├── types.ts       # HTTP-specific ErrorOptions, ErrorInput
 │       │   ├── core-export.ts # Re-exports @ebec/core for ./core subpath
 │       │   ├── utils/
-│       │   │   ├── options.ts # HTTP option validation + extractOptions()
+│       │   │   ├── options.ts # isErrorOptions(), extractErrorOptions()
 │       │   │   └── sanitize.ts# sanitizeStatusCode(), sanitizeStatusMessage()
 │       │   └── errors/
-│       │       ├── base/      # HTTPError, ClientError, ServerError
-│       │       ├── client/    # Generated 4xx error classes (37 files)
+│       │       ├── base/      # HTTPError, ClientError, ServerError + types
+│       │       ├── client/    # Generated 4xx error classes (31 files)
 │       │       └── server/    # Generated 5xx error classes (12 files)
 │       ├── build/             # Code generation for error classes
-│       │   ├── index.mjs      # Generator script
+│       │   ├── index.mjs      # Generator script with derivation helpers
 │       │   ├── utils.mjs      # File I/O helpers
 │       │   ├── client.json    # 4xx error definitions (key: statusCode, with optional overrides)
 │       │   └── server.json    # 5xx error definitions (key: statusCode, with optional overrides)
@@ -72,10 +65,9 @@ ebec/
 
 ```
 @ebec/http  →  @ebec/core  →  (no runtime deps)
-ebec         →  @ebec/core  →  (no runtime deps)
 ```
 
-`@ebec/core` (packages/core) is the canonical implementation with zero runtime dependencies. `@ebec/http` depends on `@ebec/core`. `ebec` is a thin backwards-compat wrapper that re-exports `@ebec/core`.
+`@ebec/core` (packages/core) is the canonical implementation with zero runtime dependencies. `@ebec/http` depends on `@ebec/core`.
 
 ## Generated Files
 
@@ -88,8 +80,7 @@ Both packages produce dual ESM + CJS outputs via tsdown:
 | Package | Export | Files |
 |---------|--------|-------|
 | `@ebec/core` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
-| `ebec` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
 | `@ebec/http` | `.` | `dist/index.{mjs,cjs,d.mts,d.cts}` |
 | `@ebec/http` | `./core` | `dist/core/index.{mjs,cjs,d.mts,d.cts}` |
 
-The `./core` subpath on `@ebec/http` re-exports everything from `@ebec/core`, allowing consumers to use `@ebec/http/core` instead of depending on `@ebec/core` directly. The `ebec` package is a thin backwards-compat wrapper that also re-exports `@ebec/core`.
+The `./core` subpath on `@ebec/http` re-exports everything from `@ebec/core`, allowing consumers to use `@ebec/http/core` instead of depending on `@ebec/core` directly.

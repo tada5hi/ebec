@@ -1,189 +1,219 @@
-# ebec 🥋
+# @ebec/core
 
-[![npm version](https://badge.fury.io/js/ebec.svg)](https://badge.fury.io/js/ebec)
-[![main](https://github.com/Tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/Tada5hi/ebec/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
+[![npm version](https://badge.fury.io/js/@ebec%2Fcore.svg)](https://badge.fury.io/js/@ebec%2Fcore)
+[![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-A library that simplifies error handling by providing an ES6 error class and utility functions.
-This library facilitates the extraction of options and error messages from constructor arguments.
+Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. Zero runtime dependencies.
 
 **Table of Contents**
 
 - [Installation](#installation)
-- [Usage](#usage)
-    - [Simple](#simple)
-    - [Inheritance](#inheritance)
-- [Types](#types)
-- [Utils](#utils)
+- [Quick Start](#quick-start)
+- [Code Derivation](#code-derivation)
+- [Message Interpolation](#message-interpolation)
+- [Wrapping Errors](#wrapping-errors)
+- [Serialization](#serialization)
+- [Type Guards](#type-guards)
+- [Error Catalog](#error-catalog)
+- [API Reference](#api-reference)
 - [License](#license)
 
 ## Installation
 
 ```bash
-npm install ebec --save
+npm install @ebec/core
 ```
 
-## Usage
+## Quick Start
 
-The **BaseError** class accepts various constructor arguments of type [Input](#input) and any
-[Options](#options) specified during initialization are automatically assigned as attributes.
-
-### Simple
-
-Create error instances in different ways, as demonstrated in the following examples:
-
-**Example #1**
+The constructor accepts a `string` or an `ErrorOptions` object:
 
 ```typescript
-import { BaseError } from 'ebec';
+import { BaseError } from '@ebec/core';
 
-const error = new BaseError('An error occurred.');
+// String message
+const error = new BaseError('something went wrong');
 
-console.log(error.message);
-// An error occurred.
-```
-
-**Example #2**
-
-In this example, only error options are passed as a single argument to the error constructor.
-
-```typescript
-import { BaseError } from 'ebec';
-
+// Options object
 const error = new BaseError({
-    message: 'The entity could not be found',
-    code: 'BAD_REQUEST'
+    message: 'something went wrong',
+    code: 'SOMETHING_WRONG',
+});
+
+// No arguments — defaults to message "An error occurred"
+const error = new BaseError();
+```
+
+## Code Derivation
+
+When no `code` is provided, it is derived from the class name by converting PascalCase to CONSTANT_CASE:
+
+```typescript
+const error = new BaseError();
+console.log(error.code);
+// "BASE_ERROR"
+
+class NotFoundError extends BaseError {}
+const notFound = new NotFoundError();
+console.log(notFound.code);
+// "NOT_FOUND_ERROR"
+```
+
+An explicit code always takes priority:
+
+```typescript
+const error = new BaseError({ code: 'CUSTOM_CODE' });
+console.log(error.code);
+// "CUSTOM_CODE"
+```
+
+## Message Interpolation
+
+Use `messageData` to fill `{placeholder}` tokens in the message. The data is used for interpolation only and is not stored on the error instance.
+
+```typescript
+const error = new BaseError({
+    message: 'User {id} not found in {service}',
+    messageData: { id: 42, service: 'auth' },
 });
 
 console.log(error.message);
-// The entity could not be found
-
-console.log(error.code);
-// BAD_REQUEST
+// "User 42 not found in auth"
 ```
 
-**Example #3**
-
-In this example, multiple arguments are passed to the error constructor.
+Missing keys are left as-is:
 
 ```typescript
-import { BaseError } from 'ebec';
-
-const cause = new Error('foo');
-
-const error = new BaseError(
-    'The entity could not be found',
-    {
-        code: 'BAD_REQUEST'
-    },
-    cause
-);
+const error = new BaseError({
+    message: 'Missing {field}',
+    messageData: { other: 'value' },
+});
 
 console.log(error.message);
-// The entity could not be found
-
-console.log(error.code);
-// BAD_REQUEST
-
-console.log(error.cause);
-// { message: 'foo', ... }
+// "Missing {field}"
 ```
 
-### Inheritance
+## Wrapping Errors
 
-Custom error classes that inherit from BaseError allow for more specific error handling.
+Use the `cause` option to preserve the original error:
 
 ```typescript
-import {
-    BaseError, 
-    Options
-} from 'ebec';
-
-export class NotFoundError extends BaseError {
-    constructor(message?: string) {
-        super({
-            message,
-            logMessage: true,
-            logLevel: 'warning',
-            code: 'NOT_FOUND'
-        });
-    }
-
+try {
+    await db.query('...');
+} catch (err) {
+    throw new BaseError({
+        message: 'query failed',
+        code: 'DB_ERROR',
+        cause: err,
+    });
 }
 ```
 
-## Types
+## Serialization
 
-### Input
-
-```typescript
-type Input = Options | Error | string;
-```
-
-### Options
+`toJSON()` returns a plain object with `name`, `message`, `code`, and optionally `cause`. If `cause` is a `BaseError`, it is serialized recursively.
 
 ```typescript
-type Options = {
-    /**
-     * The actual error message, if not provided on another way.
-     */
-    message?: string,
+const cause = new BaseError({ message: 'inner', code: 'INNER' });
+const error = new BaseError({ message: 'outer', code: 'OUTER', cause });
 
-    /**
-     * Trace of which functions were called.
-     */
-    stack?: string
-
-    /**
-     * A unique identifier for the error,
-     * which can be a short uppercase string or a numeric code.
-     */
-    code?: string | number | null,
-
-    /**
-     * Additional data associated with the error. This property can hold
-     * unstructured information or supplementary details that provide context
-     * to the error.
-     */
-    data?: unknown,
-
-    /**
-     * Determines whether the error message can be safely exposed externally.
-     */
-    expose?: boolean;
-
-    /**
-     * Indicates whether the error should be logged in the application's logs.
-     */
-    logMessage?: boolean,
-
-    /**
-     * Specifies the log level at which this error should be recorded.
-     */
-    logLevel?: string | number,
-
-    /**
-     * Represents the underlying cause or source of the error.
-     */
-    cause?: unknown
-};
+console.log(JSON.stringify(error, null, 2));
+// {
+//   "name": "BaseError",
+//   "message": "outer",
+//   "code": "OUTER",
+//   "cause": {
+//     "name": "BaseError",
+//     "message": "inner",
+//     "code": "INNER"
+//   }
+// }
 ```
 
-## Utils
-
-### isBaseError
-
-This method is used to determine if the error is a basic error or if the error extends this class.
+## Type Guards
 
 ```typescript
-import { isBaseError, BaseError } from "ebec";
+import { isBaseError, isErrorWithCode } from '@ebec/core';
 
-const error = new BaseError();
+// Check if any value is a BaseError-shaped object
+if (isBaseError(error)) {
+    console.log(error.code);
+}
 
-console.log(isBaseError(error));
-// true
+// Narrow by specific code
+if (isErrorWithCode(error, 'NOT_FOUND')) {
+    // error.code is narrowed to 'NOT_FOUND'
+}
+
+// Match against multiple codes
+if (isErrorWithCode(error, ['NOT_FOUND', 'GONE'])) {
+    // error.code is 'NOT_FOUND' | 'GONE'
+}
 ```
+
+## Error Catalog
+
+Define a centralized catalog of error factories with interpolation support:
+
+```typescript
+import { defineErrorCatalog } from '@ebec/core';
+
+const errors = defineErrorCatalog({
+    USER_NOT_FOUND: { message: 'User {id} not found' },
+    INVALID_INPUT: { message: 'Invalid input: {reason}', code: 'VALIDATION_ERROR' },
+});
+
+// Create errors with interpolation data
+throw errors.USER_NOT_FOUND({ id: 42 });
+// ^ message: "User 42 not found", code: "USER_NOT_FOUND"
+
+// Override via second argument
+throw errors.INVALID_INPUT({ reason: 'email required' }, { code: 'MISSING_EMAIL' });
+// ^ message: "Invalid input: email required", code: "MISSING_EMAIL"
+```
+
+When `code` is not specified in the catalog entry, the key name is used as the code.
+
+## API Reference
+
+### BaseError
+
+```typescript
+class BaseError extends Error {
+    readonly code: string;
+    cause?: unknown;
+
+    constructor(input?: string | ErrorOptions);
+    toJSON(): { name: string; message: string; code: string; cause?: unknown };
+}
+```
+
+### ErrorOptions
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `message` | `string` | Error message. Defaults to `"An error occurred"`. |
+| `code` | `string` | Error identifier. Derived from class name if not set. |
+| `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
+| `cause` | `unknown` | Underlying cause of the error. |
+| `stack` | `string` | Override the stack trace. |
+
+### Type Guards
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `isBaseError(input)` | `input is IBaseError` | Checks for Error with string `code` |
+| `isErrorWithCode(input, code)` | `input is IBaseError & { code: C }` | Narrows code to specific value(s) |
+| `isErrorOptions(input)` | `input is ErrorOptions` | Validates options shape |
+
+### Helpers
+
+| Function | Description |
+|----------|-------------|
+| `sanitizeErrorCode(input)` | Converts PascalCase to CONSTANT_CASE |
+| `extractErrorOptions(input)` | Normalizes `string \| ErrorOptions` to `ErrorOptions` |
+| `defineErrorCatalog(definitions)` | Creates typed error factory functions |
 
 ## License
 

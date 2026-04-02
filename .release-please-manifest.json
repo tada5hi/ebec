@@ -1,5 +1,4 @@
 {
     "packages/core": "0.0.0",
-    "packages/ebec": "2.3.0",
     "packages/http": "2.3.0"
 }
