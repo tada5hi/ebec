@@ -14,6 +14,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## 2.3.0 (2026-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* public api changed
+
+### Features
+
+* **core:** add error catalog and message interpolation ([#396](https://github.com/tada5hi/ebec/issues/396)) ([3e5bc59](https://github.com/tada5hi/ebec/commit/3e5bc593c1c82ca93c9c9098d3dcf0e718698d05))
+* isErrorWithCode helper fn ([#397](https://github.com/tada5hi/ebec/issues/397)) ([b501aad](https://github.com/tada5hi/ebec/commit/b501aad5c7a0a09517c0ef617ea5ec1fcdda7b6a))
+* move core implementation to @ebec/core package ([#395](https://github.com/tada5hi/ebec/issues/395)) ([a256dd5](https://github.com/tada5hi/ebec/commit/a256dd5c6e35435102bb39bd6361211919d843c5))
+* simplify API ([#398](https://github.com/tada5hi/ebec/issues/398)) ([5821f73](https://github.com/tada5hi/ebec/commit/5821f73213d50e00777b3d667726db410c3cfc7d))
+
+
+### Bug Fixes
+
+* **core:** prevent prototype pollution in options extraction ([19d8e67](https://github.com/tada5hi/ebec/commit/19d8e67528d0270214972d2b61c9330a40f07ef8))
+
 ## [2.2.1](https://github.com/Tada5hi/ebec/compare/ebec@2.2.0...ebec@2.2.1) (2023-09-24)
 
 
