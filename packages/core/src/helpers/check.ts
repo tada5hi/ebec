@@ -6,6 +6,7 @@
  */
 import type { IBaseError, IBaseErrorGroup } from '../types';
 import { isErrorOptions } from '../options';
+import { isError } from './error';
 import { isObject } from './object';
 
 export function isBaseError(
@@ -37,5 +38,6 @@ export function isBaseErrorGroup(
         return false;
     }
 
-    return 'errors' in input && Array.isArray((input as unknown as Record<string, unknown>).errors);
+    const { errors } = input as unknown as Record<string, unknown>;
+    return Array.isArray(errors) && errors.every((e) => isError(e));
 }

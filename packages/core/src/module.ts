@@ -62,7 +62,7 @@ export class BaseError extends Error {
         this.code = options.code || sanitizeErrorCode(this.constructor.name);
 
         if (options.errors !== undefined) {
-            this.errors = options.errors;
+            this.errors = [...options.errors];
         }
     }
 
