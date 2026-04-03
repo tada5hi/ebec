@@ -45,6 +45,22 @@ describe('src/module.ts', () => {
         expect(error.statusMessage).toEqual('BadRequest');
     });
 
+    it('should strip CRLF from status message to prevent response splitting', () => {
+        const error = new HTTPError({
+            statusCode: 400,
+            statusMessage: 'OK\r\nSet-Cookie: admin=true',
+        });
+        expect(error.statusMessage).toEqual('OKSet-Cookie: admin=true');
+    });
+
+    it('should strip lone CR and LF from status message', () => {
+        const error = new HTTPError({
+            statusCode: 400,
+            statusMessage: 'Bad\rRequest\nHere',
+        });
+        expect(error.statusMessage).toEqual('BadRequestHere');
+    });
+
     it('should trim and cap status message length', () => {
         const longMessage = 'A'.repeat(300);
         const error = new HTTPError({
