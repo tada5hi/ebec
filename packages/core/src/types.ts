@@ -14,4 +14,9 @@ export interface IBaseError {
     stack?: string;
     cause?: unknown;
     code: string;
+    errors?: ReadonlyArray<Error>;
+}
+
+export interface IBaseErrorGroup extends IBaseError {
+    errors: ReadonlyArray<Error>;
 }

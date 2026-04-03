@@ -4,8 +4,9 @@
  *  For the full copyright and license information,
  *  view the LICENSE file that was distributed with this source code.
  */
-import type { IBaseError } from '../types';
+import type { IBaseError, IBaseErrorGroup } from '../types';
 import { isErrorOptions } from '../options';
+import { isError } from './error';
 import { isObject } from './object';
 
 export function isBaseError(
@@ -28,4 +29,15 @@ export function isBaseError(
 
     return typeof input.message === 'string' &&
         typeof input.code === 'string';
+}
+
+export function isBaseErrorGroup(
+    input: unknown,
+): input is IBaseErrorGroup {
+    if (!isBaseError(input)) {
+        return false;
+    }
+
+    const { errors } = input as unknown as Record<string, unknown>;
+    return Array.isArray(errors) && errors.every((e) => isError(e));
 }

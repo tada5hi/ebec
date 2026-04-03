@@ -7,7 +7,7 @@
 
 A collection of extensible, type-safe error classes for TypeScript.
 
-Every error gets a `code` (derived automatically from the class name if you don't set one), an optional `cause` for wrapping, and a `toJSON()` that serializes the full chain. No decorators, no reflection — just plain classes you can extend, catch, and serialize.
+Every error gets a `code` (derived automatically from the class name if you don't set one), an optional `cause` for wrapping, optional `errors` for grouping multiple failures, and a `toJSON()` that serializes the full chain. No decorators, no reflection — just plain classes you can extend, catch, and serialize.
 
 **Table of Contents**
 
@@ -46,6 +46,12 @@ throw new BaseError({
 class PaymentError extends BaseError {}
 throw new PaymentError('card declined');
 // ^ code: "PAYMENT_ERROR"
+
+// Group multiple errors
+throw new BaseError({
+    message: 'validation failed',
+    errors: [new Error('field required'), new Error('invalid format')],
+});
 ```
 
 [Full documentation](./packages/core/README.md)

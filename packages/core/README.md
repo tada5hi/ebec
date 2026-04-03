@@ -15,6 +15,7 @@ Core error class library for TypeScript. Provides `BaseError` with automatic cod
 - [Wrapping Errors](#wrapping-errors)
 - [Serialization](#serialization)
 - [Type Guards](#type-guards)
+- [Error Grouping](#error-grouping)
 - [Error Catalog](#error-catalog)
 - [API Reference](#api-reference)
 - [License](#license)
@@ -152,6 +153,70 @@ if (isErrorWithCode(error, ['NOT_FOUND', 'GONE'])) {
 }
 ```
 
+## Error Grouping
+
+Use the `errors` option to collect multiple errors into a single error:
+
+```typescript
+const errors = [
+    new BaseError({ message: 'field "name" is required', code: 'VALIDATION' }),
+    new BaseError({ message: 'field "email" is invalid', code: 'VALIDATION' }),
+];
+
+throw new BaseError({
+    message: 'validation failed',
+    errors,
+});
+```
+
+Plain `Error` instances work too — no wrapping needed:
+
+```typescript
+const results = await Promise.allSettled([taskA(), taskB(), taskC()]);
+const failures = results
+    .filter((r) => r.status === 'rejected')
+    .map((r) => r.reason);
+
+if (failures.length > 0) {
+    throw new BaseError({ message: 'batch operation failed', errors: failures });
+}
+```
+
+Use `isBaseErrorGroup` to check if an error carries grouped errors:
+
+```typescript
+import { isBaseErrorGroup } from '@ebec/core';
+
+if (isBaseErrorGroup(error)) {
+    for (const child of error.errors) {
+        console.log(child.message);
+    }
+}
+```
+
+`toJSON()` includes `errors` when present, serializing each child via its `toJSON()` method if available:
+
+```typescript
+const error = new BaseError({
+    message: 'batch failed',
+    errors: [
+        new BaseError({ message: 'step 1', code: 'STEP_1' }),
+        new Error('step 2'),
+    ],
+});
+
+console.log(JSON.stringify(error, null, 2));
+// {
+//   "name": "BaseError",
+//   "message": "batch failed",
+//   "code": "BASE_ERROR",
+//   "errors": [
+//     { "name": "BaseError", "message": "step 1", "code": "STEP_1" },
+//     { "message": "step 2" }
+//   ]
+// }
+```
+
 ## Error Catalog
 
 Define a centralized catalog of error factories with interpolation support:
@@ -182,10 +247,11 @@ When `code` is not specified in the catalog entry, the key name is used as the c
 ```typescript
 class BaseError extends Error {
     readonly code: string;
+    readonly errors?: ReadonlyArray<Error>;
     cause?: unknown;
 
     constructor(input?: string | ErrorOptions);
-    toJSON(): { name: string; message: string; code: string; cause?: unknown };
+    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[] };
 }
 ```
 
@@ -197,6 +263,7 @@ class BaseError extends Error {
 | `code` | `string` | Error identifier. Derived from class name if not set. |
 | `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
 | `cause` | `unknown` | Underlying cause of the error. |
+| `errors` | `Error[]` | Collection of errors for batch/group scenarios. |
 | `stack` | `string` | Override the stack trace. |
 
 ### Type Guards
@@ -204,7 +271,9 @@ class BaseError extends Error {
 | Function | Returns | Description |
 |----------|---------|-------------|
 | `isBaseError(input)` | `input is IBaseError` | Checks for Error with string `code` |
+| `isBaseErrorGroup(input)` | `input is IBaseErrorGroup` | Checks for `isBaseError` + `errors` array |
 | `isErrorWithCode(input, code)` | `input is IBaseError & { code: C }` | Narrows code to specific value(s) |
+| `isError(input)` | `input is Error` | Duck-type check for Error-shaped objects |
 | `isErrorOptions(input)` | `input is ErrorOptions` | Validates options shape |
 
 ### Helpers
@@ -214,6 +283,7 @@ class BaseError extends Error {
 | `sanitizeErrorCode(input)` | Converts PascalCase to CONSTANT_CASE |
 | `extractErrorOptions(input)` | Normalizes `string \| ErrorOptions` to `ErrorOptions` |
 | `defineErrorCatalog(definitions)` | Creates typed error factory functions |
+| `toSerializable(input)` | Converts to JSON-safe form via `toJSON()` or `{ message }` fallback |
 
 ## License
 

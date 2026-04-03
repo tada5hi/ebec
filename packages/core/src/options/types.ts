@@ -29,5 +29,10 @@ export type ErrorOptions = {
     /**
      * Represents the underlying cause or source of the error.
      */
-    cause?: unknown
+    cause?: unknown,
+
+    /**
+     * A collection of errors for batch/group error scenarios.
+     */
+    errors?: Error[],
 };

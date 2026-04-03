@@ -72,12 +72,12 @@ describe('src/module.ts', () => {
         });
     });
 
-    it('should serialize non-BaseError cause as-is', () => {
+    it('should serialize non-BaseError cause to message object', () => {
         const cause = new Error('native');
         const error = new BaseError({ message: 'wrapped', cause });
         const json = error.toJSON();
 
-        expect(json.cause).toBe(cause);
+        expect(json.cause).toEqual({ message: 'native' });
     });
 
     it('should recognize error', () => {
