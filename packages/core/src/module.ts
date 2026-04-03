@@ -6,7 +6,7 @@
  */
 
 import type { ErrorInput } from './types';
-import { interpolate, sanitizeErrorCode } from './helpers';
+import { interpolate, sanitizeErrorCode, toSerializable } from './helpers';
 import { extractErrorOptions } from './options';
 
 export class BaseError extends Error {
@@ -19,6 +19,11 @@ export class BaseError extends Error {
      * Represents the underlying cause or source of the error.
      */
     override cause?: unknown;
+
+    /**
+     * A collection of errors for batch/group error scenarios.
+     */
+    readonly errors?: ReadonlyArray<Error>;
 
     //--------------------------------------------------------------------
 
@@ -55,25 +60,25 @@ export class BaseError extends Error {
         }
 
         this.code = options.code || sanitizeErrorCode(this.constructor.name);
+
+        if (options.errors !== undefined) {
+            this.errors = options.errors;
+        }
     }
 
     toJSON(): {
         name: string;
         message: string;
         code: string;
-        cause?: unknown
+        cause?: unknown;
+        errors?: unknown[];
     } {
         return {
             name: this.name,
             message: this.message,
             code: this.code,
-            ...(
-                this.cause !== undefined && {
-                    cause: this.cause instanceof BaseError ?
-                        this.cause.toJSON() :
-                        this.cause,
-                }
-            ),
+            ...(this.cause !== undefined && { cause: toSerializable(this.cause) }),
+            ...(this.errors !== undefined && { errors: this.errors.map((e) => toSerializable(e)) }),
         };
     }
 }

@@ -10,3 +10,4 @@ export * from './error-code';
 export * from './interpolate';
 export * from './object';
 export * from './sanitize-code';
+export * from './serialize';
