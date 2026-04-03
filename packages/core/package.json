@@ -5,7 +5,7 @@
     "files": [
         "dist/"
     ],
-    "description": "Core ebec error class library.",
+    "description": "Extensible error class with automatic code derivation, message interpolation, error grouping, and JSON serialization.",
     "author": {
         "name": "Peter Placzek",
         "email": "contact@tada5hi.net",
@@ -15,14 +15,13 @@
     "keywords": [
         "error",
         "typescript",
-        "class",
-        "abstraction",
-        "exception",
-        "debug",
         "error-handling",
-        "options",
-        "merge",
-        "build"
+        "exception",
+        "serialization",
+        "type-guard",
+        "interpolation",
+        "error-catalog",
+        "error-group"
     ],
     "repository": {
         "type": "git",

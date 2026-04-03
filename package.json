@@ -12,14 +12,14 @@
         "./packages/*"
     ],
     "keywords": [
-        "base",
-        "classes",
-        "extendible",
-        "exception",
         "error",
+        "typescript",
+        "error-handling",
         "http",
-        "socket",
-        "interface"
+        "exception",
+        "serialization",
+        "type-guard",
+        "error-classes"
     ],
     "repository": {
         "type": "git",
