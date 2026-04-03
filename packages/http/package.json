@@ -59,7 +59,7 @@
         "mustache": "^4.2.0"
     },
     "dependencies": {
-        "@ebec/core": "^0.0.0"
+        "@ebec/core": "^0.0.1"
     },
     "publishConfig": {
         "access": "public"
