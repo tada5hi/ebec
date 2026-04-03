@@ -1,0 +1,14 @@
+/*
+ * Copyright (c) 2026.
+ *  Author Peter Placzek (tada5hi)
+ *  For the full copyright and license information,
+ *  view the LICENSE file that was distributed with this source code.
+ */
+
+import { isObject } from './object';
+
+export function isError(input: unknown): input is Error {
+    return isObject(input) &&
+        typeof input.message === 'string' &&
+        (typeof input.name === 'string' || typeof input.stack === 'string');
+}

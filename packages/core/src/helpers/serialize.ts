@@ -5,6 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
+import { isError } from './error';
 import { isObject } from './object';
 
 export function toSerializable(input: unknown): unknown {
@@ -12,7 +13,7 @@ export function toSerializable(input: unknown): unknown {
         return input.toJSON();
     }
 
-    if (input instanceof Error) {
+    if (isError(input)) {
         return { message: input.message };
     }
 
