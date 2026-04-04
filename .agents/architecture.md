@@ -72,7 +72,7 @@ new BaseError(existingError, { code: 'WRAPPED' });
 2. Error instances → `message`, `stack`, `cause` (non-enumerable properties)
 3. Objects passing `checkFn` → merge all enumerable keys (unsafe keys like `__proto__`, `constructor`, `prototype` are filtered)
 
-The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isOptions()` that also validates `statusCode`, `statusMessage`, and `redirectURL`.
+The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isHTTPErrorOptions()` that also validates `statusCode`, `statusMessage`, and `redirectURL`.
 
 ## Code Generation (HTTP Package)
 

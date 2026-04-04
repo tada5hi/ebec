@@ -27,10 +27,10 @@ ebec/
 │   └── http/                  # HTTP error classes (@ebec/http)
 │       ├── src/
 │       │   ├── index.ts       # Barrel export
-│       │   ├── types.ts       # HTTP-specific ErrorOptions, ErrorInput
+│       │   ├── types.ts       # HTTPErrorOptions, HTTPErrorInput types
 │       │   ├── core-export.ts # Re-exports @ebec/core for ./core subpath
 │       │   ├── utils/
-│       │   │   ├── options.ts # isErrorOptions(), extractErrorOptions()
+│       │   │   ├── options.ts # isHTTPErrorOptions(), extractHTTPErrorOptions()
 │       │   │   └── sanitize.ts# sanitizeStatusCode(), sanitizeStatusMessage()
 │       │   └── errors/
 │       │       ├── base/      # HTTPError, ClientError, ServerError + types
