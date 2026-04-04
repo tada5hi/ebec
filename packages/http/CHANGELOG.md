@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.0.2](https://github.com/tada5hi/ebec/compare/http-v3.0.1...http-v3.0.2) (2026-04-04)
+
+
+### Bug Fixes
+
+* add missing extends clause in IHTTPError ([89771c9](https://github.com/tada5hi/ebec/commit/89771c92279e4898ae5a90e43905705d74c958ab))
+
 ## [3.0.1](https://github.com/tada5hi/ebec/compare/http-v3.0.0...http-v3.0.1) (2026-04-04)
 
 
