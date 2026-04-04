@@ -1,7 +1,7 @@
 import { BaseError, isBaseError } from '@ebec/core';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
-    isErrorOptions,
+    isHTTPErrorOptions,
     sanitizeStatusCode,
     sanitizeStatusMessage,
 } from '../../utils';
@@ -23,8 +23,8 @@ export class HTTPError extends BaseError {
      */
     readonly redirectURL?: string;
 
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
 
         super(options);
 
@@ -41,7 +41,7 @@ export class HTTPError extends BaseError {
 }
 
 export function isHTTPError(input: unknown): input is IHTTPError {
-    if (!isErrorOptions(input)) {
+    if (!isHTTPErrorOptions(input)) {
         return false;
     }
 

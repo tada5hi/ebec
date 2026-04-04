@@ -1,7 +1,7 @@
 import { isObject } from '@ebec/core';
-import type { ErrorInput, ErrorOptions } from '../types';
+import type { HTTPErrorOptions } from '../types';
 
-export function isErrorOptions(input: unknown) : input is ErrorOptions {
+export function isHTTPErrorOptions(input: unknown) : input is HTTPErrorOptions {
     if (!isObject(input)) {
         return false;
     }
@@ -23,12 +23,4 @@ export function isErrorOptions(input: unknown) : input is ErrorOptions {
 
     return typeof input.redirectURL === 'undefined' ||
         typeof input.redirectURL === 'string';
-}
-
-export function extractErrorOptions(input: ErrorInput = {}): ErrorOptions {
-    if (typeof input === 'string') {
-        return { message: input };
-    }
-
-    return input;
 }

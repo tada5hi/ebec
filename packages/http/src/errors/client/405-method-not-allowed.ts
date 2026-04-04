@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const MethodNotAllowedErrorOptions = {
     code: 'METHOD_NOT_ALLOWED',
@@ -8,8 +8,8 @@ export const MethodNotAllowedErrorOptions = {
 } as const;
 
 export class MethodNotAllowedError extends ClientError {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? MethodNotAllowedErrorOptions.code,

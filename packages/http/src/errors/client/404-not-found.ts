@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NotFoundErrorOptions = {
     code: 'NOT_FOUND',
@@ -8,8 +8,8 @@ export const NotFoundErrorOptions = {
 } as const;
 
 export class NotFoundError extends ClientError {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? NotFoundErrorOptions.code,

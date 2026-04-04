@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const BadGatewayErrorOptions = {
     code: 'BAD_GATEWAY',
@@ -8,8 +8,8 @@ export const BadGatewayErrorOptions = {
 } as const;
 
 export class BadGatewayError extends ServerError {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? BadGatewayErrorOptions.code,

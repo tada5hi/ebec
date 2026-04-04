@@ -1,9 +1,9 @@
-import type { ErrorInput } from '../../types';
+import type { HTTPErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
 import type { IServerError } from './types';
 
 export class ServerError extends HTTPError {
-    constructor(input: ErrorInput = {}) {
+    constructor(input: HTTPErrorInput = {}) {
         super(input);
     }
 }

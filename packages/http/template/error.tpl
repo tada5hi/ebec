@@ -1,5 +1,5 @@
 import { {{baseClass}} } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const {{{class}}}Options = {
     code: '{{code}}',
@@ -8,8 +8,8 @@ export const {{{class}}}Options = {
 } as const;
 
 export class {{{class}}} extends {{baseClass}} {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? {{{class}}}Options.code,

@@ -1,6 +1,6 @@
 import type { ErrorOptions as BaseErrorOptions } from '@ebec/core';
 
-export type ErrorOptions = BaseErrorOptions & {
+export type HTTPErrorOptions = BaseErrorOptions & {
     /**
      * A numeric Status Code between 400-599.
      */
@@ -17,4 +17,4 @@ export type ErrorOptions = BaseErrorOptions & {
     redirectURL?: string
 };
 
-export type ErrorInput = string | ErrorOptions;
+export type HTTPErrorInput = string | HTTPErrorOptions;

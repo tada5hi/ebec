@@ -1,5 +1,5 @@
 import { ServerError } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const LoopDetectedErrorOptions = {
     code: 'LOOP_DETECTED',
@@ -8,8 +8,8 @@ export const LoopDetectedErrorOptions = {
 } as const;
 
 export class LoopDetectedError extends ServerError {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? LoopDetectedErrorOptions.code,

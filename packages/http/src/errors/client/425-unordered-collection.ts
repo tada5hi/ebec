@@ -1,5 +1,5 @@
 import { ClientError } from '../base';
-import type { ErrorInput, ErrorOptions } from '../../types';
+import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const UnorderedCollectionErrorOptions = {
     code: 'UNORDERED_COLLECTION',
@@ -8,8 +8,8 @@ export const UnorderedCollectionErrorOptions = {
 } as const;
 
 export class UnorderedCollectionError extends ClientError {
-    constructor(input: ErrorInput = {}) {
-        const options: ErrorOptions = typeof input === 'string' ? { message: input } : input;
+    constructor(input: HTTPErrorInput = {}) {
+        const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         super({
             ...options,
             code: options.code ?? UnorderedCollectionErrorOptions.code,
