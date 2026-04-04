@@ -1,6 +1,6 @@
 {
     "name": "@ebec/http",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "type": "module",
     "description": "43 pre-built HTTP error classes (4xx/5xx) with status codes, status messages, and duck-typed type guards.",
     "files": [

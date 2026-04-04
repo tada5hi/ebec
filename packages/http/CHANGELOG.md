@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.0.1](https://github.com/tada5hi/ebec/compare/http-v3.0.0...http-v3.0.1) (2026-04-04)
+
+
+### Bug Fixes
+
+* added missing prefix ([88bb7ba](https://github.com/tada5hi/ebec/commit/88bb7baaee521e99f4930a7eea59a224c5aa63cb))
+
 ## [3.0.0](https://github.com/tada5hi/ebec/compare/http-v2.3.0...http-v3.0.0) (2026-04-03)
 
 
