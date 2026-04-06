@@ -14,6 +14,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.0.1](https://github.com/tada5hi/ebec/compare/core-v1.0.0...core-v1.0.1) (2026-04-06)
+
+
+### Bug Fixes
+
+* add missing implements clauses to error class hierarchy ([11b9954](https://github.com/tada5hi/ebec/commit/11b9954c970a2809633be9d7c1c9d0d5771f1988))
+* declaration merging for ErrorConstructor.captureStackTrace ([3d679de](https://github.com/tada5hi/ebec/commit/3d679ded44e4680becbe37af82c6164d28085579))
+
 ## 1.0.0 (2026-04-03)
 
 
