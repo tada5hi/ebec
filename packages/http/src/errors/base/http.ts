@@ -7,7 +7,7 @@ import {
 } from '../../utils';
 import type { IHTTPError } from './types';
 
-export class HTTPError extends BaseError {
+export class HTTPError extends BaseError implements IHTTPError {
     /**
      * A numeric Status Code between 400-599.
      */

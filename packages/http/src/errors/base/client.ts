@@ -2,7 +2,7 @@ import type { HTTPErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
 import type { IClientError } from './types';
 
-export class ClientError extends HTTPError {
+export class ClientError extends HTTPError implements IClientError {
     constructor(input: HTTPErrorInput = {}) {
         super(input);
     }

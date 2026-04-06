@@ -9,9 +9,7 @@ import type { ErrorOptions } from './options';
 
 export type ErrorInput = string | ErrorOptions;
 
-export interface IBaseError {
-    message: string;
-    stack?: string;
+export interface IBaseError extends Error {
     cause?: unknown;
     code: string;
     errors?: ReadonlyArray<Error>;

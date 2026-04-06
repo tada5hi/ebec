@@ -5,11 +5,11 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { ErrorInput } from './types';
+import type { ErrorInput, IBaseError } from './types';
 import { interpolate, sanitizeErrorCode, toSerializable } from './helpers';
 import { extractErrorOptions } from './options';
 
-export class BaseError extends Error {
+export class BaseError extends Error implements IBaseError {
     /**
      * A unique identifier for the error.
      */
