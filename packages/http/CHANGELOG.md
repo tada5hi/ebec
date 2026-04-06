@@ -14,6 +14,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.0.3](https://github.com/tada5hi/ebec/compare/http-v3.0.2...http-v3.0.3) (2026-04-06)
+
+
+### Bug Fixes
+
+* add missing implements clauses to error class hierarchy ([11b9954](https://github.com/tada5hi/ebec/commit/11b9954c970a2809633be9d7c1c9d0d5771f1988))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @ebec/core bumped from ^1.0.0 to ^1.0.1
+
 ## [3.0.2](https://github.com/tada5hi/ebec/compare/http-v3.0.1...http-v3.0.2) (2026-04-04)
 
 
