@@ -70,10 +70,10 @@ npm install @ebec/http
 import { NotFoundError, isClientError } from '@ebec/http';
 
 const error = new NotFoundError('resource not found');
-// ^ statusCode: 404, code: "NOT_FOUND", statusMessage: "Not Found"
+// ^ status: 404, code: "NOT_FOUND", statusMessage: "Not Found"
 
 if (isClientError(error)) {
-    res.status(error.statusCode).json(error.toJSON());
+    res.status(error.status).json(error.toJSON());
 }
 ```
 

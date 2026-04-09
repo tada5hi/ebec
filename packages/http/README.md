@@ -31,7 +31,7 @@ import { NotFoundError, InternalServerError } from '@ebec/http';
 
 // String message
 const error = new NotFoundError('user not found');
-console.log(error.statusCode);    // 404
+console.log(error.status);        // 404
 console.log(error.code);          // "NOT_FOUND"
 console.log(error.statusMessage); // "Not Found"
 
@@ -40,8 +40,8 @@ const error = new InternalServerError({
     message: 'database connection lost',
     code: 'DB_CONN_LOST',
 });
-console.log(error.statusCode); // 500
-console.log(error.code);       // "DB_CONN_LOST"
+console.log(error.status); // 500
+console.log(error.code);   // "DB_CONN_LOST"
 ```
 
 Use in an Express-style error handler:
@@ -51,7 +51,7 @@ import { isHTTPError } from '@ebec/http';
 
 app.use((err, req, res, next) => {
     if (isHTTPError(err)) {
-        res.status(err.statusCode).json(err.toJSON());
+        res.status(err.status).json(err.toJSON());
     } else {
         res.status(500).json({ message: 'Internal Server Error' });
     }
@@ -75,7 +75,7 @@ class UserNotFoundError extends NotFoundError {
 }
 
 throw new UserNotFoundError(42);
-// statusCode: 404, code: "USER_NOT_FOUND", message: "User 42 not found"
+// status: 404, code: "USER_NOT_FOUND", message: "User 42 not found"
 ```
 
 ## Type Guards
@@ -90,16 +90,16 @@ import {
 } from '@ebec/http';
 
 if (isHTTPError(error)) {
-    // error has statusCode (400-599)
-    console.log(error.statusCode);
+    // error has status (400-599)
+    console.log(error.status);
 }
 
 if (isClientError(error)) {
-    // error has statusCode 400-499
+    // error has status 400-499
 }
 
 if (isServerError(error)) {
-    // error has statusCode 500-599
+    // error has status 500-599
 }
 ```
 
@@ -180,9 +180,11 @@ import { BaseError, isBaseError } from '@ebec/http/core';
 
 ```typescript
 class HTTPError extends BaseError {
-    readonly statusCode: number;       // defaults to 500
+    readonly status: number;           // defaults to 500
     readonly statusMessage?: string;   // ASCII printable, max 256 chars
     readonly redirectURL?: string;
+
+    get statusCode(): number;          // @deprecated — alias for `status`
 
     constructor(input?: string | ErrorOptions);
 }
@@ -194,7 +196,8 @@ Extends core `ErrorOptions` with HTTP-specific fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `statusCode` | `number \| string` | HTTP status code (100-599). Invalid values default to 500. |
+| `status` | `number \| string` | HTTP status code (100-599). Invalid values default to 500. |
+| `statusCode` | `number \| string` | **Deprecated.** Alias for `status`. |
 | `statusMessage` | `string` | Reason phrase. Sanitized to ASCII printable, max 256 chars. |
 | `redirectURL` | `string` | Redirect URL for 3xx-style responses. |
 
@@ -204,17 +207,19 @@ Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
 
 | Function | Returns | Checks |
 |----------|---------|--------|
-| `isHTTPError(input)` | `input is IHTTPError` | statusCode 400-599, passes `isBaseError` |
-| `isClientError(input)` | `input is IClientError` | `isHTTPError` + statusCode 400-499 |
-| `isServerError(input)` | `input is IServerError` | `isHTTPError` + statusCode 500-599 |
+| `isHTTPError(input)` | `input is IHTTPError` | status 400-599, passes `isBaseError` |
+| `isClientError(input)` | `input is IClientError` | `isHTTPError` + status 400-499 |
+| `isServerError(input)` | `input is IServerError` | `isHTTPError` + status 500-599 |
 | `isErrorOptions(input)` | `input is ErrorOptions` | Validates HTTP options shape |
 
-### Sanitization
+### Utilities
 
 | Function | Description |
 |----------|-------------|
+| `getStatusText(statusCode)` | Returns the reason phrase for a given status code, or `undefined` if not found |
 | `sanitizeStatusCode(input)` | Parses and validates (100-599), defaults to 500 |
 | `sanitizeStatusMessage(input)` | Strips non-ASCII, trims, caps at 256 chars |
+| `STATUS_TEXTS` | Map of status codes to reason phrases (e.g. `400 → "Bad Request"`) |
 
 ## License
 
