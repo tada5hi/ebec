@@ -14,6 +14,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.1.0](https://github.com/tada5hi/ebec/compare/http-v3.0.3...http-v3.1.0) (2026-04-09)
+
+
+### Features
+
+* **http:** add status property and deprecate statusCode ([#414](https://github.com/tada5hi/ebec/issues/414)) ([77a22a8](https://github.com/tada5hi/ebec/commit/77a22a876a267883643340e00a1ad85df0766281))
+* **http:** add statusCode-to-statusText lookup utility ([#412](https://github.com/tada5hi/ebec/issues/412)) ([a797b7f](https://github.com/tada5hi/ebec/commit/a797b7f1fadc54ef0e43b4c7f7f41cc099e25c06))
+
 ## [3.0.3](https://github.com/tada5hi/ebec/compare/http-v3.0.2...http-v3.0.3) (2026-04-06)
 
 
