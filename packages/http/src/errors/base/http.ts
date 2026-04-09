@@ -22,17 +22,17 @@ export class HTTPError extends BaseError implements IHTTPError {
 
     constructor(input: HTTPErrorInput = {}) {
         const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
-
-        super(options);
-
         const statusCode = options.status ?? options.statusCode;
-        this.status = statusCode ?
+        const statusCodeNormalized = statusCode ?
             sanitizeStatusCode(statusCode) :
             500;
 
-        if (!options.message) {
-            this.message = getStatusText(this.status) || 'An error occurred';
-        }
+        super({
+            ...options,
+            message: options.message || getStatusText(statusCodeNormalized),
+        });
+
+        this.status = statusCodeNormalized;
 
         this.redirectURL = options.redirectURL;
     }
