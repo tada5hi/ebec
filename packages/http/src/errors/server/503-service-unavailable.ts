@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const ServiceUnavailableErrorOptions = {
     code: 'SERVICE_UNAVAILABLE',
     status: 503,
-    statusMessage: 'Service Unavailable',
 } as const;
 
 export class ServiceUnavailableError extends ServerError {
@@ -14,7 +13,6 @@ export class ServiceUnavailableError extends ServerError {
             ...options,
             code: options.code ?? ServiceUnavailableErrorOptions.code,
             status: options.status ?? options.statusCode ?? ServiceUnavailableErrorOptions.status,
-            statusMessage: options.statusMessage ?? ServiceUnavailableErrorOptions.statusMessage,
         });
     }
 }

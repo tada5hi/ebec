@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const RetryWithErrorOptions = {
     code: 'RETRY_WITH',
     status: 449,
-    statusMessage: 'Retry With',
 } as const;
 
 export class RetryWithError extends ClientError {
@@ -14,7 +13,6 @@ export class RetryWithError extends ClientError {
             ...options,
             code: options.code ?? RetryWithErrorOptions.code,
             status: options.status ?? options.statusCode ?? RetryWithErrorOptions.status,
-            statusMessage: options.statusMessage ?? RetryWithErrorOptions.statusMessage,
         });
     }
 }

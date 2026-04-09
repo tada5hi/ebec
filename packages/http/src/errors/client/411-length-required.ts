@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const LengthRequiredErrorOptions = {
     code: 'LENGTH_REQUIRED',
     status: 411,
-    statusMessage: 'Length Required',
 } as const;
 
 export class LengthRequiredError extends ClientError {
@@ -14,7 +13,6 @@ export class LengthRequiredError extends ClientError {
             ...options,
             code: options.code ?? LengthRequiredErrorOptions.code,
             status: options.status ?? options.statusCode ?? LengthRequiredErrorOptions.status,
-            statusMessage: options.statusMessage ?? LengthRequiredErrorOptions.statusMessage,
         });
     }
 }

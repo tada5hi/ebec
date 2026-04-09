@@ -14,11 +14,6 @@ export type HTTPErrorOptions = BaseErrorOptions & {
     statusCode?: number | string,
 
     /**
-     * A status message.
-     */
-    statusMessage?: string,
-
-    /**
      * Specify a redirect URL in case of a http error.
      */
     redirectURL?: string

@@ -1,9 +1,9 @@
 import { BaseError, isBaseError } from '@ebec/core';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
+    getStatusText,
     isHTTPErrorOptions,
     sanitizeStatusCode,
-    sanitizeStatusMessage,
 } from '../../utils';
 import type { IHTTPError } from './types';
 
@@ -14,14 +14,11 @@ export class HTTPError extends BaseError implements IHTTPError {
     readonly status: number;
 
     /**
-     * A status message.
-     */
-    readonly statusMessage?: string;
-
-    /**
      * Specify a redirect URL in case of a http error.
      */
     readonly redirectURL?: string;
+
+    private _statusMessage: string | undefined | null = null;
 
     constructor(input: HTTPErrorInput = {}) {
         const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
@@ -33,11 +30,22 @@ export class HTTPError extends BaseError implements IHTTPError {
             sanitizeStatusCode(statusCode) :
             500;
 
-        this.statusMessage = options.statusMessage ?
-            sanitizeStatusMessage(options.statusMessage) :
-            undefined;
+        if (!options.message) {
+            this.message = getStatusText(this.status) || 'An error occurred';
+        }
 
         this.redirectURL = options.redirectURL;
+    }
+
+    /**
+     * The HTTP reason phrase derived from the status code.
+     */
+    get statusMessage(): string | undefined {
+        if (this._statusMessage === null) {
+            this._statusMessage = getStatusText(this.status);
+        }
+
+        return this._statusMessage;
     }
 
     /**
@@ -45,6 +53,14 @@ export class HTTPError extends BaseError implements IHTTPError {
      */
     get statusCode(): number {
         return this.status;
+    }
+
+    override toJSON() {
+        return {
+            ...super.toJSON(),
+            status: this.status,
+            statusMessage: this.statusMessage,
+        };
     }
 }
 

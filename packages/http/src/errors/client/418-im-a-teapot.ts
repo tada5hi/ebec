@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const ImATeapotErrorOptions = {
     code: 'IM_A_TEAPOT',
     status: 418,
-    statusMessage: 'I\'m a Teapot',
 } as const;
 
 export class ImATeapotError extends ClientError {
@@ -14,7 +13,6 @@ export class ImATeapotError extends ClientError {
             ...options,
             code: options.code ?? ImATeapotErrorOptions.code,
             status: options.status ?? options.statusCode ?? ImATeapotErrorOptions.status,
-            statusMessage: options.statusMessage ?? ImATeapotErrorOptions.statusMessage,
         });
     }
 }

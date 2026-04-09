@@ -6,7 +6,7 @@ export interface IHTTPError extends IBaseError {
      * @deprecated Use `status` instead.
      */
     statusCode: number;
-    statusMessage?: string;
+    statusMessage: string | undefined;
     redirectURL?: string;
 }
 

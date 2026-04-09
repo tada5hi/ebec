@@ -16,8 +16,5 @@ describe('src/utils/options.ts', () => {
 
         is = isHTTPErrorOptions({ statusCode: { foo: 'bar' } });
         expect(is).toBeFalsy();
-
-        is = isHTTPErrorOptions({ statusMessage: 1 });
-        expect(is).toBeFalsy();
     });
 });

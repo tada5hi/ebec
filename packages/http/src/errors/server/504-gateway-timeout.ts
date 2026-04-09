@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const GatewayTimeoutErrorOptions = {
     code: 'GATEWAY_TIMEOUT',
     status: 504,
-    statusMessage: 'Gateway Timeout',
 } as const;
 
 export class GatewayTimeoutError extends ServerError {
@@ -14,7 +13,6 @@ export class GatewayTimeoutError extends ServerError {
             ...options,
             code: options.code ?? GatewayTimeoutErrorOptions.code,
             status: options.status ?? options.statusCode ?? GatewayTimeoutErrorOptions.status,
-            statusMessage: options.statusMessage ?? GatewayTimeoutErrorOptions.statusMessage,
         });
     }
 }

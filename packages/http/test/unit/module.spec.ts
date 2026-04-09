@@ -19,23 +19,48 @@ describe('src/module.ts', () => {
     });
 
     it('should create instance with options', () => {
-        const error = new HTTPError({
-            statusCode: 490,
-            statusMessage: 'Foo bar',
-        });
+        const error = new HTTPError({ statusCode: 490 });
         expect(error.status).toEqual(490);
         expect(error.statusCode).toEqual(490);
-        expect(error.statusMessage).toEqual('Foo bar');
     });
 
     it('should create instance with status option', () => {
-        const error = new HTTPError({
-            status: 490,
-            statusMessage: 'Foo bar',
-        });
+        const error = new HTTPError({ status: 490 });
         expect(error.status).toEqual(490);
         expect(error.statusCode).toEqual(490);
-        expect(error.statusMessage).toEqual('Foo bar');
+    });
+
+    it('should default message to status text when no message provided', () => {
+        const error = new HTTPError({ status: 404 });
+        expect(error.message).toEqual('Not Found');
+    });
+
+    it('should preserve explicit message', () => {
+        const error = new HTTPError({ status: 404, message: 'User not found' });
+        expect(error.message).toEqual('User not found');
+    });
+
+    it('should fall back to default message for unknown status code', () => {
+        const error = new HTTPError({ status: 490 });
+        expect(error.message).toEqual('An error occurred');
+    });
+
+    it('should derive statusMessage from status code', () => {
+        const error = new HTTPError({ status: 404 });
+        expect(error.statusMessage).toEqual('Not Found');
+    });
+
+    it('should return undefined statusMessage for unknown status code', () => {
+        const error = new HTTPError({ status: 490 });
+        expect(error.statusMessage).toBeUndefined();
+    });
+
+    it('should cache statusMessage on repeated access', () => {
+        const error = new HTTPError({ status: 500 });
+        const first = error.statusMessage;
+        const second = error.statusMessage;
+        expect(first).toEqual('Internal Server Error');
+        expect(first).toBe(second);
     });
 
     it('should prefer status over deprecated statusCode when both are provided', () => {
@@ -64,38 +89,13 @@ describe('src/module.ts', () => {
         expect(error.statusCode).toEqual(422);
     });
 
-    it('should sanitize status message to ASCII only', () => {
-        const error = new HTTPError({
-            statusCode: 400,
-            statusMessage: 'Bad\u00A0Request\u200B',
-        });
-        expect(error.statusMessage).toEqual('BadRequest');
-    });
-
-    it('should strip CRLF from status message to prevent response splitting', () => {
-        const error = new HTTPError({
-            statusCode: 400,
-            statusMessage: 'OK\r\nSet-Cookie: admin=true',
-        });
-        expect(error.statusMessage).toEqual('OKSet-Cookie: admin=true');
-    });
-
-    it('should strip lone CR and LF from status message', () => {
-        const error = new HTTPError({
-            statusCode: 400,
-            statusMessage: 'Bad\rRequest\nHere',
-        });
-        expect(error.statusMessage).toEqual('BadRequestHere');
-    });
-
-    it('should trim and cap status message length', () => {
-        const longMessage = 'A'.repeat(300);
-        const error = new HTTPError({
-            statusCode: 400,
-            statusMessage: `  ${longMessage}  `,
-        });
-        expect(error.statusMessage!.length).toBeLessThanOrEqual(256);
-        expect(error.statusMessage).toEqual('A'.repeat(256));
+    it('should include status and statusMessage in toJSON', () => {
+        const error = new NotFoundError('User not found');
+        const json = error.toJSON();
+        expect(json.status).toEqual(404);
+        expect(json.statusMessage).toEqual('Not Found');
+        expect(json.message).toEqual('User not found');
+        expect(json.code).toEqual('NOT_FOUND');
     });
 
     it('should recognize client error', () => {
