@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NotImplementedErrorOptions = {
     code: 'NOT_IMPLEMENTED',
-    statusCode: 501,
+    status: 501,
     statusMessage: 'Not Implemented',
 } as const;
 
@@ -13,7 +13,7 @@ export class NotImplementedError extends ServerError {
         super({
             ...options,
             code: options.code ?? NotImplementedErrorOptions.code,
-            statusCode: options.statusCode ?? NotImplementedErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? NotImplementedErrorOptions.status,
             statusMessage: options.statusMessage ?? NotImplementedErrorOptions.statusMessage,
         });
     }

@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const InsufficientStorageErrorOptions = {
     code: 'INSUFFICIENT_STORAGE',
-    statusCode: 507,
+    status: 507,
     statusMessage: 'Insufficient Storage',
 } as const;
 
@@ -13,7 +13,7 @@ export class InsufficientStorageError extends ServerError {
         super({
             ...options,
             code: options.code ?? InsufficientStorageErrorOptions.code,
-            statusCode: options.statusCode ?? InsufficientStorageErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? InsufficientStorageErrorOptions.status,
             statusMessage: options.statusMessage ?? InsufficientStorageErrorOptions.statusMessage,
         });
     }

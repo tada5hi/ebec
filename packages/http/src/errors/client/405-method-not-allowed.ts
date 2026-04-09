@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const MethodNotAllowedErrorOptions = {
     code: 'METHOD_NOT_ALLOWED',
-    statusCode: 405,
+    status: 405,
     statusMessage: 'Method Not Allowed',
 } as const;
 
@@ -13,7 +13,7 @@ export class MethodNotAllowedError extends ClientError {
         super({
             ...options,
             code: options.code ?? MethodNotAllowedErrorOptions.code,
-            statusCode: options.statusCode ?? MethodNotAllowedErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? MethodNotAllowedErrorOptions.status,
             statusMessage: options.statusMessage ?? MethodNotAllowedErrorOptions.statusMessage,
         });
     }

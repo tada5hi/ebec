@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const ClientClosedRequestErrorOptions = {
     code: 'CLIENT_CLOSED_REQUEST',
-    statusCode: 499,
+    status: 499,
     statusMessage: 'Client Closed Request',
 } as const;
 
@@ -13,7 +13,7 @@ export class ClientClosedRequestError extends ClientError {
         super({
             ...options,
             code: options.code ?? ClientClosedRequestErrorOptions.code,
-            statusCode: options.statusCode ?? ClientClosedRequestErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? ClientClosedRequestErrorOptions.status,
             statusMessage: options.statusMessage ?? ClientClosedRequestErrorOptions.statusMessage,
         });
     }

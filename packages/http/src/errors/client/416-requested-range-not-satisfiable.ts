@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const RequestedRangeNotSatisfiableErrorOptions = {
     code: 'REQUESTED_RANGE_NOT_SATISFIABLE',
-    statusCode: 416,
+    status: 416,
     statusMessage: 'Requested Range Not Satisfiable',
 } as const;
 
@@ -13,7 +13,7 @@ export class RequestedRangeNotSatisfiableError extends ClientError {
         super({
             ...options,
             code: options.code ?? RequestedRangeNotSatisfiableErrorOptions.code,
-            statusCode: options.statusCode ?? RequestedRangeNotSatisfiableErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? RequestedRangeNotSatisfiableErrorOptions.status,
             statusMessage: options.statusMessage ?? RequestedRangeNotSatisfiableErrorOptions.statusMessage,
         });
     }

@@ -4,6 +4,13 @@ export type HTTPErrorOptions = BaseErrorOptions & {
     /**
      * A numeric Status Code between 400-599.
      */
+    status?: number | string,
+
+    /**
+     * A numeric Status Code between 400-599.
+     *
+     * @deprecated Use `status` instead.
+     */
     statusCode?: number | string,
 
     /**

@@ -13,6 +13,7 @@ export function isClientError(input: unknown): input is IClientError {
         return false;
     }
 
-    return input.statusCode >= 400 &&
-        input.statusCode < 500;
+    const status = input.status ?? input.statusCode;
+    return status >= 400 &&
+        status < 500;
 }

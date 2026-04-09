@@ -27,11 +27,13 @@ ebec/
 │   └── http/                  # HTTP error classes (@ebec/http)
 │       ├── src/
 │       │   ├── index.ts       # Barrel export
+│       │   ├── constants.ts   # Generated STATUS_TEXTS map (statusCode → reason phrase)
 │       │   ├── types.ts       # HTTPErrorOptions, HTTPErrorInput types
 │       │   ├── core-export.ts # Re-exports @ebec/core for ./core subpath
 │       │   ├── utils/
-│       │   │   ├── options.ts # isHTTPErrorOptions(), extractHTTPErrorOptions()
-│       │   │   └── sanitize.ts# sanitizeStatusCode(), sanitizeStatusMessage()
+│       │   │   ├── options.ts     # isHTTPErrorOptions()
+│       │   │   ├── sanitize.ts    # sanitizeStatusCode(), sanitizeStatusMessage()
+│       │   │   └── status-text.ts # getStatusText()
 │       │   └── errors/
 │       │       ├── base/      # HTTPError, ClientError, ServerError + types
 │       │       ├── client/    # Generated 4xx error classes (31 files)
@@ -71,7 +73,7 @@ ebec/
 
 ## Generated Files
 
-Files in `packages/http/src/errors/client/` and `packages/http/src/errors/server/` are **generated** by `npm run build:classes` in the http package. Do not edit these files directly — modify `build/client.json`, `build/server.json`, or `template/error.tpl` instead. The JSON configs use a simplified format: `{ "ClassName": statusCode }` for simple cases, or `{ "ClassName": { "statusCode": N, "statusMessage": "..." } }` for edge cases requiring explicit overrides. The `code` and `statusMessage` are derived from the class name by default.
+Files in `packages/http/src/errors/client/`, `packages/http/src/errors/server/`, and `packages/http/src/constants.ts` are **generated** by `npm run build:classes` in the http package. Do not edit these files directly — modify `build/client.json`, `build/server.json`, or `template/error.tpl` instead. The JSON configs use a simplified format: `{ "ClassName": statusCode }` for simple cases, or `{ "ClassName": { "statusCode": N, "statusMessage": "..." } }` for edge cases requiring explicit overrides. The `code` and `statusMessage` are derived from the class name by default.
 
 ## Package Exports
 

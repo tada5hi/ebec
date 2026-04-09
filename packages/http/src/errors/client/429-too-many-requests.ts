@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const TooManyRequestsErrorOptions = {
     code: 'TOO_MANY_REQUESTS',
-    statusCode: 429,
+    status: 429,
     statusMessage: 'Too Many Requests',
 } as const;
 
@@ -13,7 +13,7 @@ export class TooManyRequestsError extends ClientError {
         super({
             ...options,
             code: options.code ?? TooManyRequestsErrorOptions.code,
-            statusCode: options.statusCode ?? TooManyRequestsErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? TooManyRequestsErrorOptions.status,
             statusMessage: options.statusMessage ?? TooManyRequestsErrorOptions.statusMessage,
         });
     }

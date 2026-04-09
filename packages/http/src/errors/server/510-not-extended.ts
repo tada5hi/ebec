@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NotExtendedErrorOptions = {
     code: 'NOT_EXTENDED',
-    statusCode: 510,
+    status: 510,
     statusMessage: 'Not Extended',
 } as const;
 
@@ -13,7 +13,7 @@ export class NotExtendedError extends ServerError {
         super({
             ...options,
             code: options.code ?? NotExtendedErrorOptions.code,
-            statusCode: options.statusCode ?? NotExtendedErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? NotExtendedErrorOptions.status,
             statusMessage: options.statusMessage ?? NotExtendedErrorOptions.statusMessage,
         });
     }

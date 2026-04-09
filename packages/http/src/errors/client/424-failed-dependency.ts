@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const FailedDependencyErrorOptions = {
     code: 'FAILED_DEPENDENCY',
-    statusCode: 424,
+    status: 424,
     statusMessage: 'Failed Dependency',
 } as const;
 
@@ -13,7 +13,7 @@ export class FailedDependencyError extends ClientError {
         super({
             ...options,
             code: options.code ?? FailedDependencyErrorOptions.code,
-            statusCode: options.statusCode ?? FailedDependencyErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? FailedDependencyErrorOptions.status,
             statusMessage: options.statusMessage ?? FailedDependencyErrorOptions.statusMessage,
         });
     }

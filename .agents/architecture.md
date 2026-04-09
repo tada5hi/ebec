@@ -35,16 +35,18 @@ class BaseError extends Error {
 
 ```typescript
 class HTTPError extends BaseError {
-    readonly statusCode: number;       // HTTP status (400-599), defaults to 500
+    readonly status: number;           // HTTP status (400-599), defaults to 500
+    get statusCode(): number;          // @deprecated — alias for `status`
     readonly statusMessage?: string;   // HTTP reason phrase (ASCII printable, max 256 chars)
     readonly redirectURL?: string;     // For redirect responses
 }
 ```
 
-### StatusCode Validation
+### Status Validation
 
 - Invalid status codes (outside 100-599) are sanitized to 500
-- Generated subclasses use nullish coalescing (`??`) to preserve their default statusCode when the user passes `undefined`
+- Constructor accepts both `status` and `statusCode` options; `status` takes precedence
+- Generated subclasses use nullish coalescing (`??`) to preserve their default status when the user passes `undefined`
 
 ### StatusMessage Sanitization
 
@@ -72,7 +74,7 @@ new BaseError(existingError, { code: 'WRAPPED' });
 2. Error instances → `message`, `stack`, `cause` (non-enumerable properties)
 3. Objects passing `checkFn` → merge all enumerable keys (unsafe keys like `__proto__`, `constructor`, `prototype` are filtered)
 
-The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isHTTPErrorOptions()` that also validates `statusCode`, `statusMessage`, and `redirectURL`.
+The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isHTTPErrorOptions()` that also validates `status`, `statusCode`, `statusMessage`, and `redirectURL`.
 
 ## Code Generation (HTTP Package)
 
@@ -81,7 +83,7 @@ The http package generates error classes from JSON config + Mustache template:
 1. **Config**: `build/client.json` and `build/server.json` — simple `{ ClassName: statusCode }` format, with optional object form for edge cases requiring explicit `statusMessage` or `code` overrides
 2. **Derivation**: `code` (CONSTANT_CASE) and `statusMessage` (space-separated words) are derived from the PascalCase key name. Explicit values in the config override derivation.
 3. **Template**: `template/error.tpl` produces a class extending `ClientError` or `ServerError`
-4. **Script**: `build/index.mjs` renders templates and writes to `src/errors/{client,server}/`
+4. **Script**: `build/index.mjs` renders templates and writes to `src/errors/{client,server}/`, and generates `src/constants.ts` (the `STATUS_TEXTS` map)
 5. **Barrel exports**: Auto-generated `index.ts` files in each subdirectory
 
 To add a new HTTP error: add an entry to the appropriate JSON file and run `npm run build:classes -w packages/http`.
@@ -94,6 +96,6 @@ Each level provides a type guard for duck-type checking:
 |----------|---------|--------|
 | `isBaseError(x)` | @ebec/core | Is object with valid Options shape + string message |
 | `isErrorWithCode(x, code)` | @ebec/core | isBaseError + code matches (single or array) |
-| `isHTTPError(x)` | @ebec/http | Is error with numeric statusCode 400-599 |
-| `isClientError(x)` | @ebec/http | isHTTPError + statusCode 400-499 |
-| `isServerError(x)` | @ebec/http | isHTTPError + statusCode 500-599 |
+| `isHTTPError(x)` | @ebec/http | Is error with numeric status (or statusCode) 400-599 |
+| `isClientError(x)` | @ebec/http | isHTTPError + status 400-499 |
+| `isServerError(x)` | @ebec/http | isHTTPError + status 500-599 |

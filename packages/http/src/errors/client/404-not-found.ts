@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NotFoundErrorOptions = {
     code: 'NOT_FOUND',
-    statusCode: 404,
+    status: 404,
     statusMessage: 'Not Found',
 } as const;
 
@@ -13,7 +13,7 @@ export class NotFoundError extends ClientError {
         super({
             ...options,
             code: options.code ?? NotFoundErrorOptions.code,
-            statusCode: options.statusCode ?? NotFoundErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? NotFoundErrorOptions.status,
             statusMessage: options.statusMessage ?? NotFoundErrorOptions.statusMessage,
         });
     }

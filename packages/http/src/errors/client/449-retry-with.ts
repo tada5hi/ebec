@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const RetryWithErrorOptions = {
     code: 'RETRY_WITH',
-    statusCode: 449,
+    status: 449,
     statusMessage: 'Retry With',
 } as const;
 
@@ -13,7 +13,7 @@ export class RetryWithError extends ClientError {
         super({
             ...options,
             code: options.code ?? RetryWithErrorOptions.code,
-            statusCode: options.statusCode ?? RetryWithErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? RetryWithErrorOptions.status,
             statusMessage: options.statusMessage ?? RetryWithErrorOptions.statusMessage,
         });
     }

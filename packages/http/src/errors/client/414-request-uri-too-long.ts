@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const RequestURITooLongErrorOptions = {
     code: 'REQUEST_URI_TOO_LONG',
-    statusCode: 414,
+    status: 414,
     statusMessage: 'Request-URI Too Long',
 } as const;
 
@@ -13,7 +13,7 @@ export class RequestURITooLongError extends ClientError {
         super({
             ...options,
             code: options.code ?? RequestURITooLongErrorOptions.code,
-            statusCode: options.statusCode ?? RequestURITooLongErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? RequestURITooLongErrorOptions.status,
             statusMessage: options.statusMessage ?? RequestURITooLongErrorOptions.statusMessage,
         });
     }
