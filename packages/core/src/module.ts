@@ -51,7 +51,7 @@ export class BaseError extends Error implements IBaseError {
         }
 
         if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
+            Error.captureStackTrace(this, this.constructor as new (...args: never[]) => unknown);
         }
 
         // override existing stack

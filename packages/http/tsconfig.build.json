@@ -1,12 +1,7 @@
 {
     "extends": "../../tsconfig.build.json",
     "compilerOptions": {
-        "outDir": "./dist",
-        "paths": {
-            "@ebec/core": [
-                "../core/src"
-            ]
-        }
+        "outDir": "./dist"
     },
     "include": [
         "src/**/*.ts"
