@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NetworkAuthenticationRequiredErrorOptions = {
     code: 'NETWORK_AUTHENTICATION_REQUIRED',
-    statusCode: 511,
+    status: 511,
     statusMessage: 'Network Authentication Required',
 } as const;
 
@@ -13,7 +13,7 @@ export class NetworkAuthenticationRequiredError extends ServerError {
         super({
             ...options,
             code: options.code ?? NetworkAuthenticationRequiredErrorOptions.code,
-            statusCode: options.statusCode ?? NetworkAuthenticationRequiredErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? NetworkAuthenticationRequiredErrorOptions.status,
             statusMessage: options.statusMessage ?? NetworkAuthenticationRequiredErrorOptions.statusMessage,
         });
     }

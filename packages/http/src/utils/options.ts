@@ -7,6 +7,14 @@ export function isHTTPErrorOptions(input: unknown) : input is HTTPErrorOptions {
     }
 
     if (
+        typeof input.status !== 'undefined' &&
+        typeof input.status !== 'number' &&
+        typeof input.status !== 'string'
+    ) {
+        return false;
+    }
+
+    if (
         typeof input.statusCode !== 'undefined' &&
         typeof input.statusCode !== 'number' &&
         typeof input.statusCode !== 'string'

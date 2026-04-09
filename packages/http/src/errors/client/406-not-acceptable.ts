@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const NotAcceptableErrorOptions = {
     code: 'NOT_ACCEPTABLE',
-    statusCode: 406,
+    status: 406,
     statusMessage: 'Not Acceptable',
 } as const;
 
@@ -13,7 +13,7 @@ export class NotAcceptableError extends ClientError {
         super({
             ...options,
             code: options.code ?? NotAcceptableErrorOptions.code,
-            statusCode: options.statusCode ?? NotAcceptableErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? NotAcceptableErrorOptions.status,
             statusMessage: options.statusMessage ?? NotAcceptableErrorOptions.statusMessage,
         });
     }

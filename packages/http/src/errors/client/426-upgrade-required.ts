@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const UpgradeRequiredErrorOptions = {
     code: 'UPGRADE_REQUIRED',
-    statusCode: 426,
+    status: 426,
     statusMessage: 'Upgrade Required',
 } as const;
 
@@ -13,7 +13,7 @@ export class UpgradeRequiredError extends ClientError {
         super({
             ...options,
             code: options.code ?? UpgradeRequiredErrorOptions.code,
-            statusCode: options.statusCode ?? UpgradeRequiredErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? UpgradeRequiredErrorOptions.status,
             statusMessage: options.statusMessage ?? UpgradeRequiredErrorOptions.statusMessage,
         });
     }

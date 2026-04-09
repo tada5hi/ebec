@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const GoneErrorOptions = {
     code: 'GONE',
-    statusCode: 410,
+    status: 410,
     statusMessage: 'Gone',
 } as const;
 
@@ -13,7 +13,7 @@ export class GoneError extends ClientError {
         super({
             ...options,
             code: options.code ?? GoneErrorOptions.code,
-            statusCode: options.statusCode ?? GoneErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? GoneErrorOptions.status,
             statusMessage: options.statusMessage ?? GoneErrorOptions.statusMessage,
         });
     }

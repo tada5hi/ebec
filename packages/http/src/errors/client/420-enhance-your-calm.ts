@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const EnhanceYourCalmErrorOptions = {
     code: 'ENHANCE_YOUR_CALM',
-    statusCode: 420,
+    status: 420,
     statusMessage: 'Enhance Your Calm',
 } as const;
 
@@ -13,7 +13,7 @@ export class EnhanceYourCalmError extends ClientError {
         super({
             ...options,
             code: options.code ?? EnhanceYourCalmErrorOptions.code,
-            statusCode: options.statusCode ?? EnhanceYourCalmErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? EnhanceYourCalmErrorOptions.status,
             statusMessage: options.statusMessage ?? EnhanceYourCalmErrorOptions.statusMessage,
         });
     }

@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const UnprocessableEntityErrorOptions = {
     code: 'UNPROCESSABLE_ENTITY',
-    statusCode: 422,
+    status: 422,
     statusMessage: 'Unprocessable Entity',
 } as const;
 
@@ -13,7 +13,7 @@ export class UnprocessableEntityError extends ClientError {
         super({
             ...options,
             code: options.code ?? UnprocessableEntityErrorOptions.code,
-            statusCode: options.statusCode ?? UnprocessableEntityErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? UnprocessableEntityErrorOptions.status,
             statusMessage: options.statusMessage ?? UnprocessableEntityErrorOptions.statusMessage,
         });
     }

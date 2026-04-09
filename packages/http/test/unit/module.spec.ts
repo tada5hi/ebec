@@ -23,6 +23,17 @@ describe('src/module.ts', () => {
             statusCode: 490,
             statusMessage: 'Foo bar',
         });
+        expect(error.status).toEqual(490);
+        expect(error.statusCode).toEqual(490);
+        expect(error.statusMessage).toEqual('Foo bar');
+    });
+
+    it('should create instance with status option', () => {
+        const error = new HTTPError({
+            status: 490,
+            statusMessage: 'Foo bar',
+        });
+        expect(error.status).toEqual(490);
         expect(error.statusCode).toEqual(490);
         expect(error.statusMessage).toEqual('Foo bar');
     });

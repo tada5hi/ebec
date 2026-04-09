@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const {{{class}}}Options = {
     code: '{{code}}',
-    statusCode: {{statusCode}},
+    status: {{statusCode}},
     statusMessage: '{{{statusMessage}}}',
 } as const;
 
@@ -13,7 +13,7 @@ export class {{{class}}} extends {{baseClass}} {
         super({
             ...options,
             code: options.code ?? {{{class}}}Options.code,
-            statusCode: options.statusCode ?? {{{class}}}Options.statusCode,
+            status: options.status ?? options.statusCode ?? {{{class}}}Options.status,
             statusMessage: options.statusMessage ?? {{{class}}}Options.statusMessage,
         });
     }

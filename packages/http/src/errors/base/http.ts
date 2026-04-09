@@ -11,7 +11,7 @@ export class HTTPError extends BaseError implements IHTTPError {
     /**
      * A numeric Status Code between 400-599.
      */
-    readonly statusCode: number;
+    readonly status: number;
 
     /**
      * A status message.
@@ -28,8 +28,9 @@ export class HTTPError extends BaseError implements IHTTPError {
 
         super(options);
 
-        this.statusCode = options.statusCode ?
-            sanitizeStatusCode(options.statusCode) :
+        const statusCode = options.status ?? options.statusCode;
+        this.status = statusCode ?
+            sanitizeStatusCode(statusCode) :
             500;
 
         this.statusMessage = options.statusMessage ?
@@ -38,6 +39,13 @@ export class HTTPError extends BaseError implements IHTTPError {
 
         this.redirectURL = options.redirectURL;
     }
+
+    /**
+     * @deprecated Use `status` instead.
+     */
+    get statusCode(): number {
+        return this.status;
+    }
 }
 
 export function isHTTPError(input: unknown): input is IHTTPError {
@@ -45,10 +53,11 @@ export function isHTTPError(input: unknown): input is IHTTPError {
         return false;
     }
 
+    const status = (input as Record<string, unknown>).status ?? (input as Record<string, unknown>).statusCode;
     if (
-        typeof input.statusCode !== 'number' ||
-        input.statusCode < 400 ||
-        input.statusCode >= 600
+        typeof status !== 'number' ||
+        status < 400 ||
+        status >= 600
     ) {
         return false;
     }

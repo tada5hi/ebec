@@ -3,7 +3,7 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 
 export const BadRequestErrorOptions = {
     code: 'BAD_REQUEST',
-    statusCode: 400,
+    status: 400,
     statusMessage: 'Bad Request',
 } as const;
 
@@ -13,7 +13,7 @@ export class BadRequestError extends ClientError {
         super({
             ...options,
             code: options.code ?? BadRequestErrorOptions.code,
-            statusCode: options.statusCode ?? BadRequestErrorOptions.statusCode,
+            status: options.status ?? options.statusCode ?? BadRequestErrorOptions.status,
             statusMessage: options.statusMessage ?? BadRequestErrorOptions.statusMessage,
         });
     }
