@@ -38,8 +38,24 @@ describe('src/module.ts', () => {
         expect(error.statusMessage).toEqual('Foo bar');
     });
 
+    it('should prefer status over deprecated statusCode when both are provided', () => {
+        const error = new HTTPError({
+            status: 418,
+            statusCode: 404,
+        });
+
+        expect(error.status).toEqual(418);
+        expect(error.statusCode).toEqual(418);
+    });
+
     it('should sanitize status code', () => {
         const error = new HTTPError({ statusCode: 999 });
+        expect(error.statusCode).toEqual(500);
+    });
+
+    it('should sanitize invalid status option', () => {
+        const error = new HTTPError({ status: 999 });
+        expect(error.status).toEqual(500);
         expect(error.statusCode).toEqual(500);
     });
 
