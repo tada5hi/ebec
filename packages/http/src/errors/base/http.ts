@@ -21,8 +21,11 @@ export class HTTPError extends BaseError implements IHTTPError {
     constructor(input: HTTPErrorInput = {}) {
         const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
         const statusCode = options.status ?? options.statusCode;
-        const statusCodeNormalized = statusCode ?
+        const statusCodeSanitized = statusCode != null ?
             sanitizeStatusCode(statusCode) :
+            500;
+        const statusCodeNormalized = statusCodeSanitized >= 400 && statusCodeSanitized < 600 ?
+            statusCodeSanitized :
             500;
 
         super({

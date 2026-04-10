@@ -108,13 +108,14 @@ describe('src/module.ts', () => {
         expect(isHTTPError(t2)).toBeTruthy();
     });
 
-    it('should not recognize http error', () => {
+    it('should normalize non-error status to 500', () => {
         const error = new HTTPError({ statusCode: 300 });
+        expect(error.status).toEqual(500);
+        expect(isServerError(error)).toBeTruthy();
+        expect(isHTTPError(error)).toBeTruthy();
+    });
 
-        expect(isClientError(error)).toBeFalsy();
-        expect(isServerError(error)).toBeFalsy();
-        expect(isHTTPError(error)).toBeFalsy();
-
+    it('should not recognize non-HTTPError as http error', () => {
         expect(isHTTPError(undefined)).toBeFalsy();
     });
 });
