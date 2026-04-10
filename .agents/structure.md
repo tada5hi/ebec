@@ -32,7 +32,7 @@ ebec/
 │       │   ├── core-export.ts # Re-exports @ebec/core for ./core subpath
 │       │   ├── utils/
 │       │   │   ├── options.ts     # isHTTPErrorOptions()
-│       │   │   ├── sanitize.ts    # sanitizeStatusCode(), sanitizeStatusMessage()
+│       │   │   ├── sanitize.ts    # sanitizeStatusCode()
 │       │   │   └── status-text.ts # getStatusText()
 │       │   └── errors/
 │       │       ├── base/      # HTTPError, ClientError, ServerError + types

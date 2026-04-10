@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const PreconditionRequiredErrorOptions = {
     code: 'PRECONDITION_REQUIRED',
     status: 428,
-    statusMessage: 'Precondition Required',
 } as const;
 
 export class PreconditionRequiredError extends ClientError {
@@ -14,7 +13,6 @@ export class PreconditionRequiredError extends ClientError {
             ...options,
             code: options.code ?? PreconditionRequiredErrorOptions.code,
             status: options.status ?? options.statusCode ?? PreconditionRequiredErrorOptions.status,
-            statusMessage: options.statusMessage ?? PreconditionRequiredErrorOptions.statusMessage,
         });
     }
 }

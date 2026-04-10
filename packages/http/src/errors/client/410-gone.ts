@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const GoneErrorOptions = {
     code: 'GONE',
     status: 410,
-    statusMessage: 'Gone',
 } as const;
 
 export class GoneError extends ClientError {
@@ -14,7 +13,6 @@ export class GoneError extends ClientError {
             ...options,
             code: options.code ?? GoneErrorOptions.code,
             status: options.status ?? options.statusCode ?? GoneErrorOptions.status,
-            statusMessage: options.statusMessage ?? GoneErrorOptions.statusMessage,
         });
     }
 }

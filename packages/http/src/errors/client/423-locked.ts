@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const LockedErrorOptions = {
     code: 'LOCKED',
     status: 423,
-    statusMessage: 'Locked',
 } as const;
 
 export class LockedError extends ClientError {
@@ -14,7 +13,6 @@ export class LockedError extends ClientError {
             ...options,
             code: options.code ?? LockedErrorOptions.code,
             status: options.status ?? options.statusCode ?? LockedErrorOptions.status,
-            statusMessage: options.statusMessage ?? LockedErrorOptions.statusMessage,
         });
     }
 }

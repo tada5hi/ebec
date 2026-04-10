@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const UnprocessableEntityErrorOptions = {
     code: 'UNPROCESSABLE_ENTITY',
     status: 422,
-    statusMessage: 'Unprocessable Entity',
 } as const;
 
 export class UnprocessableEntityError extends ClientError {
@@ -14,7 +13,6 @@ export class UnprocessableEntityError extends ClientError {
             ...options,
             code: options.code ?? UnprocessableEntityErrorOptions.code,
             status: options.status ?? options.statusCode ?? UnprocessableEntityErrorOptions.status,
-            statusMessage: options.statusMessage ?? UnprocessableEntityErrorOptions.statusMessage,
         });
     }
 }

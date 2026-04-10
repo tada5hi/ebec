@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const RequestHeaderFieldsTooLargeErrorOptions = {
     code: 'REQUEST_HEADER_FIELDS_TOO_LARGE',
     status: 431,
-    statusMessage: 'Request Header Fields Too Large',
 } as const;
 
 export class RequestHeaderFieldsTooLargeError extends ClientError {
@@ -14,7 +13,6 @@ export class RequestHeaderFieldsTooLargeError extends ClientError {
             ...options,
             code: options.code ?? RequestHeaderFieldsTooLargeErrorOptions.code,
             status: options.status ?? options.statusCode ?? RequestHeaderFieldsTooLargeErrorOptions.status,
-            statusMessage: options.statusMessage ?? RequestHeaderFieldsTooLargeErrorOptions.statusMessage,
         });
     }
 }

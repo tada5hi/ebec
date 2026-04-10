@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const RequestEntityTooLargeErrorOptions = {
     code: 'REQUEST_ENTITY_TOO_LARGE',
     status: 413,
-    statusMessage: 'Request Entity Too Large',
 } as const;
 
 export class RequestEntityTooLargeError extends ClientError {
@@ -14,7 +13,6 @@ export class RequestEntityTooLargeError extends ClientError {
             ...options,
             code: options.code ?? RequestEntityTooLargeErrorOptions.code,
             status: options.status ?? options.statusCode ?? RequestEntityTooLargeErrorOptions.status,
-            statusMessage: options.statusMessage ?? RequestEntityTooLargeErrorOptions.statusMessage,
         });
     }
 }

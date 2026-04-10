@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const ConflictErrorOptions = {
     code: 'CONFLICT',
     status: 409,
-    statusMessage: 'Conflict',
 } as const;
 
 export class ConflictError extends ClientError {
@@ -14,7 +13,6 @@ export class ConflictError extends ClientError {
             ...options,
             code: options.code ?? ConflictErrorOptions.code,
             status: options.status ?? options.statusCode ?? ConflictErrorOptions.status,
-            statusMessage: options.statusMessage ?? ConflictErrorOptions.statusMessage,
         });
     }
 }

@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const UnorderedCollectionErrorOptions = {
     code: 'UNORDERED_COLLECTION',
     status: 425,
-    statusMessage: 'Unordered Collection',
 } as const;
 
 export class UnorderedCollectionError extends ClientError {
@@ -14,7 +13,6 @@ export class UnorderedCollectionError extends ClientError {
             ...options,
             code: options.code ?? UnorderedCollectionErrorOptions.code,
             status: options.status ?? options.statusCode ?? UnorderedCollectionErrorOptions.status,
-            statusMessage: options.statusMessage ?? UnorderedCollectionErrorOptions.statusMessage,
         });
     }
 }

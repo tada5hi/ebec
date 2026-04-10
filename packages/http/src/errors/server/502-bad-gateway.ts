@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const BadGatewayErrorOptions = {
     code: 'BAD_GATEWAY',
     status: 502,
-    statusMessage: 'Bad Gateway',
 } as const;
 
 export class BadGatewayError extends ServerError {
@@ -14,7 +13,6 @@ export class BadGatewayError extends ServerError {
             ...options,
             code: options.code ?? BadGatewayErrorOptions.code,
             status: options.status ?? options.statusCode ?? BadGatewayErrorOptions.status,
-            statusMessage: options.statusMessage ?? BadGatewayErrorOptions.statusMessage,
         });
     }
 }

@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const RequestTimeoutErrorOptions = {
     code: 'REQUEST_TIMEOUT',
     status: 408,
-    statusMessage: 'Request Timeout',
 } as const;
 
 export class RequestTimeoutError extends ClientError {
@@ -14,7 +13,6 @@ export class RequestTimeoutError extends ClientError {
             ...options,
             code: options.code ?? RequestTimeoutErrorOptions.code,
             status: options.status ?? options.statusCode ?? RequestTimeoutErrorOptions.status,
-            statusMessage: options.statusMessage ?? RequestTimeoutErrorOptions.statusMessage,
         });
     }
 }

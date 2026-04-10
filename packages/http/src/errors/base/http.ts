@@ -1,9 +1,9 @@
 import { BaseError, isBaseError } from '@ebec/core';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
+    getStatusText,
     isHTTPErrorOptions,
     sanitizeStatusCode,
-    sanitizeStatusMessage,
 } from '../../utils';
 import type { IHTTPError } from './types';
 
@@ -14,28 +14,20 @@ export class HTTPError extends BaseError implements IHTTPError {
     readonly status: number;
 
     /**
-     * A status message.
-     */
-    readonly statusMessage?: string;
-
-    /**
      * Specify a redirect URL in case of a http error.
      */
     readonly redirectURL?: string;
 
     constructor(input: HTTPErrorInput = {}) {
         const options: HTTPErrorOptions = typeof input === 'string' ? { message: input } : input;
+        const statusCodeNormalized = sanitizeStatusCode(options.status ?? options.statusCode);
 
-        super(options);
+        super({
+            ...options,
+            message: options.message || getStatusText(statusCodeNormalized),
+        });
 
-        const statusCode = options.status ?? options.statusCode;
-        this.status = statusCode ?
-            sanitizeStatusCode(statusCode) :
-            500;
-
-        this.statusMessage = options.statusMessage ?
-            sanitizeStatusMessage(options.statusMessage) :
-            undefined;
+        this.status = statusCodeNormalized;
 
         this.redirectURL = options.redirectURL;
     }
@@ -45,6 +37,13 @@ export class HTTPError extends BaseError implements IHTTPError {
      */
     get statusCode(): number {
         return this.status;
+    }
+
+    override toJSON() {
+        return {
+            ...super.toJSON(),
+            status: this.status,
+        };
     }
 }
 

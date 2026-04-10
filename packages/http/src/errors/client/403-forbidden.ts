@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const ForbiddenErrorOptions = {
     code: 'FORBIDDEN',
     status: 403,
-    statusMessage: 'Forbidden',
 } as const;
 
 export class ForbiddenError extends ClientError {
@@ -14,7 +13,6 @@ export class ForbiddenError extends ClientError {
             ...options,
             code: options.code ?? ForbiddenErrorOptions.code,
             status: options.status ?? options.statusCode ?? ForbiddenErrorOptions.status,
-            statusMessage: options.statusMessage ?? ForbiddenErrorOptions.statusMessage,
         });
     }
 }

@@ -33,7 +33,7 @@ import { NotFoundError, InternalServerError } from '@ebec/http';
 const error = new NotFoundError('user not found');
 console.log(error.status);        // 404
 console.log(error.code);          // "NOT_FOUND"
-console.log(error.statusMessage); // "Not Found"
+console.log(error.message);       // "user not found"
 
 // Options input
 const error = new InternalServerError({
@@ -181,7 +181,6 @@ import { BaseError, isBaseError } from '@ebec/http/core';
 ```typescript
 class HTTPError extends BaseError {
     readonly status: number;           // defaults to 500
-    readonly statusMessage?: string;   // ASCII printable, max 256 chars
     readonly redirectURL?: string;
 
     get statusCode(): number;          // @deprecated — alias for `status`
@@ -198,7 +197,6 @@ Extends core `ErrorOptions` with HTTP-specific fields:
 |----------|------|-------------|
 | `status` | `number \| string` | HTTP status code (100-599). Invalid values default to 500. |
 | `statusCode` | `number \| string` | **Deprecated.** Alias for `status`. |
-| `statusMessage` | `string` | Reason phrase. Sanitized to ASCII printable, max 256 chars. |
 | `redirectURL` | `string` | Redirect URL for 3xx-style responses. |
 
 Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
@@ -218,7 +216,6 @@ Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
 |----------|-------------|
 | `getStatusText(statusCode)` | Returns the reason phrase for a given status code, or `undefined` if not found |
 | `sanitizeStatusCode(input)` | Parses and validates (100-599), defaults to 500 |
-| `sanitizeStatusMessage(input)` | Strips non-ASCII, trims, caps at 256 chars |
 | `STATUS_TEXTS` | Map of status codes to reason phrases (e.g. `400 → "Bad Request"`) |
 
 ## License

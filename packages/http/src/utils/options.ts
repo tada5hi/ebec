@@ -22,13 +22,6 @@ export function isHTTPErrorOptions(input: unknown) : input is HTTPErrorOptions {
         return false;
     }
 
-    if (
-        typeof input.statusMessage !== 'undefined' &&
-        typeof input.statusMessage !== 'string'
-    ) {
-        return false;
-    }
-
     return typeof input.redirectURL === 'undefined' ||
         typeof input.redirectURL === 'string';
 }

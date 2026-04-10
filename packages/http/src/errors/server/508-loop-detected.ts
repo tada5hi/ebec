@@ -4,7 +4,6 @@ import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 export const LoopDetectedErrorOptions = {
     code: 'LOOP_DETECTED',
     status: 508,
-    statusMessage: 'Loop Detected',
 } as const;
 
 export class LoopDetectedError extends ServerError {
@@ -14,7 +13,6 @@ export class LoopDetectedError extends ServerError {
             ...options,
             code: options.code ?? LoopDetectedErrorOptions.code,
             status: options.status ?? options.statusCode ?? LoopDetectedErrorOptions.status,
-            statusMessage: options.statusMessage ?? LoopDetectedErrorOptions.statusMessage,
         });
     }
 }

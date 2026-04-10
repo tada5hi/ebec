@@ -37,7 +37,6 @@ class BaseError extends Error {
 class HTTPError extends BaseError {
     readonly status: number;           // HTTP status (400-599), defaults to 500
     get statusCode(): number;          // @deprecated — alias for `status`
-    readonly statusMessage?: string;   // HTTP reason phrase (ASCII printable, max 256 chars)
     readonly redirectURL?: string;     // For redirect responses
 }
 ```
@@ -47,12 +46,6 @@ class HTTPError extends BaseError {
 - Invalid status codes (outside 100-599) are sanitized to 500
 - Constructor accepts both `status` and `statusCode` options; `status` takes precedence
 - Generated subclasses use nullish coalescing (`??`) to preserve their default status when the user passes `undefined`
-
-### StatusMessage Sanitization
-
-- Only ASCII printable characters (0x20-0x7E) are allowed
-- Whitespace is trimmed
-- Maximum length is 256 characters
 
 ## Flexible Constructor Pattern
 
@@ -74,7 +67,7 @@ new BaseError(existingError, { code: 'WRAPPED' });
 2. Error instances → `message`, `stack`, `cause` (non-enumerable properties)
 3. Objects passing `checkFn` → merge all enumerable keys (unsafe keys like `__proto__`, `constructor`, `prototype` are filtered)
 
-The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isHTTPErrorOptions()` that also validates `status`, `statusCode`, `statusMessage`, and `redirectURL`.
+The `@ebec/core` package creates its extractor with `isOptions()`. The `@ebec/http` package creates its own with an extended `isHTTPErrorOptions()` that also validates `status`, `statusCode`, and `redirectURL`.
 
 ## Code Generation (HTTP Package)
 
