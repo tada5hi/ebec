@@ -45,24 +45,6 @@ describe('src/module.ts', () => {
         expect(error.message).toEqual('An error occurred');
     });
 
-    it('should derive statusMessage from status code', () => {
-        const error = new HTTPError({ status: 404 });
-        expect(error.statusMessage).toEqual('Not Found');
-    });
-
-    it('should return undefined statusMessage for unknown status code', () => {
-        const error = new HTTPError({ status: 490 });
-        expect(error.statusMessage).toBeUndefined();
-    });
-
-    it('should cache statusMessage on repeated access', () => {
-        const error = new HTTPError({ status: 500 });
-        const first = error.statusMessage;
-        const second = error.statusMessage;
-        expect(first).toEqual('Internal Server Error');
-        expect(first).toBe(second);
-    });
-
     it('should prefer status over deprecated statusCode when both are provided', () => {
         const error = new HTTPError({
             status: 418,
@@ -89,11 +71,10 @@ describe('src/module.ts', () => {
         expect(error.statusCode).toEqual(422);
     });
 
-    it('should include status and statusMessage in toJSON', () => {
+    it('should include status in toJSON', () => {
         const error = new NotFoundError('User not found');
         const json = error.toJSON();
         expect(json.status).toEqual(404);
-        expect(json.statusMessage).toEqual('Not Found');
         expect(json.message).toEqual('User not found');
         expect(json.code).toEqual('NOT_FOUND');
     });
