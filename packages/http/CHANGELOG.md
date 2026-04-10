@@ -14,6 +14,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [4.0.0](https://github.com/tada5hi/ebec/compare/http-v3.1.0...http-v4.0.0) (2026-04-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **http:** statusMessage is no longer accepted as a constructor
+
+### Features
+
+* **http:** remove statusMessage as constructor option and derive fro… ([#416](https://github.com/tada5hi/ebec/issues/416)) ([a4e9244](https://github.com/tada5hi/ebec/commit/a4e92447c64f2f76dd0edccab06d7283a3de0430))
+
 ## [3.1.0](https://github.com/tada5hi/ebec/compare/http-v3.0.3...http-v3.1.0) (2026-04-09)
 
 
