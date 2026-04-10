@@ -43,7 +43,7 @@ class HTTPError extends BaseError {
 
 ### Status Validation
 
-- Invalid status codes (outside 100-599) are sanitized to 500
+- Invalid status codes (outside 400-599) are sanitized to 500
 - Constructor accepts both `status` and `statusCode` options; `status` takes precedence
 - Generated subclasses use nullish coalescing (`??`) to preserve their default status when the user passes `undefined`
 

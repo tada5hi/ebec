@@ -195,7 +195,7 @@ Extends core `ErrorOptions` with HTTP-specific fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `status` | `number \| string` | HTTP status code (100-599). Invalid values default to 500. |
+| `status` | `number \| string` | HTTP status code (400-599). Invalid values default to 500. |
 | `statusCode` | `number \| string` | **Deprecated.** Alias for `status`. |
 | `redirectURL` | `string` | Redirect URL for 3xx-style responses. |
 
@@ -215,7 +215,7 @@ Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
 | Function | Description |
 |----------|-------------|
 | `getStatusText(statusCode)` | Returns the reason phrase for a given status code, or `undefined` if not found |
-| `sanitizeStatusCode(input)` | Parses and validates (100-599), defaults to 500 |
+| `sanitizeStatusCode(input)` | Parses and validates (400-599), defaults to 500 |
 | `STATUS_TEXTS` | Map of status codes to reason phrases (e.g. `400 → "Bad Request"`) |
 
 ## License
