@@ -36,14 +36,14 @@
         "@tada5hi/commitlint-config": "^1.3.1",
         "@tada5hi/eslint-config": "^2.3.0",
         "@tada5hi/tsconfig": "^0.7.2",
-        "@types/node": "^25.5.2",
+        "@types/node": "^25.6.0",
         "@vitest/coverage-v8": "^4.1.4",
         "eslint": "^10.2.0",
         "husky": "^9.1.7",
-        "nx": "^22.6.3",
-        "tsdown": "^0.21.5",
+        "nx": "^22.6.5",
+        "tsdown": "^0.21.8",
         "typescript": "^6.0.2",
-        "typescript-eslint": "^8.58.1",
+        "typescript-eslint": "^8.58.2",
         "vitest": "^4.0.18"
     },
     "scripts": {
