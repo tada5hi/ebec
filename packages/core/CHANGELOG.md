@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.1.0](https://github.com/tada5hi/ebec/compare/core-v1.0.1...core-v1.1.0) (2026-05-11)
+
+
+### Features
+
+* **http:** integrate [@instanceof](https://github.com/instanceof) markers across error hierarchy  ([#430](https://github.com/tada5hi/ebec/issues/430)) ([5124656](https://github.com/tada5hi/ebec/commit/512465696b43a11c0e5b53c5122b1efd8feb81f3))
+
 ## [1.0.1](https://github.com/tada5hi/ebec/compare/core-v1.0.0...core-v1.0.1) (2026-04-06)
 
 
