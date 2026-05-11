@@ -8,7 +8,14 @@
 import { isObject } from './object';
 
 export function isError(input: unknown): input is Error {
-    return isObject(input) &&
-        typeof input.message === 'string' &&
+    if (!isObject(input)) {
+        return false;
+    }
+
+    if (input instanceof Error) {
+        return true;
+    }
+
+    return typeof input.message === 'string' &&
         (typeof input.name === 'string' || typeof input.stack === 'string');
 }

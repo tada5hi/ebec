@@ -1,9 +1,17 @@
+import { INSTANCEOF_PROPERTY, hasInstanceof } from '@ebec/core';
 import { describe, expect, it } from 'vitest';
 import {
+    BAD_REQUEST_ERROR_INSTANCE,
+    BadRequestError,
+    CLIENT_ERROR_INSTANCE,
     ClientError,
     HTTPError,
+    HTTP_ERROR_INSTANCE,
+    INTERNAL_SERVER_ERROR_INSTANCE,
     InternalServerError,
+    NOT_FOUND_ERROR_INSTANCE,
     NotFoundError,
+    SERVER_ERROR_INSTANCE,
     ServerError,
     isClientError,
     isHTTPError,
@@ -117,5 +125,64 @@ describe('src/module.ts', () => {
 
     it('should not recognize non-HTTPError as http error', () => {
         expect(isHTTPError(undefined)).toBeFalsy();
+    });
+
+    describe('instanceof markers', () => {
+        it('should attach a Symbol.for marker chain to every HTTPError instance', () => {
+            const error = new HTTPError({ status: 418 });
+
+            expect(hasInstanceof(error, HTTP_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, CLIENT_ERROR_INSTANCE)).toBe(false);
+            expect(hasInstanceof(error, SERVER_ERROR_INSTANCE)).toBe(false);
+        });
+
+        it('should accumulate ancestor markers on ClientError subclasses', () => {
+            const error = new BadRequestError();
+
+            expect(hasInstanceof(error, HTTP_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, CLIENT_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, BAD_REQUEST_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, NOT_FOUND_ERROR_INSTANCE)).toBe(false);
+            expect(hasInstanceof(error, SERVER_ERROR_INSTANCE)).toBe(false);
+        });
+
+        it('should accumulate ancestor markers on ServerError subclasses', () => {
+            const error = new InternalServerError();
+
+            expect(hasInstanceof(error, HTTP_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, SERVER_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, INTERNAL_SERVER_ERROR_INSTANCE)).toBe(true);
+            expect(hasInstanceof(error, CLIENT_ERROR_INSTANCE)).toBe(false);
+        });
+
+        it('should resolve markers across independent Symbol.for lookups (cross-realm)', () => {
+            const error = new NotFoundError();
+
+            // A fresh lookup with the same key resolves to the identical symbol —
+            // this is what makes the marker survive cross-bundle / cross-realm boundaries.
+            expect(hasInstanceof(error, Symbol.for('@ebec/http/HTTPError'))).toBe(true);
+            expect(hasInstanceof(error, Symbol.for('@ebec/http/ClientError'))).toBe(true);
+            expect(hasInstanceof(error, Symbol.for('@ebec/http/NotFoundError'))).toBe(true);
+        });
+
+        it('should let isHTTPError fast-path-match a marker-only object', () => {
+            // Simulate a foreign-realm instance: no prototype link, just the chain.
+            const foreign: Record<string, unknown> = {};
+            Object.defineProperty(foreign, INSTANCEOF_PROPERTY, {
+                value: [HTTP_ERROR_INSTANCE, CLIENT_ERROR_INSTANCE],
+                enumerable: false,
+            });
+
+            expect(isHTTPError(foreign)).toBe(true);
+            expect(isClientError(foreign)).toBe(true);
+            expect(isServerError(foreign)).toBe(false);
+        });
+
+        it('should keep the marker chain out of toJSON output', () => {
+            const error = new NotFoundError('User not found');
+            const json = error.toJSON();
+
+            expect((json as Record<string, unknown>)[INSTANCEOF_PROPERTY]).toBeUndefined();
+        });
     });
 });

@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const GONE_ERROR_INSTANCE = Symbol.for('@ebec/http/GoneError');
 
 export const GoneErrorOptions = {
     code: 'GONE',
@@ -14,5 +17,6 @@ export class GoneError extends ClientError {
             code: options.code ?? GoneErrorOptions.code,
             status: options.status ?? options.statusCode ?? GoneErrorOptions.status,
         });
+        markInstanceof(this, GONE_ERROR_INSTANCE);
     }
 }

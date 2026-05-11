@@ -7,17 +7,27 @@
 import type { IBaseError, IBaseErrorGroup } from '../types';
 import { isErrorOptions } from '../options';
 import { isError } from './error';
+import { hasInstanceof } from './instanceof';
 import { isObject } from './object';
+
+// Resolved via the global Symbol.for registry — same identity as
+// `BASE_ERROR_INSTANCE` exported from `../module`. Looking it up here
+// avoids a circular import (module.ts → helpers → check.ts → module.ts).
+const BASE_ERROR_INSTANCE = Symbol.for('@ebec/core/BaseError');
 
 export function isBaseError(
     input: unknown,
 ): input is IBaseError {
+    if (hasInstanceof(input, BASE_ERROR_INSTANCE)) {
+        return true;
+    }
+
     if (!isObject(input)) {
         return false;
     }
 
     if (
-        input instanceof Error &&
+        isError(input) &&
         isErrorOptions(input)
     ) {
         return typeof input.code === 'string';

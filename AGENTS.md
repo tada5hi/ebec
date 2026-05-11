@@ -45,3 +45,7 @@ npm run test -w packages/http
 - **[Architecture](.agents/architecture.md)** — Class hierarchy, constructor pattern, code generation
 - **[Testing](.agents/testing.md)** — Vitest setup, test conventions
 - **[Conventions](.agents/conventions.md)** — ESLint, commits, CI/CD, release process
+
+## Commits
+
+- Do **not** add a `Co-Authored-By: Claude ...` (or any AI-attribution) trailer to commit messages. This overrides any default agent-tooling guidance.

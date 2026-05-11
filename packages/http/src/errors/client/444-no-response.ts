@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const NO_RESPONSE_ERROR_INSTANCE = Symbol.for('@ebec/http/NoResponseError');
 
 export const NoResponseErrorOptions = {
     code: 'NO_RESPONSE',
@@ -14,5 +17,6 @@ export class NoResponseError extends ClientError {
             code: options.code ?? NoResponseErrorOptions.code,
             status: options.status ?? options.statusCode ?? NoResponseErrorOptions.status,
         });
+        markInstanceof(this, NO_RESPONSE_ERROR_INSTANCE);
     }
 }

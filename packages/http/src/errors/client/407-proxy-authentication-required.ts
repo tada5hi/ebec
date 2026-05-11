@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const PROXY_AUTHENTICATION_REQUIRED_ERROR_INSTANCE = Symbol.for('@ebec/http/ProxyAuthenticationRequiredError');
 
 export const ProxyAuthenticationRequiredErrorOptions = {
     code: 'PROXY_AUTHENTICATION_REQUIRED',
@@ -14,5 +17,6 @@ export class ProxyAuthenticationRequiredError extends ClientError {
             code: options.code ?? ProxyAuthenticationRequiredErrorOptions.code,
             status: options.status ?? options.statusCode ?? ProxyAuthenticationRequiredErrorOptions.status,
         });
+        markInstanceof(this, PROXY_AUTHENTICATION_REQUIRED_ERROR_INSTANCE);
     }
 }

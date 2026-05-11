@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const REQUEST_URI_TOO_LONG_ERROR_INSTANCE = Symbol.for('@ebec/http/RequestURITooLongError');
 
 export const RequestURITooLongErrorOptions = {
     code: 'REQUEST_URI_TOO_LONG',
@@ -14,5 +17,6 @@ export class RequestURITooLongError extends ClientError {
             code: options.code ?? RequestURITooLongErrorOptions.code,
             status: options.status ?? options.statusCode ?? RequestURITooLongErrorOptions.status,
         });
+        markInstanceof(this, REQUEST_URI_TOO_LONG_ERROR_INSTANCE);
     }
 }

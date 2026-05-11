@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const METHOD_NOT_ALLOWED_ERROR_INSTANCE = Symbol.for('@ebec/http/MethodNotAllowedError');
 
 export const MethodNotAllowedErrorOptions = {
     code: 'METHOD_NOT_ALLOWED',
@@ -14,5 +17,6 @@ export class MethodNotAllowedError extends ClientError {
             code: options.code ?? MethodNotAllowedErrorOptions.code,
             status: options.status ?? options.statusCode ?? MethodNotAllowedErrorOptions.status,
         });
+        markInstanceof(this, METHOD_NOT_ALLOWED_ERROR_INSTANCE);
     }
 }

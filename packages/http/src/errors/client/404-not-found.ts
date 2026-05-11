@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const NOT_FOUND_ERROR_INSTANCE = Symbol.for('@ebec/http/NotFoundError');
 
 export const NotFoundErrorOptions = {
     code: 'NOT_FOUND',
@@ -14,5 +17,6 @@ export class NotFoundError extends ClientError {
             code: options.code ?? NotFoundErrorOptions.code,
             status: options.status ?? options.statusCode ?? NotFoundErrorOptions.status,
         });
+        markInstanceof(this, NOT_FOUND_ERROR_INSTANCE);
     }
 }

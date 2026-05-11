@@ -6,8 +6,15 @@
  */
 
 import type { ErrorInput, IBaseError } from './types';
-import { interpolate, sanitizeErrorCode, toSerializable } from './helpers';
+import {
+    interpolate,
+    markInstanceof,
+    sanitizeErrorCode,
+    toSerializable,
+} from './helpers';
 import { extractErrorOptions } from './options';
+
+export const BASE_ERROR_INSTANCE = Symbol.for('@ebec/core/BaseError');
 
 export class BaseError extends Error implements IBaseError {
     /**
@@ -64,6 +71,8 @@ export class BaseError extends Error implements IBaseError {
         if (options.errors !== undefined) {
             this.errors = [...options.errors];
         }
+
+        markInstanceof(this, BASE_ERROR_INSTANCE);
     }
 
     toJSON(): {

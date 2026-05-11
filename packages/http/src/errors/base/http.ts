@@ -1,4 +1,9 @@
-import { BaseError, isBaseError } from '@ebec/core';
+import {
+    BaseError,
+    hasInstanceof,
+    isBaseError,
+    markInstanceof,
+} from '@ebec/core';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
     getStatusText,
@@ -6,6 +11,8 @@ import {
     sanitizeStatusCode,
 } from '../../utils';
 import type { IHTTPError } from './types';
+
+export const HTTP_ERROR_INSTANCE = Symbol.for('@ebec/http/HTTPError');
 
 export class HTTPError extends BaseError implements IHTTPError {
     /**
@@ -30,6 +37,8 @@ export class HTTPError extends BaseError implements IHTTPError {
         this.status = statusCodeNormalized;
 
         this.redirectURL = options.redirectURL;
+
+        markInstanceof(this, HTTP_ERROR_INSTANCE);
     }
 
     /**
@@ -48,6 +57,10 @@ export class HTTPError extends BaseError implements IHTTPError {
 }
 
 export function isHTTPError(input: unknown): input is IHTTPError {
+    if (hasInstanceof(input, HTTP_ERROR_INSTANCE)) {
+        return true;
+    }
+
     if (!isHTTPErrorOptions(input)) {
         return false;
     }
