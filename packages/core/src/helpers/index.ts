@@ -8,6 +8,7 @@
 export * from './check';
 export * from './error';
 export * from './error-code';
+export * from './instanceof';
 export * from './interpolate';
 export * from './object';
 export * from './sanitize-code';
