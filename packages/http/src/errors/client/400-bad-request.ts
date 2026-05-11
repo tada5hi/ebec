@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const BAD_REQUEST_ERROR_INSTANCE = Symbol.for('@ebec/http/BadRequestError');
 
 export const BadRequestErrorOptions = {
     code: 'BAD_REQUEST',
@@ -14,5 +17,6 @@ export class BadRequestError extends ClientError {
             code: options.code ?? BadRequestErrorOptions.code,
             status: options.status ?? options.statusCode ?? BadRequestErrorOptions.status,
         });
+        markInstanceof(this, BAD_REQUEST_ERROR_INSTANCE);
     }
 }

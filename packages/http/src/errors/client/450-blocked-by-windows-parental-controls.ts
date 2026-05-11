@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS_ERROR_INSTANCE = Symbol.for('@ebec/http/BlockedByWindowsParentalControlsError');
 
 export const BlockedByWindowsParentalControlsErrorOptions = {
     code: 'BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS',
@@ -14,5 +17,6 @@ export class BlockedByWindowsParentalControlsError extends ClientError {
             code: options.code ?? BlockedByWindowsParentalControlsErrorOptions.code,
             status: options.status ?? options.statusCode ?? BlockedByWindowsParentalControlsErrorOptions.status,
         });
+        markInstanceof(this, BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS_ERROR_INSTANCE);
     }
 }

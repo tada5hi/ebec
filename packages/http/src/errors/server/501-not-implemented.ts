@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ServerError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const NOT_IMPLEMENTED_ERROR_INSTANCE = Symbol.for('@ebec/http/NotImplementedError');
 
 export const NotImplementedErrorOptions = {
     code: 'NOT_IMPLEMENTED',
@@ -14,5 +17,6 @@ export class NotImplementedError extends ServerError {
             code: options.code ?? NotImplementedErrorOptions.code,
             status: options.status ?? options.statusCode ?? NotImplementedErrorOptions.status,
         });
+        markInstanceof(this, NOT_IMPLEMENTED_ERROR_INSTANCE);
     }
 }

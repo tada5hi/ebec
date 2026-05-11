@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const CONFLICT_ERROR_INSTANCE = Symbol.for('@ebec/http/ConflictError');
 
 export const ConflictErrorOptions = {
     code: 'CONFLICT',
@@ -14,5 +17,6 @@ export class ConflictError extends ClientError {
             code: options.code ?? ConflictErrorOptions.code,
             status: options.status ?? options.statusCode ?? ConflictErrorOptions.status,
         });
+        markInstanceof(this, CONFLICT_ERROR_INSTANCE);
     }
 }

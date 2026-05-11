@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const UNAUTHORIZED_ERROR_INSTANCE = Symbol.for('@ebec/http/UnauthorizedError');
 
 export const UnauthorizedErrorOptions = {
     code: 'UNAUTHORIZED',
@@ -14,5 +17,6 @@ export class UnauthorizedError extends ClientError {
             code: options.code ?? UnauthorizedErrorOptions.code,
             status: options.status ?? options.statusCode ?? UnauthorizedErrorOptions.status,
         });
+        markInstanceof(this, UNAUTHORIZED_ERROR_INSTANCE);
     }
 }

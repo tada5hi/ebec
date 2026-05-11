@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ServerError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const INTERNAL_SERVER_ERROR_INSTANCE = Symbol.for('@ebec/http/InternalServerError');
 
 export const InternalServerErrorOptions = {
     code: 'INTERNAL_SERVER_ERROR',
@@ -14,5 +17,6 @@ export class InternalServerError extends ServerError {
             code: options.code ?? InternalServerErrorOptions.code,
             status: options.status ?? options.statusCode ?? InternalServerErrorOptions.status,
         });
+        markInstanceof(this, INTERNAL_SERVER_ERROR_INSTANCE);
     }
 }

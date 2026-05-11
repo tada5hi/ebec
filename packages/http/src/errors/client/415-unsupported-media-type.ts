@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const UNSUPPORTED_MEDIA_TYPE_ERROR_INSTANCE = Symbol.for('@ebec/http/UnsupportedMediaTypeError');
 
 export const UnsupportedMediaTypeErrorOptions = {
     code: 'UNSUPPORTED_MEDIA_TYPE',
@@ -14,5 +17,6 @@ export class UnsupportedMediaTypeError extends ClientError {
             code: options.code ?? UnsupportedMediaTypeErrorOptions.code,
             status: options.status ?? options.statusCode ?? UnsupportedMediaTypeErrorOptions.status,
         });
+        markInstanceof(this, UNSUPPORTED_MEDIA_TYPE_ERROR_INSTANCE);
     }
 }

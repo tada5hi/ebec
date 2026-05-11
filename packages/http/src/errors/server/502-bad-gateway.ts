@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ServerError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const BAD_GATEWAY_ERROR_INSTANCE = Symbol.for('@ebec/http/BadGatewayError');
 
 export const BadGatewayErrorOptions = {
     code: 'BAD_GATEWAY',
@@ -14,5 +17,6 @@ export class BadGatewayError extends ServerError {
             code: options.code ?? BadGatewayErrorOptions.code,
             status: options.status ?? options.statusCode ?? BadGatewayErrorOptions.status,
         });
+        markInstanceof(this, BAD_GATEWAY_ERROR_INSTANCE);
     }
 }

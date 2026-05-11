@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const PRECONDITION_REQUIRED_ERROR_INSTANCE = Symbol.for('@ebec/http/PreconditionRequiredError');
 
 export const PreconditionRequiredErrorOptions = {
     code: 'PRECONDITION_REQUIRED',
@@ -14,5 +17,6 @@ export class PreconditionRequiredError extends ClientError {
             code: options.code ?? PreconditionRequiredErrorOptions.code,
             status: options.status ?? options.statusCode ?? PreconditionRequiredErrorOptions.status,
         });
+        markInstanceof(this, PRECONDITION_REQUIRED_ERROR_INSTANCE);
     }
 }

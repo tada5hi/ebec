@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const LOCKED_ERROR_INSTANCE = Symbol.for('@ebec/http/LockedError');
 
 export const LockedErrorOptions = {
     code: 'LOCKED',
@@ -14,5 +17,6 @@ export class LockedError extends ClientError {
             code: options.code ?? LockedErrorOptions.code,
             status: options.status ?? options.statusCode ?? LockedErrorOptions.status,
         });
+        markInstanceof(this, LOCKED_ERROR_INSTANCE);
     }
 }

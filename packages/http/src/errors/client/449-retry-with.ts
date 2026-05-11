@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ClientError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const RETRY_WITH_ERROR_INSTANCE = Symbol.for('@ebec/http/RetryWithError');
 
 export const RetryWithErrorOptions = {
     code: 'RETRY_WITH',
@@ -14,5 +17,6 @@ export class RetryWithError extends ClientError {
             code: options.code ?? RetryWithErrorOptions.code,
             status: options.status ?? options.statusCode ?? RetryWithErrorOptions.status,
         });
+        markInstanceof(this, RETRY_WITH_ERROR_INSTANCE);
     }
 }

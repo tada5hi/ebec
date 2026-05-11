@@ -75,10 +75,13 @@ function normalizeEntry(key, value) {
 
         const baseClassName = isServerError ? 'ServerError' : 'ClientError';
 
+        const instanceConstantName = `${deriveCode(className)}_INSTANCE`;
+
         const content = mustache.render(tpl, {
             namespaceFile: 'index.ts',
             class: className,
             baseClass: baseClassName,
+            instanceConstantName,
             ...entry,
         });
 

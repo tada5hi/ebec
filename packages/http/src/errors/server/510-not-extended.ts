@@ -1,5 +1,8 @@
+import { markInstanceof } from '@ebec/core';
 import { ServerError } from '../base';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
+
+export const NOT_EXTENDED_ERROR_INSTANCE = Symbol.for('@ebec/http/NotExtendedError');
 
 export const NotExtendedErrorOptions = {
     code: 'NOT_EXTENDED',
@@ -14,5 +17,6 @@ export class NotExtendedError extends ServerError {
             code: options.code ?? NotExtendedErrorOptions.code,
             status: options.status ?? options.statusCode ?? NotExtendedErrorOptions.status,
         });
+        markInstanceof(this, NOT_EXTENDED_ERROR_INSTANCE);
     }
 }
