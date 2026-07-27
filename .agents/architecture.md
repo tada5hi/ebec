@@ -29,7 +29,16 @@ class BaseError extends Error {
 
 ### Serialization
 
-`toJSON()` returns `{ name, message, code, cause? }`. If `cause` is a `BaseError`, it is serialized recursively via `toJSON()`. Otherwise, the raw cause value is included.
+`toJSON()` returns `{ name, message, code, cause?, '@instanceof' }`. If `cause` is a `BaseError`, it is serialized recursively via `toJSON()`. Otherwise, the raw cause value is included.
+
+The `@instanceof` key carries the class-marker chain (see below) as a string list — the markers' `Symbol.for(...)` registry keys — since symbols are dropped by `JSON.stringify`. `serializeInstanceofChain(input)` produces this form.
+
+## @instanceof Markers
+
+Every class in the hierarchy declares a `Symbol.for(...)` marker (e.g. `BASE_ERROR_INSTANCE`, `HTTP_ERROR_INSTANCE`) and appends it to the instance's non-enumerable `@instanceof` chain via `markInstanceof(this, MARKER)` in its constructor. Subclass instances accumulate markers from every ancestor, so a parent-class guard can fast-path-match a subclass instance across bundle/realm boundaries.
+
+- `hasInstanceof(input, marker)` — strict form, matches the marker symbol only
+- `matchesInstanceof(input, marker)` — matches the symbol **or** its description string; use this as the guard fast path so the inheritance match survives a JSON round-trip (`toJSON()` serializes the chain to strings)
 
 ## HTTPError Properties
 
@@ -92,3 +101,5 @@ Each level provides a type guard for duck-type checking:
 | `isHTTPError(x)` | @ebec/http | Is error with numeric status (or statusCode) 400-599 |
 | `isClientError(x)` | @ebec/http | isHTTPError + status 400-499 |
 | `isServerError(x)` | @ebec/http | isHTTPError + status 500-599 |
+
+Each guard checks `matchesInstanceof(x, MARKER)` as its fast path before falling back to the shape checks above. New guards must use `matchesInstanceof` (not `hasInstanceof`) so JSON-rehydrated errors keep the inheritance match.

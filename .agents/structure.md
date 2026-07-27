@@ -15,11 +15,14 @@ ebec/
 │   │   │   │   ├── module.ts  # isErrorOptions(), extractErrorOptions()
 │   │   │   │   └── types.ts   # ErrorOptions type
 │   │   │   └── helpers/
-│   │   │       ├── check.ts        # isBaseError()
+│   │   │       ├── check.ts        # isBaseError(), isBaseErrorGroup()
+│   │   │       ├── error.ts        # isError()
 │   │   │       ├── error-code.ts   # isErrorWithCode()
+│   │   │       ├── instanceof.ts   # markInstanceof(), hasInstanceof(), matchesInstanceof(), serializeInstanceofChain()
 │   │   │       ├── interpolate.ts  # Message template interpolation
 │   │   │       ├── object.ts       # isObject() helper
-│   │   │       └── sanitize-code.ts # sanitizeErrorCode()
+│   │   │       ├── sanitize-code.ts # sanitizeErrorCode()
+│   │   │       └── serialize.ts    # toSerializable()
 │   │   ├── test/unit/
 │   │   ├── tsdown.config.ts
 │   │   └── package.json

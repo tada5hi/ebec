@@ -1,4 +1,4 @@
-import { hasInstanceof, markInstanceof } from '@ebec/core';
+import { markInstanceof, matchesInstanceof } from '@ebec/core';
 import type { HTTPErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
 import type { IClientError } from './types';
@@ -13,7 +13,7 @@ export class ClientError extends HTTPError implements IClientError {
 }
 
 export function isClientError(input: unknown): input is IClientError {
-    if (hasInstanceof(input, CLIENT_ERROR_INSTANCE)) {
+    if (matchesInstanceof(input, CLIENT_ERROR_INSTANCE)) {
         return true;
     }
 

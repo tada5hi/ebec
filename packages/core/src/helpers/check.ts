@@ -7,7 +7,7 @@
 import type { IBaseError, IBaseErrorGroup } from '../types';
 import { isErrorOptions } from '../options';
 import { isError } from './error';
-import { hasInstanceof } from './instanceof';
+import { matchesInstanceof } from './instanceof';
 import { isObject } from './object';
 
 // Resolved via the global Symbol.for registry — same identity as
@@ -18,7 +18,7 @@ const BASE_ERROR_INSTANCE = Symbol.for('@ebec/core/BaseError');
 export function isBaseError(
     input: unknown,
 ): input is IBaseError {
-    if (hasInstanceof(input, BASE_ERROR_INSTANCE)) {
+    if (matchesInstanceof(input, BASE_ERROR_INSTANCE)) {
         return true;
     }
 

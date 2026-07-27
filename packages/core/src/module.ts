@@ -7,9 +7,11 @@
 
 import type { ErrorInput, IBaseError } from './types';
 import {
+    INSTANCEOF_PROPERTY,
     interpolate,
     markInstanceof,
     sanitizeErrorCode,
+    serializeInstanceofChain,
     toSerializable,
 } from './helpers';
 import { extractErrorOptions } from './options';
@@ -75,12 +77,19 @@ export class BaseError extends Error implements IBaseError {
         markInstanceof(this, BASE_ERROR_INSTANCE);
     }
 
+    /**
+     * The class-marker chain rides along as a string list so the ancestor
+     * information survives a JSON round-trip (symbols don't serialize) —
+     * duck-type guards match rehydrated subclass errors through it via
+     * `matchesInstanceof`.
+     */
     toJSON(): {
         name: string;
         message: string;
         code: string;
         cause?: unknown;
         errors?: unknown[];
+        [INSTANCEOF_PROPERTY]: string[];
     } {
         return {
             name: this.name,
@@ -88,6 +97,7 @@ export class BaseError extends Error implements IBaseError {
             code: this.code,
             ...(this.cause !== undefined && { cause: toSerializable(this.cause) }),
             ...(this.errors !== undefined && { errors: this.errors.map((e) => toSerializable(e)) }),
+            [INSTANCEOF_PROPERTY]: serializeInstanceofChain(this),
         };
     }
 }

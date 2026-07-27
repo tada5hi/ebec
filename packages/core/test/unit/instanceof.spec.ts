@@ -7,6 +7,8 @@ import {
     hasInstanceof,
     isBaseError,
     markInstanceof,
+    matchesInstanceof,
+    serializeInstanceofChain,
 } from '../../src';
 
 describe('src/helpers/instanceof.ts', () => {
@@ -112,6 +114,143 @@ describe('src/helpers/instanceof.ts', () => {
         });
     });
 
+    describe('serializeInstanceofChain', () => {
+        it('should serialize symbol markers to their description strings', () => {
+            const target = {};
+
+            markInstanceof(target, Symbol.for('@ebec-test/SerializeFoo'));
+            markInstanceof(target, Symbol.for('@ebec-test/SerializeBar'));
+
+            expect(serializeInstanceofChain(target)).toEqual([
+                '@ebec-test/SerializeFoo',
+                '@ebec-test/SerializeBar',
+            ]);
+        });
+
+        it('should pass string entries through unchanged', () => {
+            const target = { [INSTANCEOF_PROPERTY]: ['@ebec-test/Rehydrated', Symbol.for('@ebec-test/Native')] };
+
+            expect(serializeInstanceofChain(target)).toEqual([
+                '@ebec-test/Rehydrated',
+                '@ebec-test/Native',
+            ]);
+        });
+
+        it('should drop description-less symbols and non-string entries', () => {
+            const target = {
+                // eslint-disable-next-line symbol-description
+                [INSTANCEOF_PROPERTY]: [Symbol(), 42, null, Symbol.for('@ebec-test/Kept')],
+            };
+
+            expect(serializeInstanceofChain(target)).toEqual(['@ebec-test/Kept']);
+        });
+
+        it('should return an empty list for non-objects and missing or malformed chains', () => {
+            expect(serializeInstanceofChain(undefined)).toEqual([]);
+            expect(serializeInstanceofChain('string')).toEqual([]);
+            expect(serializeInstanceofChain({})).toEqual([]);
+            expect(serializeInstanceofChain({ [INSTANCEOF_PROPERTY]: 'not-an-array' })).toEqual([]);
+        });
+
+        it('should emit each marker once when a re-marked rehydrated chain holds both forms', () => {
+            const rehydrated = JSON.parse(JSON.stringify(new BaseError('boom')));
+            // markInstanceof dedupes by symbol identity, so re-marking a
+            // rehydrated chain appends the symbol next to its string form.
+            markInstanceof(rehydrated, BASE_ERROR_INSTANCE);
+
+            expect(rehydrated[INSTANCEOF_PROPERTY]).toEqual(['@ebec/core/BaseError', BASE_ERROR_INSTANCE]);
+            expect(serializeInstanceofChain(rehydrated)).toEqual(['@ebec/core/BaseError']);
+        });
+    });
+
+    describe('matchesInstanceof', () => {
+        it('should match the native symbol form', () => {
+            const target = {};
+            const marker = Symbol.for('@ebec-test/MatchSymbol');
+
+            markInstanceof(target, marker);
+
+            expect(matchesInstanceof(target, marker)).toBe(true);
+        });
+
+        it('should match the serialized string form', () => {
+            const target = { [INSTANCEOF_PROPERTY]: ['@ebec-test/MatchString'] };
+
+            expect(matchesInstanceof(target, Symbol.for('@ebec-test/MatchString'))).toBe(true);
+        });
+
+        it('should not match a marker absent from either form', () => {
+            const target = { [INSTANCEOF_PROPERTY]: ['@ebec-test/MatchPresent', Symbol.for('@ebec-test/MatchPresent')] };
+
+            expect(matchesInstanceof(target, Symbol.for('@ebec-test/MatchAbsent'))).toBe(false);
+        });
+
+        it('should not string-match a description-less marker', () => {
+            const target = { [INSTANCEOF_PROPERTY]: ['undefined'] };
+
+            // eslint-disable-next-line symbol-description
+            expect(matchesInstanceof(target, Symbol())).toBe(false);
+        });
+
+        it('should not match a local same-description symbol against a symbol chain', () => {
+            const target = {};
+
+            markInstanceof(target, Symbol.for('@ebec-test/MatchLocal'));
+
+            // Description matching applies to serialized string chains only —
+            // symbol entries still require registry identity.
+            expect(matchesInstanceof(target, Symbol('@ebec-test/MatchLocal'))).toBe(false);
+        });
+
+        it('should return false for non-object inputs and missing chains', () => {
+            const marker = Symbol.for('@ebec-test/MatchNone');
+
+            expect(matchesInstanceof(undefined, marker)).toBe(false);
+            expect(matchesInstanceof(null, marker)).toBe(false);
+            expect(matchesInstanceof({}, marker)).toBe(false);
+        });
+    });
+
+    describe('JSON round-trip', () => {
+        it('should emit the serialized chain in BaseError.toJSON output', () => {
+            const error = new BaseError('boom');
+
+            expect(error.toJSON()[INSTANCEOF_PROPERTY]).toEqual(['@ebec/core/BaseError']);
+        });
+
+        it('should keep the chain match after a JSON round-trip', () => {
+            const error = new BaseError('boom');
+            const rehydrated = JSON.parse(JSON.stringify(error));
+
+            expect(hasInstanceof(rehydrated, BASE_ERROR_INSTANCE)).toBe(false);
+            expect(matchesInstanceof(rehydrated, BASE_ERROR_INSTANCE)).toBe(true);
+            expect(isBaseError(rehydrated)).toBe(true);
+        });
+
+        it('should survive a double round-trip losslessly', () => {
+            const error = new BaseError('boom');
+            const once = JSON.parse(JSON.stringify(error));
+            // The rehydrated chain is a plain enumerable string list, so a
+            // second stringify carries it along without a toJSON hook.
+            const twice = JSON.parse(JSON.stringify(once));
+
+            expect(twice[INSTANCEOF_PROPERTY]).toEqual(['@ebec/core/BaseError']);
+            expect(matchesInstanceof(twice, BASE_ERROR_INSTANCE)).toBe(true);
+        });
+
+        it('should fall back gracefully for chain-less legacy payloads', () => {
+            const legacy = {
+                name: 'BaseError', 
+                message: 'boom', 
+                code: 'BASE_ERROR', 
+            };
+
+            expect(matchesInstanceof(legacy, BASE_ERROR_INSTANCE)).toBe(false);
+            // The guard still matches through its slow path (shape check).
+            expect(isBaseError(legacy)).toBe(true);
+        });
+    });
+
     describe('cross-realm identity via Symbol.for', () => {
         it('should match across independent Symbol.for lookups for the same key', () => {
             const target = {};
@@ -196,6 +335,14 @@ describe('src/helpers/instanceof.ts', () => {
 
             expect(hasInstanceof(foo, FOO_INSTANCE)).toBe(true);
             expect(hasInstanceof(foo, BAR_INSTANCE)).toBe(false);
+        });
+
+        it('should keep the ancestor match for a JSON-rehydrated subclass instance', () => {
+            const rehydrated = JSON.parse(JSON.stringify(new BarError('boom')));
+
+            expect(matchesInstanceof(rehydrated, BASE_ERROR_INSTANCE)).toBe(true);
+            expect(matchesInstanceof(rehydrated, FOO_INSTANCE)).toBe(true);
+            expect(matchesInstanceof(rehydrated, BAR_INSTANCE)).toBe(true);
         });
     });
 });

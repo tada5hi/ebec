@@ -82,6 +82,8 @@ throw new UserNotFoundError(42);
 
 All type guards use duck typing and return interface types (`IHTTPError`, `IClientError`, `IServerError`). They work with any object that has the right shape, not just `instanceof` checks.
 
+Each guard fast-path-matches the `@instanceof` class-marker chain via `matchesInstanceof` — as `Symbol.for(...)` markers on in-process instances, or as the string list that `toJSON()` emits under the `@instanceof` key. Guards therefore keep the full inheritance match (e.g. `isClientError` matching a `NotFoundError`) even for errors rehydrated from a JSON response body.
+
 ```typescript
 import {
     isHTTPError,

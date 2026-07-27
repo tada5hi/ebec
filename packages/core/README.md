@@ -127,9 +127,21 @@ console.log(JSON.stringify(error, null, 2));
 //   "cause": {
 //     "name": "BaseError",
 //     "message": "inner",
-//     "code": "INNER"
-//   }
+//     "code": "INNER",
+//     "@instanceof": ["@ebec/core/BaseError"]
+//   },
+//   "@instanceof": ["@ebec/core/BaseError"]
 // }
+```
+
+The `@instanceof` key carries the class-marker chain — one `Symbol.for(...)` registry key per class in the inheritance path — as a string list, since symbols don't survive `JSON.stringify`. Use `matchesInstanceof` to match a marker against both the in-process symbol chain and the rehydrated string chain:
+
+```typescript
+import { BASE_ERROR_INSTANCE, matchesInstanceof } from '@ebec/core';
+
+const rehydrated = JSON.parse(JSON.stringify(new BaseError('boom')));
+
+matchesInstanceof(rehydrated, BASE_ERROR_INSTANCE); // true
 ```
 
 ## Type Guards
@@ -251,7 +263,7 @@ class BaseError extends Error {
     cause?: unknown;
 
     constructor(input?: string | ErrorOptions);
-    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[] };
+    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; '@instanceof': string[] };
 }
 ```
 
@@ -284,6 +296,10 @@ class BaseError extends Error {
 | `extractErrorOptions(input)` | Normalizes `string \| ErrorOptions` to `ErrorOptions` |
 | `defineErrorCatalog(definitions)` | Creates typed error factory functions |
 | `toSerializable(input)` | Converts to JSON-safe form via `toJSON()` or `{ message }` fallback |
+| `markInstanceof(target, marker)` | Appends a `Symbol.for(...)` class marker to the target's `@instanceof` chain |
+| `hasInstanceof(input, marker)` | Checks the chain for the marker symbol (strict, in-process form only) |
+| `matchesInstanceof(input, marker)` | Checks the chain for the marker symbol **or** its description string (JSON-rehydrated form) |
+| `serializeInstanceofChain(input)` | Serializes the chain to its string form, as emitted by `toJSON()` |
 
 ## License
 
