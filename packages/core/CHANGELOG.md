@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.2.0](https://github.com/tada5hi/ebec/compare/core-v1.1.0...core-v1.2.0) (2026-07-27)
+
+
+### Features
+
+* keep [@instanceof](https://github.com/instanceof) marker chain across JSON serialization ([#449](https://github.com/tada5hi/ebec/issues/449)) ([a28f87a](https://github.com/tada5hi/ebec/commit/a28f87ac3889efa0a43f859b01d28422e5d1d32f))
+
 ## [1.1.0](https://github.com/tada5hi/ebec/compare/core-v1.0.1...core-v1.1.0) (2026-05-11)
 
 
