@@ -14,6 +14,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [4.2.0](https://github.com/tada5hi/ebec/compare/http-v4.1.0...http-v4.2.0) (2026-07-27)
+
+
+### Features
+
+* keep [@instanceof](https://github.com/instanceof) marker chain across JSON serialization ([#449](https://github.com/tada5hi/ebec/issues/449)) ([a28f87a](https://github.com/tada5hi/ebec/commit/a28f87ac3889efa0a43f859b01d28422e5d1d32f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @ebec/core bumped from ^1.1.0 to ^1.2.0
+
 ## [4.1.0](https://github.com/tada5hi/ebec/compare/http-v4.0.0...http-v4.1.0) (2026-05-11)
 
 
