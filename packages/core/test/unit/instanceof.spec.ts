@@ -151,6 +151,16 @@ describe('src/helpers/instanceof.ts', () => {
             expect(serializeInstanceofChain({})).toEqual([]);
             expect(serializeInstanceofChain({ [INSTANCEOF_PROPERTY]: 'not-an-array' })).toEqual([]);
         });
+
+        it('should emit each marker once when a re-marked rehydrated chain holds both forms', () => {
+            const rehydrated = JSON.parse(JSON.stringify(new BaseError('boom')));
+            // markInstanceof dedupes by symbol identity, so re-marking a
+            // rehydrated chain appends the symbol next to its string form.
+            markInstanceof(rehydrated, BASE_ERROR_INSTANCE);
+
+            expect(rehydrated[INSTANCEOF_PROPERTY]).toEqual(['@ebec/core/BaseError', BASE_ERROR_INSTANCE]);
+            expect(serializeInstanceofChain(rehydrated)).toEqual(['@ebec/core/BaseError']);
+        });
     });
 
     describe('matchesInstanceof', () => {
@@ -180,6 +190,16 @@ describe('src/helpers/instanceof.ts', () => {
 
             // eslint-disable-next-line symbol-description
             expect(matchesInstanceof(target, Symbol())).toBe(false);
+        });
+
+        it('should not match a local same-description symbol against a symbol chain', () => {
+            const target = {};
+
+            markInstanceof(target, Symbol.for('@ebec-test/MatchLocal'));
+
+            // Description matching applies to serialized string chains only —
+            // symbol entries still require registry identity.
+            expect(matchesInstanceof(target, Symbol('@ebec-test/MatchLocal'))).toBe(false);
         });
 
         it('should return false for non-object inputs and missing chains', () => {

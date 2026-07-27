@@ -70,7 +70,9 @@ export function hasInstanceof(input: unknown, marker: symbol): boolean {
  * the same identity information as the symbol form.
  *
  * String entries pass through unchanged (a rehydrated chain re-serializes
- * losslessly); anything else is dropped.
+ * losslessly); anything else is dropped. Each value is emitted once — a
+ * re-marked rehydrated chain can hold the same marker in both its string
+ * and symbol form.
  */
 export function serializeInstanceofChain(input: unknown): string[] {
     if (!isObject(input)) {
@@ -84,12 +86,17 @@ export function serializeInstanceofChain(input: unknown): string[] {
 
     const output: string[] = [];
     for (const entry of chain) {
+        let value: string | undefined;
         if (typeof entry === 'symbol') {
             if (entry.description) {
-                output.push(entry.description);
+                value = entry.description;
             }
         } else if (typeof entry === 'string') {
-            output.push(entry);
+            value = entry;
+        }
+
+        if (typeof value === 'string' && !output.includes(value)) {
+            output.push(value);
         }
     }
 
