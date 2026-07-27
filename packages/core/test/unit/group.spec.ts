@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { BaseError, isBaseErrorGroup } from '../../src';
+import { BaseError, INSTANCEOF_PROPERTY, isBaseErrorGroup } from '../../src';
+
+const BASE_ERROR_CHAIN = ['@ebec/core/BaseError'];
 
 describe('errors grouping', () => {
     it('should create instance with errors option', () => {
@@ -51,7 +53,9 @@ describe('errors grouping', () => {
                 name: 'BaseError',
                 message: 'child',
                 code: 'CHILD',
+                [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
             }],
+            [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
         });
     });
 
@@ -77,9 +81,10 @@ describe('errors grouping', () => {
 
         expect(json.errors).toEqual([
             {
-                name: 'BaseError', 
-                message: 'structured', 
-                code: 'STRUCT', 
+                name: 'BaseError',
+                message: 'structured',
+                code: 'STRUCT',
+                [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
             },
             { message: 'plain' },
         ]);

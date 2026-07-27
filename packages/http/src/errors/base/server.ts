@@ -1,4 +1,4 @@
-import { hasInstanceof, markInstanceof } from '@ebec/core';
+import { markInstanceof, matchesInstanceof } from '@ebec/core';
 import type { HTTPErrorInput } from '../../types';
 import { HTTPError, isHTTPError } from './http';
 import type { IServerError } from './types';
@@ -13,7 +13,7 @@ export class ServerError extends HTTPError implements IServerError {
 }
 
 export function isServerError(input: unknown): input is IServerError {
-    if (hasInstanceof(input, SERVER_ERROR_INSTANCE)) {
+    if (matchesInstanceof(input, SERVER_ERROR_INSTANCE)) {
         return true;
     }
 

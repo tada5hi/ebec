@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { describe, expect, it } from 'vitest';
-import { BaseError, isBaseError } from '../../src';
+import { BaseError, INSTANCEOF_PROPERTY, isBaseError } from '../../src';
+
+const BASE_ERROR_CHAIN = ['@ebec/core/BaseError'];
 
 describe('src/module.ts', () => {
     it('should create instance with message', () => {
@@ -48,6 +50,7 @@ describe('src/module.ts', () => {
             name: 'BaseError',
             message: 'test error',
             code: 'TEST',
+            [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
         });
     });
 
@@ -68,7 +71,9 @@ describe('src/module.ts', () => {
                 name: 'BaseError',
                 message: 'inner',
                 code: 'INNER',
+                [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
             },
+            [INSTANCEOF_PROPERTY]: BASE_ERROR_CHAIN,
         });
     });
 

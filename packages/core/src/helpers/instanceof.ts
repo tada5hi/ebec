@@ -12,7 +12,10 @@ import { isObject } from './object';
  *
  * The chain is a `symbol[]` of `Symbol.for(...)` markers — one per class in the
  * inheritance path. Stored as a non-enumerable, non-writable, non-configurable
- * property so it stays out of `Object.keys()` and `JSON.stringify()` output.
+ * property so it stays out of `Object.keys()` and plain `JSON.stringify()`
+ * output. `BaseError.toJSON()` re-emits it under the same key as a string
+ * list (see {@link serializeInstanceofChain}), so on objects rehydrated from
+ * that JSON the property holds a `string[]` instead.
  */
 export const INSTANCEOF_PROPERTY = '@instanceof' as const;
 
@@ -56,4 +59,65 @@ export function hasInstanceof(input: unknown, marker: symbol): boolean {
 
     const chain = input[INSTANCEOF_PROPERTY];
     return Array.isArray(chain) && chain.includes(marker);
+}
+
+/**
+ * Serialize the input's `@instanceof` class-marker chain to its string form.
+ *
+ * Symbols are dropped by `JSON.stringify`, so `BaseError.toJSON()` emits the
+ * chain as the markers' description strings instead. For `Symbol.for(...)`
+ * markers the description *is* the registry key, so the string form carries
+ * the same identity information as the symbol form.
+ *
+ * String entries pass through unchanged (a rehydrated chain re-serializes
+ * losslessly); anything else is dropped.
+ */
+export function serializeInstanceofChain(input: unknown): string[] {
+    if (!isObject(input)) {
+        return [];
+    }
+
+    const chain = input[INSTANCEOF_PROPERTY];
+    if (!Array.isArray(chain)) {
+        return [];
+    }
+
+    const output: string[] = [];
+    for (const entry of chain) {
+        if (typeof entry === 'symbol') {
+            if (entry.description) {
+                output.push(entry.description);
+            }
+        } else if (typeof entry === 'string') {
+            output.push(entry);
+        }
+    }
+
+    return output;
+}
+
+/**
+ * Check whether the input's `@instanceof` chain carries `marker` — either as
+ * the native registry symbol (an in-process instance) or as the symbol's
+ * description string (an error rehydrated from the JSON emitted by
+ * `BaseError.toJSON()`).
+ *
+ * Prefer this over {@link hasInstanceof} as the fast path of duck-type
+ * guards: `hasInstanceof` only matches the symbol form, so a guard using it
+ * loses the inheritance match for JSON-rehydrated subclass errors and falls
+ * through to its slow path.
+ */
+export function matchesInstanceof(input: unknown, marker: symbol): boolean {
+    if (hasInstanceof(input, marker)) {
+        return true;
+    }
+
+    if (!isObject(input)) {
+        return false;
+    }
+
+    const chain = input[INSTANCEOF_PROPERTY];
+    return Array.isArray(chain) &&
+        typeof marker.description === 'string' &&
+        chain.includes(marker.description);
 }

@@ -1,4 +1,4 @@
-import { INSTANCEOF_PROPERTY, hasInstanceof } from '@ebec/core';
+import { INSTANCEOF_PROPERTY, hasInstanceof, matchesInstanceof } from '@ebec/core';
 import { describe, expect, it } from 'vitest';
 import {
     BAD_REQUEST_ERROR_INSTANCE,
@@ -178,11 +178,41 @@ describe('src/module.ts', () => {
             expect(isServerError(foreign)).toBe(false);
         });
 
-        it('should keep the marker chain out of toJSON output', () => {
+        it('should emit the full marker chain in toJSON output', () => {
             const error = new NotFoundError('User not found');
             const json = error.toJSON();
 
-            expect((json as Record<string, unknown>)[INSTANCEOF_PROPERTY]).toBeUndefined();
+            expect((json as Record<string, unknown>)[INSTANCEOF_PROPERTY]).toEqual([
+                '@ebec/core/BaseError',
+                '@ebec/http/HTTPError',
+                '@ebec/http/ClientError',
+                '@ebec/http/NotFoundError',
+            ]);
+        });
+
+        it('should keep the ancestor match for a JSON-rehydrated subclass error', () => {
+            const rehydrated = JSON.parse(JSON.stringify(new NotFoundError()));
+
+            // Symbols are dropped by JSON.stringify — the strict form no
+            // longer matches, the serialized string form does.
+            expect(hasInstanceof(rehydrated, CLIENT_ERROR_INSTANCE)).toBe(false);
+            expect(matchesInstanceof(rehydrated, NOT_FOUND_ERROR_INSTANCE)).toBe(true);
+            expect(matchesInstanceof(rehydrated, CLIENT_ERROR_INSTANCE)).toBe(true);
+            expect(matchesInstanceof(rehydrated, HTTP_ERROR_INSTANCE)).toBe(true);
+
+            expect(isHTTPError(rehydrated)).toBe(true);
+            expect(isClientError(rehydrated)).toBe(true);
+            expect(isServerError(rehydrated)).toBe(false);
+        });
+
+        it('should keep guard matching for chain-less legacy payloads', () => {
+            const rehydrated = JSON.parse(JSON.stringify(new InternalServerError()));
+            delete rehydrated[INSTANCEOF_PROPERTY];
+
+            // Guards fall back to their status-based slow path.
+            expect(isHTTPError(rehydrated)).toBe(true);
+            expect(isServerError(rehydrated)).toBe(true);
+            expect(isClientError(rehydrated)).toBe(false);
         });
     });
 });

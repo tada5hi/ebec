@@ -1,8 +1,8 @@
 import {
     BaseError,
-    hasInstanceof,
     isBaseError,
     markInstanceof,
+    matchesInstanceof,
 } from '@ebec/core';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
@@ -57,7 +57,7 @@ export class HTTPError extends BaseError implements IHTTPError {
 }
 
 export function isHTTPError(input: unknown): input is IHTTPError {
-    if (hasInstanceof(input, HTTP_ERROR_INSTANCE)) {
+    if (matchesInstanceof(input, HTTP_ERROR_INSTANCE)) {
         return true;
     }
 
