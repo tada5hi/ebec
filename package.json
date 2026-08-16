@@ -38,12 +38,12 @@
         "@tada5hi/tsconfig": "^0.7.2",
         "@types/node": "^25.6.0",
         "@vitest/coverage-v8": "^4.1.9",
-        "eslint": "^10.5.0",
+        "eslint": "^10.8.1",
         "husky": "^9.1.7",
         "nx": "^22.6.5",
         "tsdown": "^0.22.3",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.61.1",
+        "typescript-eslint": "^8.66.0",
         "vitest": "^4.0.18"
     },
     "scripts": {
