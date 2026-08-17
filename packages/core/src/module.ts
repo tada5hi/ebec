@@ -5,6 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
+import type { Issue } from 'blemish';
 import type { ErrorInput, IBaseError } from './types';
 import {
     INSTANCEOF_PROPERTY,
@@ -33,6 +34,12 @@ export class BaseError extends Error implements IBaseError {
      * A collection of errors for batch/group error scenarios.
      */
     readonly errors?: ReadonlyArray<Error>;
+
+    /**
+     * Structured validation failures, as a blemish issue tree.
+     * Always an array — empty when the error carries none.
+     */
+    readonly issues: ReadonlyArray<Issue>;
 
     //--------------------------------------------------------------------
 
@@ -73,6 +80,8 @@ export class BaseError extends Error implements IBaseError {
         if (options.errors !== undefined) {
             this.errors = [...options.errors];
         }
+
+        this.issues = options.issues ? [...options.issues] : [];
 
         markInstanceof(this, BASE_ERROR_INSTANCE);
     }
