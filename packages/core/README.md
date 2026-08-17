@@ -366,7 +366,7 @@ class BaseError extends Error {
 | `isIssueGroup(input)` | Structural check for an issue with children; recurses. |
 | `isIssue(input)` | Either of the above. |
 
-Types: `Issue`, `IssueItem`, `IssueGroup`, `IssueBase`, `IssueItemTyped`, `IssueItemBare`, `IssueItemRaw`, `IssueCode`, `IssueDataByCode`, `ParameterizedIssueCode`, `BareIssueCode`, `IssueMessageTemplates`, `ResolveIssueCode`.
+Types: `Issue`, `IssueItem`, `IssueGroup`, `IssueBase`, `IssueItemTyped`, `IssueItemBare`, `IssueItemRaw`, `IssueCode`, `IssueDataByCode`, `ParameterizedIssueCode`, `BareIssueCode`, `IssueMessageTemplates`, `ResolveIssueCode`, `DefineIssueItemData`, `DefineIssueItemReturn`.
 
 `IssueCode` is a default vocabulary rather than a requirement — `IssueItem['code']` is widened to `IssueCode | (string & {})`, so any string is a well-formed code. `IssueDataByCode` is augmentable via `declare module '@ebec/core'` to add typed `data` shapes for your own codes.
 

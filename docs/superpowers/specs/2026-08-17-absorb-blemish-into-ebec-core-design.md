@@ -1,7 +1,7 @@
 # Absorbing blemish into `@ebec/core`
 
 **Date:** 2026-08-17
-**Status:** Approved, not yet implemented
+**Status:** Implemented
 **Scope:** `tada5hi/ebec`, `tada5hi/validup`, `tada5hi/rapiq`, `tada5hi/blemish`
 **Supersedes in part:** `2026-08-17-base-error-issues-design.md`, whose
 types-only-dependency decision this reverses

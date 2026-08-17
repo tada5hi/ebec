@@ -1,5 +1,9 @@
 # Absorbing blemish into `@ebec/core` — Implementation Plan
 
+> **Status: Executed — historical record, not live instructions.** Implemented
+> by commits `0a761da`, `40aff04`, `0aeb9e9` on `feat/base-error-issues`
+> (stage 1 of the spec; stages 2-4 are out of scope for this repo, see below).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Move blemish's issue model into `@ebec/core`, so a consumer needs one install to name, build and consume the `issues` property that `BaseError` already requires.

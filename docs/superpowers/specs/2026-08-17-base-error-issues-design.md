@@ -1,7 +1,7 @@
 # `BaseError.issues` — integrating the blemish issue model
 
 **Date:** 2026-08-17
-**Status:** Approved, not yet implemented
+**Status:** Implemented; superseded in part by [Absorbing blemish into `@ebec/core`](./2026-08-17-absorb-blemish-into-ebec-core-design.md), which reverses this spec's types-only-dependency decision
 **Scope:** `tada5hi/blemish` (prerequisite patch) and `tada5hi/ebec` (`@ebec/core` minor)
 
 ## Problem

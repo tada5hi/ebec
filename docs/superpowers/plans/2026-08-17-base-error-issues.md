@@ -1,5 +1,17 @@
 # `BaseError.issues` Implementation Plan
 
+> **Status: Executed — historical record, not live instructions.** Implemented
+> by commits `bbb8c3b`, `7100a8f`, `cf98632`, `5971f3a`, `3913f47`, `360fbb9`,
+> `9b40eac` on `feat/base-error-issues`.
+>
+> **⚠ Reversed constraint — do not follow Task 1 or the "types-only
+> dependency" constraint below.** The later
+> [Absorbing blemish into `@ebec/core`](2026-08-17-absorb-blemish-into-ebec-core.md)
+> plan (commits `0a761da`, `40aff04`, `0aeb9e9`) reversed this plan's central
+> premise: `blemish` is no longer a dependency of `@ebec/core` at all — its
+> issue model was copied in-package, and the separate `blemish` repository
+> referenced by Task 1 is no longer touched by this codebase's workflow.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Give `@ebec/core`'s `BaseError` an `issues` property carrying a blemish issue tree, so downstream libraries stop each declaring their own.
