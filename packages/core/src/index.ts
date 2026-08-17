@@ -10,3 +10,4 @@ export * from './module';
 export * from './options';
 export * from './helpers';
 export * from './catalog';
+export * from './issue';
