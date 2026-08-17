@@ -4,6 +4,8 @@
  *  For the full copyright and license information,
  *  view the LICENSE file that was distributed with this source code.
  */
+import type { Issue } from '../issue';
+
 export type ErrorOptions = {
     /**
      * The actual error message, if not provided on another way.
@@ -35,4 +37,12 @@ export type ErrorOptions = {
      * A collection of errors for batch/group error scenarios.
      */
     errors?: Error[],
+
+    /**
+     * Structured validation failures, as an issue tree.
+     *
+     * Stored as given — group nodes keep their children, since flattening
+     * is `flattenIssueItems`' job at the consumer.
+     */
+    issues?: Issue[],
 };

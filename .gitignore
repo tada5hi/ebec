@@ -10,3 +10,4 @@ coverage
 cache
 .claude/settings.local.json
 .agents/plans
+docs/superpowers

@@ -16,6 +16,7 @@ Core error class library for TypeScript. Provides `BaseError` with automatic cod
 - [Serialization](#serialization)
 - [Type Guards](#type-guards)
 - [Error Grouping](#error-grouping)
+- [Validation Issues](#validation-issues)
 - [Error Catalog](#error-catalog)
 - [API Reference](#api-reference)
 - [License](#license)
@@ -113,7 +114,7 @@ try {
 
 ## Serialization
 
-`toJSON()` returns a plain object with `name`, `message`, `code`, and optionally `cause`. If `cause` is a `BaseError`, it is serialized recursively.
+`toJSON()` returns a plain object with `name`, `message`, `code`, and optionally `cause`, `errors`, and `issues`. If `cause` is a `BaseError`, it is serialized recursively.
 
 ```typescript
 const cause = new BaseError({ message: 'inner', code: 'INNER' });
@@ -223,9 +224,57 @@ console.log(JSON.stringify(error, null, 2));
 //   "message": "batch failed",
 //   "code": "BASE_ERROR",
 //   "errors": [
-//     { "name": "BaseError", "message": "step 1", "code": "STEP_1" },
+//     { "name": "BaseError", "message": "step 1", "code": "STEP_1", "@instanceof": ["@ebec/core/BaseError"] },
 //     { "message": "step 2" }
-//   ]
+//   ],
+//   "@instanceof": ["@ebec/core/BaseError"]
+// }
+```
+
+## Validation Issues
+
+Use the `issues` option to attach structured validation failures, as an issue tree: every issue is either a leaf **item** or a **group** with children, and every node carries its absolute `path` from the root of the validated structure. The model is exported from the package root, so `defineIssueItem`, `flattenIssueItems`, `formatIssue`, `IssueCode` and the `Issue` types all come from `@ebec/core` directly.
+
+```typescript
+import { BaseError, IssueCode, defineIssueItem } from '@ebec/core';
+
+throw new BaseError({
+    message: 'validation failed',
+    code: 'VALIDATION',
+    issues: [
+        defineIssueItem({
+            code: IssueCode.REQUIRED,
+            path: ['user', 'name'],
+            message: 'Name is required',
+        }),
+    ],
+});
+```
+
+`issues` is always an array — it defaults to `[]`, so `error.issues.length` is safe on every error without a guard.
+
+The tree is stored as given. Group nodes keep their children rather than being flattened, so a consumer decides for itself whether the grouping matters:
+
+```typescript
+import { flattenIssueItems } from '@ebec/core';
+
+const byField = Object.fromEntries(
+    flattenIssueItems([...error.issues]).map((item) => [item.path.join('.'), item.message]),
+);
+```
+
+`toJSON()` includes `issues` only when the array is non-empty, so an error that carries none does not ship a dead key. This is lossless: the omitted key rehydrates to `[]` through the constructor default. Note that `toJSON()` copies the issues array but not its elements, so the returned issue objects are live references and must not be mutated.
+
+```typescript
+console.log(JSON.stringify(error, null, 2));
+// {
+//   "name": "BaseError",
+//   "message": "validation failed",
+//   "code": "VALIDATION",
+//   "issues": [
+//     { "type": "item", "code": "required", "path": ["user", "name"], "message": "Name is required" }
+//   ],
+//   "@instanceof": ["@ebec/core/BaseError"]
 // }
 ```
 
@@ -260,10 +309,11 @@ When `code` is not specified in the catalog entry, the key name is used as the c
 class BaseError extends Error {
     readonly code: string;
     readonly errors?: ReadonlyArray<Error>;
+    readonly issues: ReadonlyArray<Issue>;
     cause?: unknown;
 
     constructor(input?: string | ErrorOptions);
-    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; '@instanceof': string[] };
+    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; issues?: Issue[]; '@instanceof': string[] };
 }
 ```
 
@@ -276,6 +326,7 @@ class BaseError extends Error {
 | `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
 | `cause` | `unknown` | Underlying cause of the error. |
 | `errors` | `Error[]` | Collection of errors for batch/group scenarios. |
+| `issues` | `Issue[]` | Structured validation failures, as an issue tree. |
 | `stack` | `string` | Override the stack trace. |
 
 ### Type Guards
@@ -300,6 +351,24 @@ class BaseError extends Error {
 | `hasInstanceof(input, marker)` | Checks the chain for the marker symbol (strict, in-process form only) |
 | `matchesInstanceof(input, marker)` | Checks the chain for the marker symbol **or** its description string (JSON-rehydrated form) |
 | `serializeInstanceofChain(input)` | Serializes the chain to its string form, as emitted by `toJSON()` |
+
+### Issue Model
+
+| Function | Description |
+|----------|-------------|
+| `defineIssueItem(input)` | Build a leaf issue. The supplied `code` selects the required `data` shape at compile time. |
+| `defineIssueGroup(input)` | Build an issue with children. Does not rewrite child paths — that is `prefixIssuePath`'s job. |
+| `prefixIssuePath(issue, prefix)` | Rebase an issue onto a parent path, recursing into groups. Returns copies. |
+| `flattenIssueItems(issues)` | Every leaf, pre-order, grouping discarded. Returns live references. |
+| `flattenIssueGroups(issues)` | Every group, pre-order, outermost first. Returns live references. |
+| `formatIssue(issue, templates?, fallback?)` | Render a message: template → eager `message` → fallback. |
+| `isIssueItem(input)` | Structural check for a leaf. |
+| `isIssueGroup(input)` | Structural check for an issue with children; recurses. |
+| `isIssue(input)` | Either of the above. |
+
+Types: `Issue`, `IssueItem`, `IssueGroup`, `IssueBase`, `IssueItemTyped`, `IssueItemBare`, `IssueItemRaw`, `IssueCode`, `IssueDataByCode`, `ParameterizedIssueCode`, `BareIssueCode`, `IssueMessageTemplates`, `ResolveIssueCode`, `DefineIssueItemData`, `DefineIssueItemReturn`.
+
+`IssueCode` is a default vocabulary rather than a requirement — `IssueItem['code']` is widened to `IssueCode | (string & {})`, so any string is a well-formed code. `IssueDataByCode` is augmentable via `declare module '@ebec/core'` to add typed `data` shapes for your own codes.
 
 ## License
 

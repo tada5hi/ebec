@@ -14,6 +14,14 @@ ebec/
 │   │   │   ├── options/       # Options handling
 │   │   │   │   ├── module.ts  # isErrorOptions(), extractErrorOptions()
 │   │   │   │   └── types.ts   # ErrorOptions type
+│   │   │   ├── issue/         # Issue tree model (absorbed from blemish)
+│   │   │   │   ├── check.ts       # isIssue(), isIssueItem(), isIssueGroup()
+│   │   │   │   ├── constants.ts   # IssueCode vocabulary
+│   │   │   │   ├── define.ts      # defineIssueItem(), defineIssueGroup()
+│   │   │   │   ├── flatten.ts     # flattenIssueItems(), flattenIssueGroups()
+│   │   │   │   ├── format.ts      # formatIssue()
+│   │   │   │   ├── prefix.ts      # prefixIssuePath()
+│   │   │   │   └── types.ts       # Issue, IssueItem, IssueGroup
 │   │   │   └── helpers/
 │   │   │       ├── check.ts        # isBaseError(), isBaseErrorGroup()
 │   │   │       ├── error.ts        # isError()
@@ -52,6 +60,11 @@ ebec/
 │       ├── tsdown.config.ts
 │       └── package.json
 │
+├── docs/
+│   └── superpowers/            # Design specs and implementation plans
+│       ├── specs/
+│       └── plans/
+│
 ├── eslint.config.js           # ESLint v10 flat config
 ├── tsconfig.json              # Root TypeScript config
 ├── commitlint.config.mjs
@@ -72,7 +85,7 @@ ebec/
 @ebec/http  →  @ebec/core  →  (no runtime deps)
 ```
 
-`@ebec/core` (packages/core) is the canonical implementation with zero runtime dependencies. `@ebec/http` depends on `@ebec/core`.
+`@ebec/core` (packages/core) is the canonical implementation, with zero runtime dependencies. It owns both the error classes and the issue model that `BaseError.issues` carries — the latter absorbed from the `blemish` package, which it replaces. `@ebec/http` depends on `@ebec/core`.
 
 ## Generated Files
 

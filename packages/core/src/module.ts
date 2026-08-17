@@ -5,6 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
+import type { Issue } from './issue';
 import type { ErrorInput, IBaseError } from './types';
 import {
     INSTANCEOF_PROPERTY,
@@ -33,6 +34,12 @@ export class BaseError extends Error implements IBaseError {
      * A collection of errors for batch/group error scenarios.
      */
     readonly errors?: ReadonlyArray<Error>;
+
+    /**
+     * Structured validation failures, as an issue tree.
+     * Always an array — empty when the error carries none.
+     */
+    readonly issues: ReadonlyArray<Issue>;
 
     //--------------------------------------------------------------------
 
@@ -74,6 +81,8 @@ export class BaseError extends Error implements IBaseError {
             this.errors = [...options.errors];
         }
 
+        this.issues = Array.isArray(options.issues) ? [...options.issues] : [];
+
         markInstanceof(this, BASE_ERROR_INSTANCE);
     }
 
@@ -89,6 +98,7 @@ export class BaseError extends Error implements IBaseError {
         code: string;
         cause?: unknown;
         errors?: unknown[];
+        issues?: Issue[];
         [INSTANCEOF_PROPERTY]: string[];
     } {
         return {
@@ -97,6 +107,7 @@ export class BaseError extends Error implements IBaseError {
             code: this.code,
             ...(this.cause !== undefined && { cause: toSerializable(this.cause) }),
             ...(this.errors !== undefined && { errors: this.errors.map((e) => toSerializable(e)) }),
+            ...(this.issues.length > 0 && { issues: [...this.issues] }),
             [INSTANCEOF_PROPERTY]: serializeInstanceofChain(this),
         };
     }

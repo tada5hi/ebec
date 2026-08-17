@@ -39,7 +39,7 @@ describe('src/module.ts', () => {
     it('should interpolate message with messageData without storing it', () => {
         const error = new BaseError({ message: 'User {id} not found', messageData: { id: 42 } });
         expect(error.message).toEqual('User 42 not found');
-        expect((error as Record<string, unknown>).messageData).toBeUndefined();
+        expect((error as unknown as Record<string, unknown>).messageData).toBeUndefined();
     });
 
     it('should serialize with toJSON', () => {
