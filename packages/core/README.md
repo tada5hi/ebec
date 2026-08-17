@@ -259,7 +259,7 @@ The tree is stored as given. Group nodes keep their children rather than being f
 import { flattenIssueItems } from '@ebec/core';
 
 const byField = Object.fromEntries(
-    flattenIssueItems([...error.issues]).map((item) => [item.path.join('.'), item.message]),
+    flattenIssueItems(error.issues).map((item) => [item.path.join('.'), item.message]),
 );
 ```
 
@@ -313,7 +313,7 @@ class BaseError extends Error {
     cause?: unknown;
 
     constructor(input?: string | ErrorOptions);
-    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; issues?: Issue[]; '@instanceof': string[] };
+    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; issues?: readonly Issue[]; '@instanceof': string[] };
 }
 ```
 
@@ -325,8 +325,8 @@ class BaseError extends Error {
 | `code` | `string` | Error identifier. Derived from class name if not set. |
 | `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
 | `cause` | `unknown` | Underlying cause of the error. |
-| `errors` | `Error[]` | Collection of errors for batch/group scenarios. |
-| `issues` | `Issue[]` | Structured validation failures, as an issue tree. |
+| `errors` | `readonly Error[]` | Collection of errors for batch/group scenarios. |
+| `issues` | `readonly Issue[]` | Structured validation failures, as an issue tree. |
 | `stack` | `string` | Override the stack trace. |
 
 ### Type Guards

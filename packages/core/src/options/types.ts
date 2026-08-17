@@ -36,7 +36,7 @@ export type ErrorOptions = {
     /**
      * A collection of errors for batch/group error scenarios.
      */
-    errors?: Error[],
+    errors?: readonly Error[],
 
     /**
      * Structured validation failures, as an issue tree.
@@ -44,5 +44,5 @@ export type ErrorOptions = {
      * Stored as given — group nodes keep their children, since flattening
      * is `flattenIssueItems`' job at the consumer.
      */
-    issues?: Issue[],
+    issues?: readonly Issue[],
 };

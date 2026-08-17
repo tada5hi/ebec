@@ -98,7 +98,7 @@ export class BaseError extends Error implements IBaseError {
         code: string;
         cause?: unknown;
         errors?: unknown[];
-        issues?: Issue[];
+        issues?: readonly Issue[];
         [INSTANCEOF_PROPERTY]: string[];
     } {
         return {
