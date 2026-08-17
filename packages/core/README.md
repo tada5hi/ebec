@@ -16,6 +16,7 @@ Core error class library for TypeScript. Provides `BaseError` with automatic cod
 - [Serialization](#serialization)
 - [Type Guards](#type-guards)
 - [Error Grouping](#error-grouping)
+- [Validation Issues](#validation-issues)
 - [Error Catalog](#error-catalog)
 - [API Reference](#api-reference)
 - [License](#license)
@@ -229,6 +230,64 @@ console.log(JSON.stringify(error, null, 2));
 // }
 ```
 
+## Validation Issues
+
+Use the `issues` option to attach structured validation failures, as a
+[blemish](https://github.com/tada5hi/blemish) issue tree:
+
+```typescript
+import { IssueCode, defineIssueItem } from 'blemish';
+import { BaseError } from '@ebec/core';
+
+throw new BaseError({
+    message: 'validation failed',
+    code: 'VALIDATION',
+    issues: [
+        defineIssueItem({
+            code: IssueCode.REQUIRED,
+            path: ['user', 'name'],
+            message: 'Name is required',
+        }),
+    ],
+});
+```
+
+`issues` is always an array — it defaults to `[]`, so `error.issues.length`
+is safe on every error without a guard.
+
+The tree is stored as given. Group nodes keep their children rather than
+being flattened, so a consumer decides for itself whether the grouping
+matters:
+
+```typescript
+import { flattenIssueItems } from 'blemish';
+
+const byField = Object.fromEntries(
+    flattenIssueItems([...error.issues]).map((item) => [item.path.join('.'), item.message]),
+);
+```
+
+`toJSON()` includes `issues` only when the array is non-empty, so an error
+that carries none does not ship a dead key. This is lossless: the omitted
+key rehydrates to `[]` through the constructor default.
+
+```typescript
+console.log(JSON.stringify(error, null, 2));
+// {
+//   "name": "BaseError",
+//   "message": "validation failed",
+//   "code": "VALIDATION",
+//   "issues": [
+//     { "type": "item", "code": "required", "path": ["user", "name"], "message": "Name is required" }
+//   ],
+//   "@instanceof": ["@ebec/core/BaseError"]
+// }
+```
+
+`blemish` is a **types-only** dependency of this package — nothing from it
+is imported at runtime, so it adds no bytes to your bundle. Install it
+directly if you want the `defineIssueItem` / `flattenIssueItems` helpers.
+
 ## Error Catalog
 
 Define a centralized catalog of error factories with interpolation support:
@@ -260,10 +319,11 @@ When `code` is not specified in the catalog entry, the key name is used as the c
 class BaseError extends Error {
     readonly code: string;
     readonly errors?: ReadonlyArray<Error>;
+    readonly issues: ReadonlyArray<Issue>;
     cause?: unknown;
 
     constructor(input?: string | ErrorOptions);
-    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; '@instanceof': string[] };
+    toJSON(): { name: string; message: string; code: string; cause?: unknown; errors?: unknown[]; issues?: Issue[]; '@instanceof': string[] };
 }
 ```
 
@@ -276,6 +336,7 @@ class BaseError extends Error {
 | `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
 | `cause` | `unknown` | Underlying cause of the error. |
 | `errors` | `Error[]` | Collection of errors for batch/group scenarios. |
+| `issues` | `Issue[]` | Structured validation failures, as a blemish issue tree. |
 | `stack` | `string` | Override the stack trace. |
 
 ### Type Guards

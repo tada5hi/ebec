@@ -69,10 +69,14 @@ ebec/
 ## Dependency Layer
 
 ```
-@ebec/http  →  @ebec/core  →  (no runtime deps)
+@ebec/http  →  @ebec/core  →  blemish (types only)
 ```
 
-`@ebec/core` (packages/core) is the canonical implementation with zero runtime dependencies. `@ebec/http` depends on `@ebec/core`.
+`@ebec/core` (packages/core) is the canonical implementation. Its single
+dependency, `blemish`, is imported type-only for the `Issue` model — no
+blemish value is referenced in `src/`, so the import erases at build and
+the package still ships zero runtime bytes beyond its own. `@ebec/http`
+depends on `@ebec/core`.
 
 ## Generated Files
 

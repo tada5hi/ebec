@@ -17,6 +17,7 @@ Error (native)
 ```typescript
 class BaseError extends Error {
     readonly code: string;             // Error identifier, derived from class name if not provided
+    readonly issues: ReadonlyArray<Issue>; // Validation failures (blemish issue tree); always an array
     override cause?: unknown;          // Underlying cause
 }
 ```
@@ -29,7 +30,7 @@ class BaseError extends Error {
 
 ### Serialization
 
-`toJSON()` returns `{ name, message, code, cause?, '@instanceof' }`. If `cause` is a `BaseError`, it is serialized recursively via `toJSON()`. Otherwise, the raw cause value is included.
+`toJSON()` returns `{ name, message, code, cause?, errors?, issues?, '@instanceof' }`. If `cause` is a `BaseError`, it is serialized recursively via `toJSON()`. Otherwise, the raw cause value is included. `issues` is emitted only when non-empty — lossless, because the constructor defaults it back to `[]` on rehydration.
 
 The `@instanceof` key carries the class-marker chain (see below) as a string list — the markers' `Symbol.for(...)` registry keys — since symbols are dropped by `JSON.stringify`. `serializeInstanceofChain(input)` produces this form.
 
