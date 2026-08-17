@@ -19,7 +19,7 @@ import type { Issue, IssueGroup, IssueItem } from './types';
  * Returned items are the **same object references** held by the tree, not
  * copies — cheap to call, but do not mutate what you get back.
  */
-export function flattenIssueItems(issues: Issue[]): IssueItem[] {
+export function flattenIssueItems(issues: readonly Issue[]): IssueItem[] {
     const output: IssueItem[] = [];
     for (const issue of issues) {
         if (isIssueItem(issue)) {
@@ -38,7 +38,7 @@ export function flattenIssueItems(issues: Issue[]): IssueItem[] {
  * reads outermost-first. As with {@link flattenIssueItems}, entries are
  * live references into the tree.
  */
-export function flattenIssueGroups(issues: Issue[]): IssueGroup[] {
+export function flattenIssueGroups(issues: readonly Issue[]): IssueGroup[] {
     const output: IssueGroup[] = [];
     for (const issue of issues) {
         if (isIssueGroup(issue)) {

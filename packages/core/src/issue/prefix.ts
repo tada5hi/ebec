@@ -34,7 +34,7 @@ import type { Issue } from './types';
  * result also mutates it on the original. Copying happens unconditionally,
  * including for an empty `prefix`.
  */
-export function prefixIssuePath(issue: Issue, prefix: PropertyKey[]): Issue {
+export function prefixIssuePath(issue: Issue, prefix: readonly PropertyKey[]): Issue {
     const prefixed: Issue = {
         ...issue,
         path: [...prefix, ...(issue.path || [])],
