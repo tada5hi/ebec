@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { Issue } from '../../src';
 import {
     BaseError,
     IssueCode,
@@ -37,7 +38,7 @@ describe('issues', () => {
     });
 
     it('should copy the issues array instead of aliasing it', () => {
-        const issues = [requiredIssue()];
+        const issues: Issue[] = [requiredIssue()];
         const error = new BaseError({ issues });
 
         issues.push(emailIssue());

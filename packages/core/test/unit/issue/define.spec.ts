@@ -131,8 +131,7 @@ describe('defineIssueItem typed data contract', () => {
     // The producer-side gatekeep that catches mismatched payloads at compile
     // time. The value of these cases is in the `@ts-expect-error` directives,
     // which are INERT unless a `tsc` run covers the specs — `npm run
-    // build:types` (the first half of `npm run build`) is what makes them
-    // load-bearing. Verified non-vacuous by
+    // typecheck` is what makes them load-bearing. Verified non-vacuous by
     // collapsing `DefineIssueItemData`'s conditional to a permissive
     // `{ data?: any }`, which turns all three negative cases into
     // `TS2578: Unused '@ts-expect-error' directive`.

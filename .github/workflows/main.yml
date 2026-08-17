@@ -61,6 +61,25 @@ jobs:
             -   name: Lint
                 run: npm run lint
 
+    typecheck:
+        name: Typecheck
+        needs: [build]
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v6
+
+            -   name: Install
+                uses: ./.github/actions/install
+                with:
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
+
+            -   name: Build
+                uses: ./.github/actions/build
+
+            -   name: Typecheck
+                run: npx nx run-many -t typecheck
+
     tests:
         name: Test
         needs: [build]
@@ -79,3 +98,6 @@ jobs:
 
             -   name: Test
                 run: npx nx run-many -t test
+
+            -   name: Test coverage
+                run: npx nx run-many -t test:coverage

@@ -58,8 +58,8 @@ export type DefineIssueItemData<C> = DefineIssueItemCommon & {
  * bug quiet: `defineIssueItem` still rejects a bad payload, it just hands
  * back `never`, and `never` is assignable to everything — so no call site
  * complains and consumer-side narrowing silently stops meaning anything.
- * Pinned by the type-level cases in `test/unit/define.spec.ts`, which are
- * only load-bearing because `npm run build:types` covers the specs.
+ * Pinned by the type-level cases in `test/unit/issue/define.spec.ts`, which
+ * are only load-bearing because `npm run typecheck` covers the specs.
  */
 export type DefineIssueItemReturn<C, R = ResolveIssueCode<C>> = R extends ParameterizedIssueCode ?
     Extract<IssueItemTyped, { code: R }> :
