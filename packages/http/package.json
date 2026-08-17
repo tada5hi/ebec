@@ -26,12 +26,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Tada5hi/ebec.git"
+        "url": "git+https://github.com/tada5hi/ebec.git"
     },
     "bugs": {
-        "url": "https://github.com/Tada5hi/ebec/issues"
+        "url": "https://github.com/tada5hi/ebec/issues"
     },
-    "homepage": "https://github.com/Tada5hi/ebec#readme",
+    "homepage": "https://github.com/tada5hi/ebec#readme",
     "exports": {
         "./package.json": "./package.json",
         ".": {
