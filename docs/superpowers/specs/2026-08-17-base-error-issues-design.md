@@ -129,9 +129,13 @@ can keep its own `Array.isArray` check until there is a reason.
 
 ### `@ebec/http`
 
-No source or `package.json` change. `HTTPErrorOptions` is
+No source change and no runtime dependency. `HTTPErrorOptions` is
 `ErrorOptions & {...}`, so `issues` flows through, and the emitted
 types resolve `blemish` via `@ebec/core`'s own dependency.
+
+The package does gain `blemish` as a **devDependency**, so the
+inheritance test below can call the issue factories. Nothing in
+`packages/http/src/**` references it.
 
 ## Testing
 
