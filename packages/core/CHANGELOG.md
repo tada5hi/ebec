@@ -14,6 +14,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.3.1](https://github.com/tada5hi/ebec/compare/core-v1.3.0...core-v1.3.1) (2026-08-17)
+
+
+### Bug Fixes
+
+* **core:** widen issue/error array params and return types to readonly ([#463](https://github.com/tada5hi/ebec/issues/463)) ([09cdc64](https://github.com/tada5hi/ebec/commit/09cdc64619141de256e08ed654dc241542053c49))
+* lowercase repository urls so npm provenance validation passes ([e25b7ca](https://github.com/tada5hi/ebec/commit/e25b7ca69da20a5b99af3ea23e48713da87e01c3))
+
 ## [1.3.0](https://github.com/tada5hi/ebec/compare/core-v1.2.0...core-v1.3.0) (2026-08-17)
 
 
