@@ -14,6 +14,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [4.3.0](https://github.com/tada5hi/ebec/compare/http-v4.2.0...http-v4.3.0) (2026-08-17)
+
+
+### Features
+
+* **core:** add issues to BaseError and absorb the blemish issue model ([#460](https://github.com/tada5hi/ebec/issues/460)) ([9f912ef](https://github.com/tada5hi/ebec/commit/9f912ef691862d9fd8fd8ab3ec6a2dfa178f9dfd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @ebec/core bumped from ^1.2.0 to ^1.3.0
+
 ## [4.2.0](https://github.com/tada5hi/ebec/compare/http-v4.1.0...http-v4.2.0) (2026-07-27)
 
 

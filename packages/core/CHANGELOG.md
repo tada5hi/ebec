@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.3.0](https://github.com/tada5hi/ebec/compare/core-v1.2.0...core-v1.3.0) (2026-08-17)
+
+
+### Features
+
+* **core:** add issues to BaseError and absorb the blemish issue model ([#460](https://github.com/tada5hi/ebec/issues/460)) ([9f912ef](https://github.com/tada5hi/ebec/commit/9f912ef691862d9fd8fd8ab3ec6a2dfa178f9dfd))
+
 ## [1.2.0](https://github.com/tada5hi/ebec/compare/core-v1.1.0...core-v1.2.0) (2026-07-27)
 
 
