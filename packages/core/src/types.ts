@@ -5,6 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
+import type { Issue } from 'blemish';
 import type { ErrorOptions } from './options';
 
 export type ErrorInput = string | ErrorOptions;
@@ -13,6 +14,7 @@ export interface IBaseError extends Error {
     cause?: unknown;
     code: string;
     errors?: ReadonlyArray<Error>;
+    issues?: ReadonlyArray<Issue>;
 }
 
 export interface IBaseErrorGroup extends IBaseError {
