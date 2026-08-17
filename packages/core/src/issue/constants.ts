@@ -26,7 +26,7 @@
  * want a typed const for your own codes, define one alongside this one:
  *
  * ```ts
- * import { IssueCode } from 'blemish';
+ * import { IssueCode } from '@ebec/core';
  *
  * export const AppCode = {
  *     ...IssueCode,
@@ -134,7 +134,7 @@ export type IssueCode = typeof IssueCode[keyof typeof IssueCode];
  *
  * ```ts
  * // In a library or app:
- * declare module 'blemish' {
+ * declare module '@ebec/core' {
  *     interface IssueDataByCode {
  *         email_taken: { existingUserId: string };
  *     }
@@ -149,7 +149,7 @@ export type IssueCode = typeof IssueCode[keyof typeof IssueCode];
  * ```
  *
  * The augmentation also reaches through a re-exporting package: a
- * consumer of a library that does `export * from 'blemish'` may write
+ * consumer of a library that does `export * from '@ebec/core'` may write
  * `declare module '<that-library>'` and the merge still lands on this
  * interface, so `ParameterizedIssueCode` picks the new code up.
  *

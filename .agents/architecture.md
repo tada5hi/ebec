@@ -18,7 +18,7 @@ Error (native)
 class BaseError extends Error {
     readonly code: string;             // Error identifier, derived from class name if not provided
     readonly errors?: ReadonlyArray<Error>; // Collection of errors for batch/group scenarios
-    readonly issues: ReadonlyArray<Issue>; // Validation failures (blemish issue tree); always an array
+    readonly issues: ReadonlyArray<Issue>; // Structured validation failures (issue tree); always an array
     override cause?: unknown;          // Underlying cause
 }
 ```
@@ -34,6 +34,14 @@ class BaseError extends Error {
 `toJSON()` returns `{ name, message, code, cause?, errors?, issues?, '@instanceof' }`. If `cause` is a `BaseError`, it is serialized recursively via `toJSON()`. Otherwise, the raw cause value is included. `issues` is emitted only when non-empty — lossless, because the constructor defaults it back to `[]` on rehydration.
 
 The `@instanceof` key carries the class-marker chain (see below) as a string list — the markers' `Symbol.for(...)` registry keys — since symbols are dropped by `JSON.stringify`. `serializeInstanceofChain(input)` produces this form.
+
+## Issue Model
+
+`@ebec/core` owns the issue-tree model that `BaseError.issues` carries, absorbed from the `blemish` package it replaces. An issue is either an **item** (a leaf) or a **group** (a node with children), and every node carries its **absolute path** from the root of the validated structure — a leaf three groups deep still reads `['user', 'contact', 'email']`, never `['email']` relative to its parent.
+
+That invariant is maintained by the producer, not automatically. A library validating a sub-structure and merging the results into a parent tree must rebase the children as it merges; `prefixIssuePath(issue, prefix)` is that step, and it recurses into groups so nested leaves are rebased too.
+
+Build issues with the factories (`defineIssueItem`, `defineIssueGroup`) rather than object literals — the factories apply the compile-time `data` gatekeep that makes a translation catalog safe to write. The guards are duck-typed rather than `instanceof`-based, deliberately: a tree assembled across package or realm boundaries has no shared class to check against.
 
 ## @instanceof Markers
 

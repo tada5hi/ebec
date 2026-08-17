@@ -4,7 +4,7 @@
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. One types-only dependency (`blemish`) — nothing from it is imported at runtime, so it adds no bytes to your bundle.
+Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. Zero runtime dependencies.
 
 **Table of Contents**
 
@@ -233,11 +233,10 @@ console.log(JSON.stringify(error, null, 2));
 
 ## Validation Issues
 
-Use the `issues` option to attach structured validation failures, as a [blemish](https://github.com/tada5hi/blemish) issue tree:
+Use the `issues` option to attach structured validation failures, as an issue tree: every issue is either a leaf **item** or a **group** with children, and every node carries its absolute `path` from the root of the validated structure. The model is exported from the package root, so `defineIssueItem`, `flattenIssueItems`, `formatIssue`, `IssueCode` and the `Issue` types all come from `@ebec/core` directly.
 
 ```typescript
-import { IssueCode, defineIssueItem } from 'blemish';
-import { BaseError } from '@ebec/core';
+import { BaseError, IssueCode, defineIssueItem } from '@ebec/core';
 
 throw new BaseError({
     message: 'validation failed',
@@ -257,7 +256,7 @@ throw new BaseError({
 The tree is stored as given. Group nodes keep their children rather than being flattened, so a consumer decides for itself whether the grouping matters:
 
 ```typescript
-import { flattenIssueItems } from 'blemish';
+import { flattenIssueItems } from '@ebec/core';
 
 const byField = Object.fromEntries(
     flattenIssueItems([...error.issues]).map((item) => [item.path.join('.'), item.message]),
@@ -278,8 +277,6 @@ console.log(JSON.stringify(error, null, 2));
 //   "@instanceof": ["@ebec/core/BaseError"]
 // }
 ```
-
-`blemish` is a **types-only** dependency of this package — nothing from it is imported at runtime, so it adds no bytes to your bundle. Install it directly if you want the `defineIssueItem` / `flattenIssueItems` helpers.
 
 ## Error Catalog
 
@@ -329,7 +326,7 @@ class BaseError extends Error {
 | `messageData` | `Record<string, unknown>` | Data for `{placeholder}` interpolation. Not stored. |
 | `cause` | `unknown` | Underlying cause of the error. |
 | `errors` | `Error[]` | Collection of errors for batch/group scenarios. |
-| `issues` | `Issue[]` | Structured validation failures, as a blemish issue tree. |
+| `issues` | `Issue[]` | Structured validation failures, as an issue tree. |
 | `stack` | `string` | Override the stack trace. |
 
 ### Type Guards
@@ -354,6 +351,24 @@ class BaseError extends Error {
 | `hasInstanceof(input, marker)` | Checks the chain for the marker symbol (strict, in-process form only) |
 | `matchesInstanceof(input, marker)` | Checks the chain for the marker symbol **or** its description string (JSON-rehydrated form) |
 | `serializeInstanceofChain(input)` | Serializes the chain to its string form, as emitted by `toJSON()` |
+
+### Issue Model
+
+| Function | Description |
+|----------|-------------|
+| `defineIssueItem(input)` | Build a leaf issue. The supplied `code` selects the required `data` shape at compile time. |
+| `defineIssueGroup(input)` | Build an issue with children. Does not rewrite child paths — that is `prefixIssuePath`'s job. |
+| `prefixIssuePath(issue, prefix)` | Rebase an issue onto a parent path, recursing into groups. Returns copies. |
+| `flattenIssueItems(issues)` | Every leaf, pre-order, grouping discarded. Returns live references. |
+| `flattenIssueGroups(issues)` | Every group, pre-order, outermost first. Returns live references. |
+| `formatIssue(issue, templates?, fallback?)` | Render a message: template → eager `message` → fallback. |
+| `isIssueItem(input)` | Structural check for a leaf. |
+| `isIssueGroup(input)` | Structural check for an issue with children; recurses. |
+| `isIssue(input)` | Either of the above. |
+
+Types: `Issue`, `IssueItem`, `IssueGroup`, `IssueBase`, `IssueItemTyped`, `IssueItemBare`, `IssueItemRaw`, `IssueCode`, `IssueDataByCode`, `ParameterizedIssueCode`, `BareIssueCode`, `IssueMessageTemplates`, `ResolveIssueCode`.
+
+`IssueCode` is a default vocabulary rather than a requirement — `IssueItem['code']` is widened to `IssueCode | (string & {})`, so any string is a well-formed code. `IssueDataByCode` is augmentable via `declare module '@ebec/core'` to add typed `data` shapes for your own codes.
 
 ## License
 

@@ -21,7 +21,7 @@ Every error gets a `code` (derived automatically from the class name if you don'
 
 [![npm version](https://badge.fury.io/js/@ebec%2Fcore.svg)](https://badge.fury.io/js/@ebec%2Fcore)
 
-Base error class with automatic code derivation, message interpolation, error catalogs, and JSON serialization. One types-only dependency (`blemish`) — nothing from it is imported at runtime, so it adds no bytes to your bundle.
+Base error class with automatic code derivation, message interpolation, error catalogs, and JSON serialization. Zero runtime dependencies.
 
 ```bash
 npm install @ebec/core

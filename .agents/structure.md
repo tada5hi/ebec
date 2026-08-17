@@ -14,6 +14,14 @@ ebec/
 │   │   │   ├── options/       # Options handling
 │   │   │   │   ├── module.ts  # isErrorOptions(), extractErrorOptions()
 │   │   │   │   └── types.ts   # ErrorOptions type
+│   │   │   ├── issue/         # Issue tree model (absorbed from blemish)
+│   │   │   │   ├── check.ts       # isIssue(), isIssueItem(), isIssueGroup()
+│   │   │   │   ├── constants.ts   # IssueCode vocabulary
+│   │   │   │   ├── define.ts      # defineIssueItem(), defineIssueGroup()
+│   │   │   │   ├── flatten.ts     # flattenIssueItems(), flattenIssueGroups()
+│   │   │   │   ├── format.ts      # formatIssue()
+│   │   │   │   ├── prefix.ts      # prefixIssuePath()
+│   │   │   │   └── types.ts       # Issue, IssueItem, IssueGroup
 │   │   │   └── helpers/
 │   │   │       ├── check.ts        # isBaseError(), isBaseErrorGroup()
 │   │   │       ├── error.ts        # isError()
@@ -74,10 +82,10 @@ ebec/
 ## Dependency Layer
 
 ```
-@ebec/http  →  @ebec/core  →  blemish (types only)
+@ebec/http  →  @ebec/core  →  (no runtime deps)
 ```
 
-`@ebec/core` (packages/core) is the canonical implementation. Its single dependency, `blemish`, is imported type-only for the `Issue` model — no blemish value is referenced in `src/`, so the import erases at build and the package still ships zero runtime bytes beyond its own. `@ebec/http` depends on `@ebec/core`.
+`@ebec/core` (packages/core) is the canonical implementation, with zero runtime dependencies. It owns both the error classes and the issue model that `BaseError.issues` carries — the latter absorbed from the `blemish` package, which it replaces. `@ebec/http` depends on `@ebec/core`.
 
 ## Generated Files
 
