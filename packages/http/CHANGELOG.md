@@ -14,6 +14,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [4.3.1](https://github.com/tada5hi/ebec/compare/http-v4.3.0...http-v4.3.1) (2026-08-17)
+
+
+### Bug Fixes
+
+* lowercase repository urls so npm provenance validation passes ([e25b7ca](https://github.com/tada5hi/ebec/commit/e25b7ca69da20a5b99af3ea23e48713da87e01c3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @ebec/core bumped from ^1.3.0 to ^1.3.1
+
 ## [4.3.0](https://github.com/tada5hi/ebec/compare/http-v4.2.0...http-v4.3.0) (2026-08-17)
 
 
