@@ -35,19 +35,29 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.mts",
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs"
+            "import": {
+                "types": "./dist/index.d.mts",
+                "default": "./dist/index.mjs"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
         },
         "./core": {
-            "types": "./dist/core/index.d.mts",
-            "import": "./dist/core/index.mjs",
-            "require": "./dist/core/index.cjs"
+            "import": {
+                "types": "./dist/core/index.d.mts",
+                "default": "./dist/core/index.mjs"
+            },
+            "require": {
+                "types": "./dist/core/index.d.cts",
+                "default": "./dist/core/index.cjs"
+            }
         }
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.mts",
+    "types": "./dist/index.d.cts",
     "scripts": {
         "build:classes": "node ./build/index.mjs generate",
         "build": "npm run build:classes && npm run build:js && npm run build:types",
