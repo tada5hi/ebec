@@ -89,4 +89,16 @@ describe('issues', () => {
         expect(output.issues).toBeUndefined();
         expect(new BaseError(output).issues).toEqual([]);
     });
+
+    it('should ignore a malformed issues option instead of throwing or spreading characters', () => {
+        // `options.issues` is typed as `Issue[]`, but the README documents
+        // `new BaseError(parsedJson)` rehydration as a supported path, so a
+        // malformed value (e.g. from an untyped/foreign payload) must not
+        // reach the spread unguarded. Each of these previously either threw
+        // (`{}`, `42` — not iterable) or silently produced a character array
+        // (`'oops'` is iterable).
+        expect(new BaseError({ issues: 'oops' as unknown as Issue[] }).issues).toEqual([]);
+        expect(new BaseError({ issues: {} as unknown as Issue[] }).issues).toEqual([]);
+        expect(new BaseError({ issues: 42 as unknown as Issue[] }).issues).toEqual([]);
+    });
 });

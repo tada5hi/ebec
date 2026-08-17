@@ -81,7 +81,7 @@ export class BaseError extends Error implements IBaseError {
             this.errors = [...options.errors];
         }
 
-        this.issues = options.issues ? [...options.issues] : [];
+        this.issues = Array.isArray(options.issues) ? [...options.issues] : [];
 
         markInstanceof(this, BASE_ERROR_INSTANCE);
     }
