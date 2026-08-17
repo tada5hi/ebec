@@ -4,7 +4,7 @@
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. Zero runtime dependencies.
+Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. One types-only dependency (`blemish`) — nothing from it is imported at runtime, so it adds no bytes to your bundle.
 
 **Table of Contents**
 
@@ -114,7 +114,7 @@ try {
 
 ## Serialization
 
-`toJSON()` returns a plain object with `name`, `message`, `code`, and optionally `cause`. If `cause` is a `BaseError`, it is serialized recursively.
+`toJSON()` returns a plain object with `name`, `message`, `code`, and optionally `cause`, `errors`, and `issues`. If `cause` is a `BaseError`, it is serialized recursively.
 
 ```typescript
 const cause = new BaseError({ message: 'inner', code: 'INNER' });
@@ -224,16 +224,16 @@ console.log(JSON.stringify(error, null, 2));
 //   "message": "batch failed",
 //   "code": "BASE_ERROR",
 //   "errors": [
-//     { "name": "BaseError", "message": "step 1", "code": "STEP_1" },
+//     { "name": "BaseError", "message": "step 1", "code": "STEP_1", "@instanceof": ["@ebec/core/BaseError"] },
 //     { "message": "step 2" }
-//   ]
+//   ],
+//   "@instanceof": ["@ebec/core/BaseError"]
 // }
 ```
 
 ## Validation Issues
 
-Use the `issues` option to attach structured validation failures, as a
-[blemish](https://github.com/tada5hi/blemish) issue tree:
+Use the `issues` option to attach structured validation failures, as a [blemish](https://github.com/tada5hi/blemish) issue tree:
 
 ```typescript
 import { IssueCode, defineIssueItem } from 'blemish';
@@ -252,12 +252,9 @@ throw new BaseError({
 });
 ```
 
-`issues` is always an array — it defaults to `[]`, so `error.issues.length`
-is safe on every error without a guard.
+`issues` is always an array — it defaults to `[]`, so `error.issues.length` is safe on every error without a guard.
 
-The tree is stored as given. Group nodes keep their children rather than
-being flattened, so a consumer decides for itself whether the grouping
-matters:
+The tree is stored as given. Group nodes keep their children rather than being flattened, so a consumer decides for itself whether the grouping matters:
 
 ```typescript
 import { flattenIssueItems } from 'blemish';
@@ -267,9 +264,7 @@ const byField = Object.fromEntries(
 );
 ```
 
-`toJSON()` includes `issues` only when the array is non-empty, so an error
-that carries none does not ship a dead key. This is lossless: the omitted
-key rehydrates to `[]` through the constructor default.
+`toJSON()` includes `issues` only when the array is non-empty, so an error that carries none does not ship a dead key. This is lossless: the omitted key rehydrates to `[]` through the constructor default. Note that `toJSON()` copies the issues array but not its elements, so the returned issue objects are live references and must not be mutated.
 
 ```typescript
 console.log(JSON.stringify(error, null, 2));
@@ -284,9 +279,7 @@ console.log(JSON.stringify(error, null, 2));
 // }
 ```
 
-`blemish` is a **types-only** dependency of this package — nothing from it
-is imported at runtime, so it adds no bytes to your bundle. Install it
-directly if you want the `defineIssueItem` / `flattenIssueItems` helpers.
+`blemish` is a **types-only** dependency of this package — nothing from it is imported at runtime, so it adds no bytes to your bundle. Install it directly if you want the `defineIssueItem` / `flattenIssueItems` helpers.
 
 ## Error Catalog
 

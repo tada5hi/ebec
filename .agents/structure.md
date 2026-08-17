@@ -52,6 +52,11 @@ ebec/
 │       ├── tsdown.config.ts
 │       └── package.json
 │
+├── docs/
+│   └── superpowers/            # Design specs and implementation plans
+│       ├── specs/
+│       └── plans/
+│
 ├── eslint.config.js           # ESLint v10 flat config
 ├── tsconfig.json              # Root TypeScript config
 ├── commitlint.config.mjs
@@ -72,11 +77,7 @@ ebec/
 @ebec/http  →  @ebec/core  →  blemish (types only)
 ```
 
-`@ebec/core` (packages/core) is the canonical implementation. Its single
-dependency, `blemish`, is imported type-only for the `Issue` model — no
-blemish value is referenced in `src/`, so the import erases at build and
-the package still ships zero runtime bytes beyond its own. `@ebec/http`
-depends on `@ebec/core`.
+`@ebec/core` (packages/core) is the canonical implementation. Its single dependency, `blemish`, is imported type-only for the `Issue` model — no blemish value is referenced in `src/`, so the import erases at build and the package still ships zero runtime bytes beyond its own. `@ebec/http` depends on `@ebec/core`.
 
 ## Generated Files
 
