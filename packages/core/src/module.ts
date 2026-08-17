@@ -5,7 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { Issue } from 'blemish';
+import type { Issue } from './issue';
 import type { ErrorInput, IBaseError } from './types';
 import {
     INSTANCEOF_PROPERTY,
@@ -36,7 +36,7 @@ export class BaseError extends Error implements IBaseError {
     readonly errors?: ReadonlyArray<Error>;
 
     /**
-     * Structured validation failures, as a blemish issue tree.
+     * Structured validation failures, as an issue tree.
      * Always an array — empty when the error carries none.
      */
     readonly issues: ReadonlyArray<Issue>;

@@ -54,9 +54,6 @@
         "test": "vitest run --config ./test/vitest.config.ts",
         "test:coverage": "vitest run --config ./test/vitest.config.ts --coverage"
     },
-    "dependencies": {
-        "blemish": "^1.0.1"
-    },
     "publishConfig": {
         "access": "public"
     }

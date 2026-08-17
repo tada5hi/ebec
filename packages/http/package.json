@@ -71,8 +71,7 @@
         "mustache": "^4.2.0"
     },
     "dependencies": {
-        "@ebec/core": "^1.2.0",
-        "blemish": "^1.0.1"
+        "@ebec/core": "^1.2.0"
     },
     "publishConfig": {
         "access": "public"

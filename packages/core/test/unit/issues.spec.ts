@@ -1,6 +1,10 @@
-import { IssueCode, defineIssueGroup, defineIssueItem } from 'blemish';
 import { describe, expect, it } from 'vitest';
-import { BaseError } from '../../src';
+import {
+    BaseError,
+    IssueCode,
+    defineIssueGroup,
+    defineIssueItem,
+} from '../../src';
 
 function requiredIssue() {
     return defineIssueItem({

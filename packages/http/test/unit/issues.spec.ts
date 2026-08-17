@@ -1,4 +1,4 @@
-import { IssueCode, defineIssueItem } from 'blemish';
+import { IssueCode, defineIssueItem } from '@ebec/core';
 import { describe, expect, it } from 'vitest';
 import { BadRequestError } from '../../src';
 

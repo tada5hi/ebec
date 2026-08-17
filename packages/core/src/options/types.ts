@@ -4,7 +4,7 @@
  *  For the full copyright and license information,
  *  view the LICENSE file that was distributed with this source code.
  */
-import type { Issue } from 'blemish';
+import type { Issue } from '../issue';
 
 export type ErrorOptions = {
     /**
@@ -39,7 +39,7 @@ export type ErrorOptions = {
     errors?: Error[],
 
     /**
-     * Structured validation failures, as a blemish issue tree.
+     * Structured validation failures, as an issue tree.
      *
      * Stored as given — group nodes keep their children, since flattening
      * is `flattenIssueItems`' job at the consumer.

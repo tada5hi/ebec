@@ -5,7 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { Issue } from 'blemish';
+import type { Issue } from './issue';
 import type { ErrorOptions } from './options';
 
 export type ErrorInput = string | ErrorOptions;
