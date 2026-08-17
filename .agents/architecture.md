@@ -17,6 +17,7 @@ Error (native)
 ```typescript
 class BaseError extends Error {
     readonly code: string;             // Error identifier, derived from class name if not provided
+    readonly errors?: ReadonlyArray<Error>; // Collection of errors for batch/group scenarios
     readonly issues: ReadonlyArray<Issue>; // Validation failures (blemish issue tree); always an array
     override cause?: unknown;          // Underlying cause
 }
