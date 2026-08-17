@@ -98,6 +98,7 @@ export class BaseError extends Error implements IBaseError {
         code: string;
         cause?: unknown;
         errors?: unknown[];
+        issues?: Issue[];
         [INSTANCEOF_PROPERTY]: string[];
     } {
         return {
@@ -106,6 +107,7 @@ export class BaseError extends Error implements IBaseError {
             code: this.code,
             ...(this.cause !== undefined && { cause: toSerializable(this.cause) }),
             ...(this.errors !== undefined && { errors: this.errors.map((e) => toSerializable(e)) }),
+            ...(this.issues.length > 0 && { issues: [...this.issues] }),
             [INSTANCEOF_PROPERTY]: serializeInstanceofChain(this),
         };
     }
