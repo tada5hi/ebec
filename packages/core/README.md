@@ -147,10 +147,12 @@ matchesInstanceof(rehydrated, BASE_ERROR_INSTANCE); // true
 
 ## Type Guards
 
+Identity is chain-only: `isBaseError` (and every other type guard in this library) checks the `@instanceof` marker chain, not the input's shape. An object that merely *looks* like a `BaseError` — including an error from another library that happens to carry a `code` — does not match. Only errors produced by `@ebec/core` (or explicitly marked via `markInstanceof`) carry the chain, in-process and through `toJSON()`.
+
 ```typescript
 import { isBaseError, isErrorWithCode } from '@ebec/core';
 
-// Check if any value is a BaseError-shaped object
+// Check if any value is a BaseError, by its @instanceof chain
 if (isBaseError(error)) {
     console.log(error.code);
 }
@@ -195,7 +197,7 @@ if (failures.length > 0) {
 }
 ```
 
-Use `isBaseErrorGroup` to check if an error carries grouped errors:
+Use `isBaseErrorGroup` to check if an error carries grouped errors. A present but empty `errors: []` does not count as a group — the array must be non-empty:
 
 ```typescript
 import { isBaseErrorGroup } from '@ebec/core';
@@ -333,8 +335,8 @@ class BaseError extends Error {
 
 | Function | Returns | Description |
 |----------|---------|-------------|
-| `isBaseError(input)` | `input is IBaseError` | Checks for Error with string `code` |
-| `isBaseErrorGroup(input)` | `input is IBaseErrorGroup` | Checks for `isBaseError` + `errors` array |
+| `isBaseError(input)` | `input is IBaseError` | Chain-only: true iff the `@instanceof` chain carries the `BaseError` marker. No shape fallback — a merely Error-shaped object with a `code` no longer matches |
+| `isBaseErrorGroup(input)` | `input is IBaseErrorGroup` | `isBaseError` + non-empty `errors` array |
 | `isErrorWithCode(input, code)` | `input is IBaseError & { code: C }` | Narrows code to specific value(s) |
 | `isError(input)` | `input is Error` | Duck-type check for Error-shaped objects |
 | `isErrorOptions(input)` | `input is ErrorOptions` | Validates options shape |

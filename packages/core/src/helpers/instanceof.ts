@@ -16,6 +16,12 @@ import { isObject } from './object';
  * output. `BaseError.toJSON()` re-emits it under the same key as a string
  * list (see {@link serializeInstanceofChain}), so on objects rehydrated from
  * that JSON the property holds a `string[]` instead.
+ *
+ * A well-formed chain always begins with `BASE_ERROR_INSTANCE` — every real
+ * ebec error is a `BaseError` first, and subclass markers are appended on
+ * top of it. Hand-built cross-realm stand-ins that carry a subclass marker
+ * without it can invert that hierarchy (e.g. matching `@ebec/http`'s
+ * `isHTTPError` while failing `@ebec/core`'s `isBaseError`).
  */
 export const INSTANCEOF_PROPERTY = '@instanceof' as const;
 

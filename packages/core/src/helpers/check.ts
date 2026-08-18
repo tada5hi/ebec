@@ -5,40 +5,23 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 import type { IBaseError, IBaseErrorGroup } from '../types';
-import { isErrorOptions } from '../options';
 import { isError } from './error';
 import { matchesInstanceof } from './instanceof';
-import { isObject } from './object';
 
 // Resolved via the global Symbol.for registry — same identity as
 // `BASE_ERROR_INSTANCE` exported from `../module`. Looking it up here
 // avoids a circular import (module.ts → helpers → check.ts → module.ts).
 const BASE_ERROR_INSTANCE = Symbol.for('@ebec/core/BaseError');
 
+// Identity is chain-only: an input either carries the BaseError marker
+// (natively, or as the marker's description string after a JSON round-trip)
+// or it isn't a BaseError. There is no shape-based fallback — an object that
+// merely looks like one (a foreign library's error carrying a `code`, a
+// hand-built `{ message, code }`) no longer matches.
 export function isBaseError(
     input: unknown,
 ): input is IBaseError {
-    if (matchesInstanceof(input, BASE_ERROR_INSTANCE)) {
-        return true;
-    }
-
-    if (!isObject(input)) {
-        return false;
-    }
-
-    if (
-        isError(input) &&
-        isErrorOptions(input)
-    ) {
-        return typeof input.code === 'string';
-    }
-
-    if (!isErrorOptions(input)) {
-        return false;
-    }
-
-    return typeof input.message === 'string' &&
-        typeof input.code === 'string';
+    return matchesInstanceof(input, BASE_ERROR_INSTANCE);
 }
 
 export function isBaseErrorGroup(
@@ -49,5 +32,5 @@ export function isBaseErrorGroup(
     }
 
     const { errors } = input as unknown as Record<string, unknown>;
-    return Array.isArray(errors) && errors.every((e) => isError(e));
+    return Array.isArray(errors) && errors.length > 0 && errors.every((e) => isError(e));
 }
