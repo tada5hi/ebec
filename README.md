@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./assets/logo.svg" alt="ebec" width="128" height="128" />
+    <img src="./assets/logo.svg" alt="ebec" />
 </p>
 
 <h1 align="center">ebec</h1>

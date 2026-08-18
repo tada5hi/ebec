@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/core/assets/logo.svg" alt="@ebec/core" width="128" height="128" />
+    <img src="https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/core/assets/logo.svg" alt="@ebec/core" />
 </p>
 
 <h1 align="center">@ebec/core</h1>

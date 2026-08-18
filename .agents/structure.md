@@ -105,6 +105,8 @@ The octagon is a single path, its corners rounded by stroking it with its own gr
 
 Root and core are deliberately near-identical, differing only by that one accent; they are the only two marks allowed to be.
 
+**The `<img>` tags carry no `width`/`height` attributes** — each SVG declares `width="128" height="128"` on its root element instead, keeping `viewBox="0 0 256 256"` so the artwork coordinates stay unscaled. GitHub's markdown pipeline injects a `background-color: var(--bgColor-muted); border-radius: 6px` loading placeholder into any `<img>` that carries explicit dimensions, and that grey rounded panel stays visible behind a transparent logo. Without the attributes GitHub emits `style="max-width: 100%;"` only. Verify any change to these tags with `gh api -X POST /markdown --input <file>` and grep the result for `bgColor-muted`.
+
 **Package READMEs reference the logo by absolute `https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/<pkg>/assets/logo.svg` URL**, not a relative path — a relative `src` resolves against `npmjs.com` and 404s there. Both packages therefore list `assets` in their `package.json` `files` array so the SVG ships in the tarball. The root README is GitHub-only, so it uses `./assets/logo.svg`.
 
 ## Generated Files
