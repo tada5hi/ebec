@@ -53,18 +53,38 @@ export function markInstanceof(target: object, marker: symbol): void {
 }
 
 /**
- * Check whether the input's `@instanceof` chain contains `marker`.
+ * Check whether the input's `@instanceof` chain carries `marker`.
  *
  * Returns `false` for non-objects, objects without the chain, or chains
  * stored as a non-array value (defensive).
+ *
+ * By default (`strict: true`) only the native `Symbol.for(...)` form
+ * matches. Pass `strict: false` to also match the marker's description
+ * string against a serialized (string) chain — the form a chain takes
+ * after a `JSON.stringify`/`JSON.parse` round-trip. {@link matchesInstanceof}
+ * is `hasInstanceof(input, marker, false)`.
  */
-export function hasInstanceof(input: unknown, marker: symbol): boolean {
+export function hasInstanceof(input: unknown, marker: symbol, strict: boolean = true): boolean {
     if (!isObject(input)) {
         return false;
     }
 
     const chain = input[INSTANCEOF_PROPERTY];
-    return Array.isArray(chain) && chain.includes(marker);
+
+    if (!Array.isArray(chain)) {
+        return false;
+    }
+
+    if (chain.includes(marker)) {
+        return true;
+    }
+
+    if (strict) {
+        return false;
+    }
+
+    return typeof marker.description === 'string' &&
+        chain.includes(marker.description);
 }
 
 /**
@@ -115,22 +135,12 @@ export function serializeInstanceofChain(input: unknown): string[] {
  * description string (an error rehydrated from the JSON emitted by
  * `BaseError.toJSON()`).
  *
- * Prefer this over {@link hasInstanceof} as the fast path of duck-type
- * guards: `hasInstanceof` only matches the symbol form, so a guard using it
- * loses the inheritance match for JSON-rehydrated subclass errors and falls
- * through to its slow path.
+ * Prefer this over the strict (default) form of {@link hasInstanceof} as the
+ * fast path of duck-type guards: the strict form only matches the symbol
+ * form, so a guard using it loses the inheritance match for JSON-rehydrated
+ * subclass errors and falls through to its slow path. Equivalent to
+ * `hasInstanceof(input, marker, false)`.
  */
 export function matchesInstanceof(input: unknown, marker: symbol): boolean {
-    if (hasInstanceof(input, marker)) {
-        return true;
-    }
-
-    if (!isObject(input)) {
-        return false;
-    }
-
-    const chain = input[INSTANCEOF_PROPERTY];
-    return Array.isArray(chain) &&
-        typeof marker.description === 'string' &&
-        chain.includes(marker.description);
+    return hasInstanceof(input, marker, false);
 }
