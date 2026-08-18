@@ -17,6 +17,12 @@ export function isServerError(input: unknown): input is IServerError {
         return true;
     }
 
+    // Identity wins first (the marker match above): a ServerError instance
+    // matches regardless of status. Otherwise chain authority is delegated
+    // to isHTTPError — chain-only itself, so it rejects anything that isn't
+    // a confirmed HTTPError — and status range decides from there, so a bare
+    // `new HTTPError({ status: 500 })`, which never marks itself as a
+    // ServerError, still counts as a server error.
     if (!isHTTPError(input)) {
         return false;
     }

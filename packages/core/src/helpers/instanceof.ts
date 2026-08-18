@@ -16,6 +16,12 @@ import { isObject } from './object';
  * output. `BaseError.toJSON()` re-emits it under the same key as a string
  * list (see {@link serializeInstanceofChain}), so on objects rehydrated from
  * that JSON the property holds a `string[]` instead.
+ *
+ * A well-formed chain always begins with `BASE_ERROR_INSTANCE` — every real
+ * ebec error is a `BaseError` first, and subclass markers are appended on
+ * top of it. Hand-built cross-realm stand-ins that carry a subclass marker
+ * without it can invert that hierarchy (e.g. matching `@ebec/http`'s
+ * `isHTTPError` while failing `@ebec/core`'s `isBaseError`).
  */
 export const INSTANCEOF_PROPERTY = '@instanceof' as const;
 
@@ -47,18 +53,41 @@ export function markInstanceof(target: object, marker: symbol): void {
 }
 
 /**
- * Check whether the input's `@instanceof` chain contains `marker`.
+ * Check whether the input's `@instanceof` chain carries `marker`.
  *
  * Returns `false` for non-objects, objects without the chain, or chains
  * stored as a non-array value (defensive).
+ *
+ * `strict` controls which chain entries count as a match. By default
+ * (`strict: true`) only the native `Symbol.for(...)` form matches, which is
+ * what an in-process instance carries. Pass `strict: false` to also match
+ * the marker's `description` string: symbols are dropped by
+ * `JSON.stringify`, so an error rehydrated from the JSON emitted by
+ * `BaseError.toJSON()` carries the marker's description string in its chain
+ * instead of the symbol, and only the loose form still recognizes it.
+ * {@link matchesInstanceof} is `hasInstanceof(input, marker, false)`.
  */
-export function hasInstanceof(input: unknown, marker: symbol): boolean {
+export function hasInstanceof(input: unknown, marker: symbol, strict: boolean = true): boolean {
     if (!isObject(input)) {
         return false;
     }
 
     const chain = input[INSTANCEOF_PROPERTY];
-    return Array.isArray(chain) && chain.includes(marker);
+
+    if (!Array.isArray(chain)) {
+        return false;
+    }
+
+    if (chain.includes(marker)) {
+        return true;
+    }
+
+    if (strict) {
+        return false;
+    }
+
+    return typeof marker.description === 'string' &&
+        chain.includes(marker.description);
 }
 
 /**
@@ -109,22 +138,13 @@ export function serializeInstanceofChain(input: unknown): string[] {
  * description string (an error rehydrated from the JSON emitted by
  * `BaseError.toJSON()`).
  *
- * Prefer this over {@link hasInstanceof} as the fast path of duck-type
- * guards: `hasInstanceof` only matches the symbol form, so a guard using it
- * loses the inheritance match for JSON-rehydrated subclass errors and falls
- * through to its slow path.
+ * Prefer this over the strict (default) form of {@link hasInstanceof} as the
+ * fast path of duck-type guards. Guards have no shape-based fallback, so the
+ * strict form is the only check one performs: it matches only the symbol
+ * form, so a guard built on it returns `false` outright for a
+ * JSON-rehydrated subclass error — there is no slower path to fall back to.
+ * Equivalent to `hasInstanceof(input, marker, false)`.
  */
 export function matchesInstanceof(input: unknown, marker: symbol): boolean {
-    if (hasInstanceof(input, marker)) {
-        return true;
-    }
-
-    if (!isObject(input)) {
-        return false;
-    }
-
-    const chain = input[INSTANCEOF_PROPERTY];
-    return Array.isArray(chain) &&
-        typeof marker.description === 'string' &&
-        chain.includes(marker.description);
+    return hasInstanceof(input, marker, false);
 }

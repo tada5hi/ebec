@@ -102,14 +102,16 @@ To add a new HTTP error: add an entry to the appropriate JSON file and run `npm 
 
 ## Type Guards
 
-Each level provides a type guard for duck-type checking:
+Identity is chain-only. Each class-identity guard (`isBaseError`, `isHTTPError`) is a single check: `matchesInstanceof(x, MARKER)` against its own class marker. There is no shape/duck-typing fallback — an object that merely looks right (Error-shaped with a string `code`, or carrying a `status` field) but was never marked no longer matches. `matchesInstanceof` covers both the in-process symbol chain and the string chain that `toJSON()` emits, so the match survives a JSON round-trip; only errors actually produced by `@ebec/core`/`@ebec/http` (or explicitly marked via `markInstanceof`) carry that chain.
+
+`isClientError`/`isServerError` are not class-identity checks — they are status-range refinements of `isHTTPError`. Each first matches its own marker (`CLIENT_ERROR_INSTANCE`/`SERVER_ERROR_INSTANCE`) as a fast path, and otherwise delegates identity to `isHTTPError` (chain-only itself) and decides by `status` range from there. That's why a bare `new HTTPError({ status: 404 })` — which never marks itself as a `ClientError` — still matches `isClientError`: it's a confirmed `HTTPError` by chain, refined by status. Do not "fix" this by gating on the subclass marker alone.
 
 | Function | Package | Checks |
 |----------|---------|--------|
-| `isBaseError(x)` | @ebec/core | Is object with valid Options shape + string message |
+| `isBaseError(x)` | @ebec/core | `matchesInstanceof(x, BASE_ERROR_INSTANCE)` — chain-only |
 | `isErrorWithCode(x, code)` | @ebec/core | isBaseError + code matches (single or array) |
-| `isHTTPError(x)` | @ebec/http | Is error with numeric status (or statusCode) 400-599 |
-| `isClientError(x)` | @ebec/http | isHTTPError + status 400-499 |
-| `isServerError(x)` | @ebec/http | isHTTPError + status 500-599 |
+| `isHTTPError(x)` | @ebec/http | `matchesInstanceof(x, HTTP_ERROR_INSTANCE)` — chain-only |
+| `isClientError(x)` | @ebec/http | Own marker match, else `isHTTPError` (chain-confirmed) + status 400-499 |
+| `isServerError(x)` | @ebec/http | Own marker match, else `isHTTPError` (chain-confirmed) + status 500-599 |
 
-Each guard checks `matchesInstanceof(x, MARKER)` as its fast path before falling back to the shape checks above. New guards must use `matchesInstanceof` (not `hasInstanceof`) so JSON-rehydrated errors keep the inheritance match.
+New identity guards must use `matchesInstanceof` (not `hasInstanceof`), so JSON-rehydrated errors keep the inheritance match — `hasInstanceof` only matches the native symbol chain and misses the string chain a JSON round-trip produces. A guard that is a class-identity check reduces to that single `matchesInstanceof` call; a guard that is a status/shape refinement of another guard (like `isClientError`/`isServerError`) should delegate identity to that guard rather than duplicating a marker/chain check.

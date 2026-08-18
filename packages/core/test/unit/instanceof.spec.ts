@@ -238,16 +238,16 @@ describe('src/helpers/instanceof.ts', () => {
             expect(matchesInstanceof(twice, BASE_ERROR_INSTANCE)).toBe(true);
         });
 
-        it('should fall back gracefully for chain-less legacy payloads', () => {
+        it('should reject chain-less legacy payloads now that identity is chain-only', () => {
             const legacy = {
-                name: 'BaseError', 
-                message: 'boom', 
-                code: 'BASE_ERROR', 
+                name: 'BaseError',
+                message: 'boom',
+                code: 'BASE_ERROR',
             };
 
             expect(matchesInstanceof(legacy, BASE_ERROR_INSTANCE)).toBe(false);
-            // The guard still matches through its slow path (shape check).
-            expect(isBaseError(legacy)).toBe(true);
+            // No shape fallback remains — a missing chain is a definitive no.
+            expect(isBaseError(legacy)).toBe(false);
         });
     });
 
