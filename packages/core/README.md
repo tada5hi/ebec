@@ -1,10 +1,16 @@
-# @ebec/core 🧱
+<p align="center">
+    <img src="https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/core/assets/logo.svg" alt="@ebec/core" width="128" height="128" />
+</p>
+
+<h1 align="center">@ebec/core</h1>
+
+<p align="center">
+    <b>Core error class library for TypeScript — <code>BaseError</code> with automatic code derivation, message interpolation, and JSON serialization. Zero runtime dependencies.</b>
+</p>
 
 [![npm version](https://badge.fury.io/js/@ebec%2Fcore.svg)](https://badge.fury.io/js/@ebec%2Fcore)
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
-
-Core error class library for TypeScript. Provides `BaseError` with automatic code derivation, message interpolation, and JSON serialization. Zero runtime dependencies.
 
 **Table of Contents**
 

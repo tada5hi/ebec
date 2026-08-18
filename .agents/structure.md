@@ -4,8 +4,11 @@
 
 ```
 ebec/
+├── assets/
+│   └── logo.svg               # Root README logo
 ├── packages/
 │   ├── core/                  # Core error library (@ebec/core)
+│   │   ├── assets/logo.svg    # README logo (shipped in the npm tarball)
 │   │   ├── src/
 │   │   │   ├── index.ts       # Barrel export
 │   │   │   ├── module.ts      # BaseError class
@@ -36,6 +39,7 @@ ebec/
 │   │   └── package.json
 │   │
 │   └── http/                  # HTTP error classes (@ebec/http)
+│       ├── assets/logo.svg    # README logo (shipped in the npm tarball)
 │       ├── src/
 │       │   ├── index.ts       # Barrel export
 │       │   ├── constants.ts   # Generated STATUS_TEXTS map (statusCode → reason phrase)
@@ -86,6 +90,22 @@ ebec/
 ```
 
 `@ebec/core` (packages/core) is the canonical implementation, with zero runtime dependencies. It owns both the error classes and the issue model that `BaseError.issues` carries — the latter absorbed from the `blemish` package, which it replaces. `@ebec/http` depends on `@ebec/core`.
+
+## README Logos
+
+Every README — the root one and both packages — opens with a centred `<p align="center">` logo block, an `<h1 align="center">`, and a one-line bold tagline above the badges, following [tada5hi/ilingo@bf1ed8a](https://github.com/tada5hi/ilingo/commit/bf1ed8a5bc28206f5783452d8929234d12a467f5). The logos are one family: a **stop-sign octagon** — the shape of "halt, something went wrong" — filled with a per-package gradient and carrying a per-package white glyph, at `<pkg>/assets/logo.svg`.
+
+The octagon is a single path, its corners rounded by stroking it with its own gradient at `stroke-linejoin="round"`, so the mark stays one shape in every file. Glyphs are drawn directly in body coordinates (roughly x/y 68–188, centred on 128) — no nested `transform`, so the numbers in the file are the numbers on screen. `#FBBF24` is the family's single accent.
+
+| Mark | Gradient | Glyph |
+|------|----------|-------|
+| root `ebec` | `#F43F5E` → `#7C3AED` | a white bang — the error itself |
+| `@ebec/core` | same as root | the same bang, point in `#FBBF24` — the code that names it |
+| `@ebec/http` | `#3B82F6` → `#06B6D4` | a white globe, equator in `#FBBF24` — the transport layer |
+
+Root and core are deliberately near-identical, differing only by that one accent; they are the only two marks allowed to be.
+
+**Package READMEs reference the logo by absolute `https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/<pkg>/assets/logo.svg` URL**, not a relative path — a relative `src` resolves against `npmjs.com` and 404s there. Both packages therefore list `assets` in their `package.json` `files` array so the SVG ships in the tarball. The root README is GitHub-only, so it uses `./assets/logo.svg`.
 
 ## Generated Files
 

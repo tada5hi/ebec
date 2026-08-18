@@ -1,10 +1,16 @@
-# @ebec/http 🌐
+<p align="center">
+    <img src="https://raw.githubusercontent.com/tada5hi/ebec/HEAD/packages/http/assets/logo.svg" alt="@ebec/http" width="128" height="128" />
+</p>
+
+<h1 align="center">@ebec/http</h1>
+
+<p align="center">
+    <b>HTTP error classes for TypeScript, extending <a href="https://www.npmjs.com/package/@ebec/core">@ebec/core</a> — 43 pre-built classes for the 4xx and 5xx status codes, with <code>@instanceof</code>-chain-based type guards.</b>
+</p>
 
 [![npm version](https://badge.fury.io/js/@ebec%2Fhttp.svg)](https://badge.fury.io/js/@ebec%2Fhttp)
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
-
-HTTP error classes for TypeScript, extending [`@ebec/core`](../core). Provides 43 pre-built error classes for HTTP 4xx and 5xx status codes with `@instanceof`-chain-based type guards.
 
 **Table of Contents**
 

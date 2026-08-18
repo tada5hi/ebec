@@ -1,0 +1,17 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="http-title">
+    <title id="http-title">@ebec/http logo: an octagon bearing a globe</title>
+
+    <defs>
+        <linearGradient id="http-octagon" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3B82F6" />
+            <stop offset="1" stop-color="#06B6D4" />
+        </linearGradient>
+    </defs>
+
+    <path fill="url(#http-octagon)" stroke="url(#http-octagon)" stroke-width="24" stroke-linejoin="round" d="M93 44 H163 L212 93 V163 L163 212 H93 L44 163 V93 Z" />
+
+    <!-- 4xx and 5xx, wherever they are raised -->
+    <circle cx="128" cy="128" r="58" stroke="#FFFFFF" stroke-width="16" />
+    <ellipse cx="128" cy="128" rx="26" ry="58" stroke="#FFFFFF" stroke-width="16" />
+    <path stroke="#FBBF24" stroke-width="16" stroke-linecap="round" d="M72 128 H184" />
+</svg>

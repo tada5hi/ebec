@@ -4,6 +4,7 @@
     "type": "module",
     "description": "43 pre-built HTTP error classes (4xx/5xx) with status codes, status messages, and duck-typed type guards.",
     "files": [
+        "assets",
         "dist/"
     ],
     "author": {

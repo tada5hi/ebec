@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="core-title">
+    <title id="core-title">@ebec/core logo: an octagon bearing an exclamation mark, the point in amber</title>
+
+    <defs>
+        <linearGradient id="core-octagon" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F43F5E" />
+            <stop offset="1" stop-color="#7C3AED" />
+        </linearGradient>
+    </defs>
+
+    <path fill="url(#core-octagon)" stroke="url(#core-octagon)" stroke-width="24" stroke-linejoin="round" d="M93 44 H163 L212 93 V163 L163 212 H93 L44 163 V93 Z" />
+
+    <!-- the failure, and the code that names it -->
+    <path stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" d="M128 76 V140" />
+    <circle cx="128" cy="176" r="14" fill="#FBBF24" />
+</svg>

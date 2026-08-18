@@ -1,11 +1,17 @@
-# ebec 💥
+<p align="center">
+    <img src="./assets/logo.svg" alt="ebec" width="128" height="128" />
+</p>
+
+<h1 align="center">ebec</h1>
+
+<p align="center">
+    <b>A collection of extensible, type-safe error classes for TypeScript.</b>
+</p>
 
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 [![Known Vulnerabilities](https://snyk.io/test/github/tada5hi/ebec/badge.svg)](https://snyk.io/test/github/tada5hi/ebec)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
-
-A collection of extensible, type-safe error classes for TypeScript.
 
 Every error gets a `code` (derived automatically from the class name if you don't set one), an optional `cause` for wrapping, optional `errors` for grouping multiple failures, and a `toJSON()` that serializes the full chain. No decorators, no reflection — just plain classes you can extend, catch, and serialize.
 

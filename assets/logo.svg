@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ebec-title">
+    <title id="ebec-title">ebec logo: an octagon bearing an exclamation mark</title>
+
+    <defs>
+        <linearGradient id="ebec-octagon" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F43F5E" />
+            <stop offset="1" stop-color="#7C3AED" />
+        </linearGradient>
+    </defs>
+
+    <path fill="url(#ebec-octagon)" stroke="url(#ebec-octagon)" stroke-width="24" stroke-linejoin="round" d="M93 44 H163 L212 93 V163 L163 212 H93 L44 163 V93 Z" />
+
+    <!-- something went wrong -->
+    <path stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" d="M128 76 V140" />
+    <circle cx="128" cy="176" r="14" fill="#FFFFFF" />
+</svg>
