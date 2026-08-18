@@ -17,6 +17,12 @@ export function isClientError(input: unknown): input is IClientError {
         return true;
     }
 
+    // Identity wins first (the marker match above): a ClientError instance
+    // matches regardless of status. Otherwise chain authority is delegated
+    // to isHTTPError — chain-only itself, so it rejects anything that isn't
+    // a confirmed HTTPError — and status range decides from there, so a bare
+    // `new HTTPError({ status: 404 })`, which never marks itself as a
+    // ClientError, still counts as a client error.
     if (!isHTTPError(input)) {
         return false;
     }

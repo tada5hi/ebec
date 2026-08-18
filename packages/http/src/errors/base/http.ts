@@ -1,13 +1,11 @@
 import {
     BaseError,
-    isBaseError,
     markInstanceof,
     matchesInstanceof,
 } from '@ebec/core';
 import type { HTTPErrorInput, HTTPErrorOptions } from '../../types';
 import {
     getStatusText,
-    isHTTPErrorOptions,
     sanitizeStatusCode,
 } from '../../utils';
 import type { IHTTPError } from './types';
@@ -56,23 +54,10 @@ export class HTTPError extends BaseError implements IHTTPError {
     }
 }
 
+// Identity is chain-only, same as isBaseError: an input either carries the
+// HTTPError marker or it doesn't. There is no shape/status fallback — an
+// upstream error that merely carries a `status` field is no longer mirrored
+// onto our own response as if it were an HTTPError.
 export function isHTTPError(input: unknown): input is IHTTPError {
-    if (matchesInstanceof(input, HTTP_ERROR_INSTANCE)) {
-        return true;
-    }
-
-    if (!isHTTPErrorOptions(input)) {
-        return false;
-    }
-
-    const status = (input as Record<string, unknown>).status ?? (input as Record<string, unknown>).statusCode;
-    if (
-        typeof status !== 'number' ||
-        status < 400 ||
-        status >= 600
-    ) {
-        return false;
-    }
-
-    return isBaseError(input);
+    return matchesInstanceof(input, HTTP_ERROR_INSTANCE);
 }

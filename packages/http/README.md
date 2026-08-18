@@ -4,7 +4,7 @@
 [![main](https://github.com/tada5hi/ebec/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/ebec/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/ebec/branch/master/graph/badge.svg?token=HLHCWI3VO1)](https://codecov.io/gh/tada5hi/ebec)
 
-HTTP error classes for TypeScript, extending [`@ebec/core`](../core). Provides 43 pre-built error classes for HTTP 4xx and 5xx status codes with duck-typed type guards.
+HTTP error classes for TypeScript, extending [`@ebec/core`](../core). Provides 43 pre-built error classes for HTTP 4xx and 5xx status codes with `@instanceof`-chain-based type guards.
 
 **Table of Contents**
 
@@ -80,9 +80,9 @@ throw new UserNotFoundError(42);
 
 ## Type Guards
 
-All type guards use duck typing and return interface types (`IHTTPError`, `IClientError`, `IServerError`). They work with any object that has the right shape, not just `instanceof` checks.
+Type guards check the `@instanceof` class-marker chain and return interface types (`IHTTPError`, `IClientError`, `IServerError`). Identity is chain-only — there is no duck-typing shape fallback. An object that merely has the right shape (a `status` field, a `code`, even one carried over from another HTTP error library) is not recognised; only errors that actually carry the `@ebec/http` marker chain are.
 
-Each guard fast-path-matches the `@instanceof` class-marker chain via `matchesInstanceof` — as `Symbol.for(...)` markers on in-process instances, or as the string list that `toJSON()` emits under the `@instanceof` key. Guards therefore keep the full inheritance match (e.g. `isClientError` matching a `NotFoundError`) even for errors rehydrated from a JSON response body.
+`isHTTPError` matches via `matchesInstanceof` — as a `Symbol.for(...)` marker on in-process instances, or as the string list that `toJSON()` emits under the `@instanceof` key — so the match survives a JSON round-trip. `isClientError` and `isServerError` are status-range refinements, not separate identity checks: each first matches its own chain marker (so a `NotFoundError` matches `isClientError` outright), and otherwise delegates identity to `isHTTPError` and decides by `status` range from there. That's why a bare `new HTTPError({ status: 404 })` — which never marks itself as a `ClientError` — still matches `isClientError`: it's a confirmed `HTTPError` by chain, refined by status.
 
 ```typescript
 import {
@@ -207,9 +207,9 @@ Plus all fields from [`@ebec/core` ErrorOptions](../core#erroroptions).
 
 | Function | Returns | Checks |
 |----------|---------|--------|
-| `isHTTPError(input)` | `input is IHTTPError` | status 400-599, passes `isBaseError` |
-| `isClientError(input)` | `input is IClientError` | `isHTTPError` + status 400-499 |
-| `isServerError(input)` | `input is IServerError` | `isHTTPError` + status 500-599 |
+| `isHTTPError(input)` | `input is IHTTPError` | Chain-only: true iff the `@instanceof` chain carries the `HTTPError` marker. No shape/status fallback |
+| `isClientError(input)` | `input is IClientError` | Own chain marker match; otherwise delegates identity to `isHTTPError` (chain-confirmed) + status 400-499 |
+| `isServerError(input)` | `input is IServerError` | Own chain marker match; otherwise delegates identity to `isHTTPError` (chain-confirmed) + status 500-599 |
 | `isErrorOptions(input)` | `input is ErrorOptions` | Validates HTTP options shape |
 
 ### Utilities

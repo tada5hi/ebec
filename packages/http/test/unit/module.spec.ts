@@ -1,4 +1,9 @@
-import { INSTANCEOF_PROPERTY, hasInstanceof, matchesInstanceof } from '@ebec/core';
+import {
+    BaseError,
+    INSTANCEOF_PROPERTY,
+    hasInstanceof,
+    matchesInstanceof,
+} from '@ebec/core';
 import { describe, expect, it } from 'vitest';
 import {
     BAD_REQUEST_ERROR_INSTANCE,
@@ -108,12 +113,14 @@ describe('src/module.ts', () => {
         expect(isServerError(t1)).toBeFalsy();
         expect(isHTTPError(t1)).toBeTruthy();
 
+        // A chain-less plain Error with a status bolted on no longer matches —
+        // identity is chain-only now, there is no shape/status fallback.
         const t2 = new Error();
         (t2 as Record<string, unknown>).statusCode = 500;
         (t2 as Record<string, unknown>).code = 'SERVER_ERROR';
         expect(isClientError(t2)).toBeFalsy();
-        expect(isServerError(t2)).toBeTruthy();
-        expect(isHTTPError(t2)).toBeTruthy();
+        expect(isServerError(t2)).toBeFalsy();
+        expect(isHTTPError(t2)).toBeFalsy();
     });
 
     it('should normalize non-error status to 500', () => {
@@ -205,14 +212,60 @@ describe('src/module.ts', () => {
             expect(isServerError(rehydrated)).toBe(false);
         });
 
-        it('should keep guard matching for chain-less legacy payloads', () => {
+        it('should reject chain-less legacy payloads now that there is no status-based fallback', () => {
             const rehydrated = JSON.parse(JSON.stringify(new InternalServerError()));
             delete rehydrated[INSTANCEOF_PROPERTY];
 
-            // Guards fall back to their status-based slow path.
-            expect(isHTTPError(rehydrated)).toBe(true);
-            expect(isServerError(rehydrated)).toBe(true);
+            // No chain, no identity — status alone no longer decides.
+            expect(isHTTPError(rehydrated)).toBe(false);
+            expect(isServerError(rehydrated)).toBe(false);
             expect(isClientError(rehydrated)).toBe(false);
+        });
+
+        it('should reject an error whose chain lacks the HTTP marker', () => {
+            // Shaped like hapic's HttpResponseError: extends BaseError, carries an
+            // upstream status, but never announces itself as an HTTPError.
+            const upstream = {
+                ...new BaseError({ message: 'upstream failed', code: 'UPSTREAM' }).toJSON(),
+                status: 503,
+            };
+
+            expect(isHTTPError(upstream)).toBeFalsy();
+            expect(isServerError(upstream)).toBeFalsy();
+        });
+
+        it('should reject a chain-less object now that there is no shape fallback', () => {
+            expect(isHTTPError({
+                message: 'x',
+                code: 'y',
+                status: 404,
+            })).toBeFalsy();
+        });
+
+        it('should still accept a JSON round-tripped HTTP error', () => {
+            const json = JSON.parse(JSON.stringify(new NotFoundError()));
+
+            expect(isHTTPError(json)).toBeTruthy();
+            expect(isClientError(json)).toBeTruthy();
+        });
+
+        it('should treat a bare HTTPError as a client error by status, not identity', () => {
+            // isClientError is a status-range refinement of isHTTPError, not a
+            // class-identity check: a plain HTTPError never marks itself with
+            // CLIENT_ERROR_INSTANCE, yet still counts as a client error here.
+            const bare = new HTTPError({ status: 404 });
+
+            expect(isClientError(bare)).toBeTruthy();
+            expect(bare.toJSON()[INSTANCEOF_PROPERTY]).not.toContain(CLIENT_ERROR_INSTANCE.description);
+        });
+
+        it('should reject a non-HTTP error even when its status is in range', () => {
+            const upstream = {
+                ...new BaseError({ message: 'upstream failed', code: 'UPSTREAM' }).toJSON(),
+                status: 404,
+            };
+
+            expect(isClientError(upstream)).toBeFalsy();
         });
     });
 });
