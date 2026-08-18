@@ -14,6 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [1.3.2](https://github.com/tada5hi/ebec/compare/core-v1.3.1...core-v1.3.2) (2026-08-18)
+
+
+### Bug Fixes
+
+* treat a non-matching instanceof chain as definitive ([#464](https://github.com/tada5hi/ebec/issues/464)) ([2846d38](https://github.com/tada5hi/ebec/commit/2846d38c73e847b8347efc54ac8c233590fbae74))
+
 ## [1.3.1](https://github.com/tada5hi/ebec/compare/core-v1.3.0...core-v1.3.1) (2026-08-17)
 
 
