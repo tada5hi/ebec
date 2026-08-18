@@ -58,11 +58,14 @@ export function markInstanceof(target: object, marker: symbol): void {
  * Returns `false` for non-objects, objects without the chain, or chains
  * stored as a non-array value (defensive).
  *
- * By default (`strict: true`) only the native `Symbol.for(...)` form
- * matches. Pass `strict: false` to also match the marker's description
- * string against a serialized (string) chain — the form a chain takes
- * after a `JSON.stringify`/`JSON.parse` round-trip. {@link matchesInstanceof}
- * is `hasInstanceof(input, marker, false)`.
+ * `strict` controls which chain entries count as a match. By default
+ * (`strict: true`) only the native `Symbol.for(...)` form matches, which is
+ * what an in-process instance carries. Pass `strict: false` to also match
+ * the marker's `description` string: symbols are dropped by
+ * `JSON.stringify`, so an error rehydrated from the JSON emitted by
+ * `BaseError.toJSON()` carries the marker's description string in its chain
+ * instead of the symbol, and only the loose form still recognizes it.
+ * {@link matchesInstanceof} is `hasInstanceof(input, marker, false)`.
  */
 export function hasInstanceof(input: unknown, marker: symbol, strict: boolean = true): boolean {
     if (!isObject(input)) {
@@ -136,10 +139,11 @@ export function serializeInstanceofChain(input: unknown): string[] {
  * `BaseError.toJSON()`).
  *
  * Prefer this over the strict (default) form of {@link hasInstanceof} as the
- * fast path of duck-type guards: the strict form only matches the symbol
- * form, so a guard using it loses the inheritance match for JSON-rehydrated
- * subclass errors and falls through to its slow path. Equivalent to
- * `hasInstanceof(input, marker, false)`.
+ * fast path of duck-type guards. Guards have no shape-based fallback, so the
+ * strict form is the only check one performs: it matches only the symbol
+ * form, so a guard built on it returns `false` outright for a
+ * JSON-rehydrated subclass error — there is no slower path to fall back to.
+ * Equivalent to `hasInstanceof(input, marker, false)`.
  */
 export function matchesInstanceof(input: unknown, marker: symbol): boolean {
     return hasInstanceof(input, marker, false);
