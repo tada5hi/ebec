@@ -30,7 +30,7 @@
     },
     "homepage": "https://github.com/tada5hi/ebec#readme",
     "engines": {
-        "node": ">=22.0.0"
+        "node": "^24.11.0 || >=26.0.0"
     },
     "devDependencies": {
         "@tada5hi/commitlint-config": "^1.3.1",
