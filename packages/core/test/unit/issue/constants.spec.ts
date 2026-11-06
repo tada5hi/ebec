@@ -50,6 +50,7 @@ describe('IssueCode vocabulary', () => {
         // casing so a future PR adding `MyNewCode: 'myNewCode'` fails here
         // instead of silently shipping the inconsistency.
         const snakeCase = /^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$/;
+
         for (const value of Object.values(IssueCode)) {
             expect(value, `IssueCode value "${value}" must be lower_snake_case`)
                 .toMatch(snakeCase);

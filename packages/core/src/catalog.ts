@@ -1,3 +1,9 @@
+import type {
+    ErrorCatalog,
+    ErrorCatalogDefinitions,
+    ErrorCatalogEntry,
+    ErrorFactory,
+} from './types';
 /*
  * Copyright (c) 2026.
  *  Author Peter Placzek (tada5hi)
@@ -8,22 +14,6 @@
 import { BaseError } from './module';
 import type { ErrorOptions } from './options';
 
-export type ErrorCatalogEntry = {
-    message?: string;
-    code?: string;
-};
-
-export type ErrorCatalogDefinitions = Record<string, ErrorCatalogEntry>;
-
-export type ErrorFactory = (
-    messageData?: Record<string, unknown>,
-    overrides?: ErrorOptions,
-) => BaseError;
-
-export type ErrorCatalog<T extends ErrorCatalogDefinitions> = {
-    [K in keyof T]: ErrorFactory;
-};
-
 export function defineErrorCatalog<T extends ErrorCatalogDefinitions>(
     definitions: T,
 ): ErrorCatalog<T> {
@@ -31,6 +21,7 @@ export function defineErrorCatalog<T extends ErrorCatalogDefinitions>(
 
     for (const key of Object.keys(definitions) as Array<keyof T & string>) {
         const entry = definitions[key] as ErrorCatalogEntry;
+
         catalog[key] = ((messageData?: Record<string, unknown>, overrides: ErrorOptions = {}) => new BaseError({
             ...entry,
             ...overrides,

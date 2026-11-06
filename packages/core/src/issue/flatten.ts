@@ -21,6 +21,7 @@ import type { Issue, IssueGroup, IssueItem } from './types';
  */
 export function flattenIssueItems(issues: readonly Issue[]): IssueItem[] {
     const output: IssueItem[] = [];
+
     for (const issue of issues) {
         if (isIssueItem(issue)) {
             output.push(issue);
@@ -28,6 +29,7 @@ export function flattenIssueItems(issues: readonly Issue[]): IssueItem[] {
             output.push(...flattenIssueItems(issue.issues));
         }
     }
+
     return output;
 }
 
@@ -40,11 +42,13 @@ export function flattenIssueItems(issues: readonly Issue[]): IssueItem[] {
  */
 export function flattenIssueGroups(issues: readonly Issue[]): IssueGroup[] {
     const output: IssueGroup[] = [];
+
     for (const issue of issues) {
         if (isIssueGroup(issue)) {
             output.push(issue);
             output.push(...flattenIssueGroups(issue.issues));
         }
     }
+
     return output;
 }

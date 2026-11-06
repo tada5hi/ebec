@@ -116,6 +116,7 @@ export const IssueCode = {
     SAME_AS: 'same_as',
 } as const;
 
+// eslint-disable-next-line @tada5hi/type-declaration-location -- Keep the merged public contract.
 export type IssueCode = typeof IssueCode[keyof typeof IssueCode];
 
 /**
@@ -157,6 +158,8 @@ export type IssueCode = typeof IssueCode[keyof typeof IssueCode];
  * {@link IssueCode} entry — the type-level enforcement and the
  * documentation are two views of the same contract.
  */
+
+// eslint-disable-next-line @tada5hi/type-declaration-location, @typescript-eslint/naming-convention -- Keep the merged public contract.
 export interface IssueDataByCode {
     min_length: { min: number };
     max_length: { max: number };
@@ -179,6 +182,7 @@ export interface IssueDataByCode {
  * {@link IssueDataByCode}. Producers using one of these codes must
  * supply the matching `data` shape.
  */
+// eslint-disable-next-line @tada5hi/type-declaration-location -- Keep the merged public contract.
 export type ParameterizedIssueCode = keyof IssueDataByCode;
 
 /**
@@ -186,4 +190,5 @@ export type ParameterizedIssueCode = keyof IssueDataByCode;
  * `REQUIRED`, …). Producers using one of these codes must omit `data`
  * (or pass `undefined`).
  */
+// eslint-disable-next-line @tada5hi/type-declaration-location -- Keep the merged public contract.
 export type BareIssueCode = Exclude<IssueCode, ParameterizedIssueCode>;

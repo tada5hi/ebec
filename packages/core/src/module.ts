@@ -47,6 +47,7 @@ export class BaseError extends Error implements IBaseError {
         const options = extractErrorOptions(input);
 
         let message = options.message || 'An error occurred';
+
         if (options.messageData) {
             message = interpolate(message, options.messageData);
         }

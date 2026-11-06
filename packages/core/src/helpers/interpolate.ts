@@ -27,6 +27,7 @@ export function interpolate(
     return Array.from(str.matchAll(regex))
         .reduce((acc, match) => {
             const key = match[1];
+
             if (key && typeof data[key] !== 'undefined') {
                 return acc.replace(match[0], String(data[key]));
             }

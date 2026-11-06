@@ -10,4 +10,10 @@ export * from './module';
 export * from './options';
 export * from './helpers';
 export * from './catalog';
+export type {
+    ErrorCatalogEntry,
+    ErrorCatalogDefinitions,
+    ErrorFactory,
+    ErrorCatalog,
+} from './types';
 export * from './issue';

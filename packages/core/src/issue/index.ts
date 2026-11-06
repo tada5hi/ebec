@@ -8,7 +8,9 @@
 export * from './check';
 export * from './constants';
 export * from './define';
+export type { DefineIssueItemCommon, DefineIssueItemData, DefineIssueItemReturn } from './types';
 export * from './flatten';
 export * from './format';
+export type { IssueMessageTemplates } from './types';
 export * from './prefix';
 export * from './types';

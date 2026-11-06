@@ -39,9 +39,9 @@ describe('defineIssueItem', () => {
     it('falls back to VALUE_INVALID for an empty-string code', () => {
         // The runtime gate is `||`, not `??` — an empty code is not a code.
         const item = defineIssueItem({
-            path: [], 
-            message: 'x', 
-            code: '', 
+            path: [],
+            message: 'x',
+            code: '',
         });
 
         expect(item.code).toBe(IssueCode.VALUE_INVALID);
@@ -87,17 +87,17 @@ describe('defineIssueItem', () => {
 describe('defineIssueGroup', () => {
     it('stamps the group discriminant', () => {
         expect(defineIssueGroup({
-            path: [], 
-            message: 'foo', 
-            issues: [], 
+            path: [],
+            message: 'foo',
+            issues: [],
         }).type).toBe('group');
     });
 
     it('carries children and the optional code through', () => {
         const child = defineIssueItem({
-            path: ['a'], 
-            message: 'x', 
-            code: 'custom', 
+            path: ['a'],
+            message: 'x',
+            code: 'custom',
         });
         const group = defineIssueGroup({
             path: [],
@@ -117,9 +117,9 @@ describe('defineIssueGroup', () => {
             path: ['user'],
             message: 'foo',
             issues: [defineIssueItem({
-                path: ['street'], 
-                message: 'x', 
-                code: 'custom', 
+                path: ['street'],
+                message: 'x',
+                code: 'custom',
             })],
         });
 
@@ -145,6 +145,7 @@ describe('defineIssueItem typed data contract', () => {
         });
 
         expect(item.code).toBe(IssueCode.MIN_LENGTH);
+
         // After narrowing on `code`, `data.min` is typed `number`.
         if (item.code === IssueCode.MIN_LENGTH) {
             expect(item.data.min).toBe(3);

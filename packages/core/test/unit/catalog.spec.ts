@@ -6,6 +6,7 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ NOT_FOUND: { message: 'Resource not found', code: 'NOT_FOUND' } });
 
         const error = catalog.NOT_FOUND();
+
         expect(error).toBeInstanceOf(BaseError);
         expect(error.message).toEqual('Resource not found');
         expect(error.code).toEqual('NOT_FOUND');
@@ -15,6 +16,7 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ SOMETHING_WRONG: { message: 'Oops' } });
 
         const error = catalog.SOMETHING_WRONG();
+
         expect(error.code).toEqual('SOMETHING_WRONG');
     });
 
@@ -22,6 +24,7 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ NOT_FOUND: { message: 'User {id} not found' } });
 
         const error = catalog.NOT_FOUND({ id: 42 });
+
         expect(error.message).toEqual('User 42 not found');
     });
 
@@ -29,6 +32,7 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ ERR: { message: 'Missing {field}' } });
 
         const error = catalog.ERR({ other: 'value' });
+
         expect(error.message).toEqual('Missing {field}');
     });
 
@@ -36,11 +40,13 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ ERR: { message: 'original', code: 'ERR' } });
 
         const error = catalog.ERR(undefined, { message: 'overridden message' });
+
         expect(error.message).toEqual('overridden message');
     });
 
     it('should handle empty catalog', () => {
         const catalog = defineErrorCatalog({});
+
         expect(Object.keys(catalog)).toHaveLength(0);
     });
 
@@ -48,6 +54,7 @@ describe('src/catalog.ts', () => {
         const catalog = defineErrorCatalog({ GENERIC: { message: 'Something went wrong' } });
 
         const error = catalog.GENERIC();
+
         expect(error.message).toEqual('Something went wrong');
     });
 });
