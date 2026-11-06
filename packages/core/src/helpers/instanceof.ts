@@ -37,10 +37,12 @@ export const INSTANCEOF_PROPERTY = '@instanceof' as const;
  */
 export function markInstanceof(target: object, marker: symbol): void {
     const existing = (target as Record<string, unknown>)[INSTANCEOF_PROPERTY];
+
     if (Array.isArray(existing)) {
         if (!existing.includes(marker)) {
             existing.push(marker);
         }
+
         return;
     }
 
@@ -109,13 +111,16 @@ export function serializeInstanceofChain(input: unknown): string[] {
     }
 
     const chain = input[INSTANCEOF_PROPERTY];
+
     if (!Array.isArray(chain)) {
         return [];
     }
 
     const output: string[] = [];
+
     for (const entry of chain) {
         let value: string | undefined;
+
         if (typeof entry === 'symbol') {
             if (entry.description) {
                 value = entry.description;

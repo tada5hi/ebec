@@ -29,15 +29,7 @@ function isIssuePath(input: unknown) : input is PropertyKey[] {
 }
 
 function isBaseIssue(input: unknown) : input is IssueBase & { [ke: string]: any } {
-    if (!isObject(input)) {
-        return false;
-    }
-
-    if (typeof input.message !== 'string') {
-        return false;
-    }
-
-    if (!isIssuePath(input.path)) {
+    if (!isObject(input) || (typeof input.message !== 'string') || !isIssuePath(input.path)) {
         return false;
     }
 
@@ -53,11 +45,7 @@ function isBaseIssue(input: unknown) : input is IssueBase & { [ke: string]: any 
  * or from two copies of this package — must still validate.
  */
 export function isIssueItem(input: unknown) : input is IssueItem {
-    if (!isBaseIssue(input)) {
-        return false;
-    }
-
-    if (input.type !== 'item') {
+    if (!isBaseIssue(input) || (input.type !== 'item')) {
         return false;
     }
 
@@ -69,11 +57,7 @@ export function isIssueItem(input: unknown) : input is IssueItem {
  * passes when every descendant is itself well-formed.
  */
 export function isIssueGroup(input: unknown) : input is IssueGroup {
-    if (!isBaseIssue(input)) {
-        return false;
-    }
-
-    if (input.type !== 'group') {
+    if (!isBaseIssue(input) || (input.type !== 'group')) {
         return false;
     }
 

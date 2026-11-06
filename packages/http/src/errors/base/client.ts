@@ -28,6 +28,7 @@ export function isClientError(input: unknown): input is IClientError {
     }
 
     const status = input.status ?? input.statusCode;
+
     return status >= 400 &&
         status < 500;
 }

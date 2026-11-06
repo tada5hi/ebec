@@ -33,28 +33,33 @@ describe('src/module.ts', () => {
 
     it('should create instance with options', () => {
         const error = new HTTPError({ statusCode: 490 });
+
         expect(error.status).toEqual(490);
         expect(error.statusCode).toEqual(490);
     });
 
     it('should create instance with status option', () => {
         const error = new HTTPError({ status: 490 });
+
         expect(error.status).toEqual(490);
         expect(error.statusCode).toEqual(490);
     });
 
     it('should default message to status text when no message provided', () => {
         const error = new HTTPError({ status: 404 });
+
         expect(error.message).toEqual('Not Found');
     });
 
     it('should preserve explicit message', () => {
         const error = new HTTPError({ status: 404, message: 'User not found' });
+
         expect(error.message).toEqual('User not found');
     });
 
     it('should fall back to default message for unknown status code', () => {
         const error = new HTTPError({ status: 490 });
+
         expect(error.message).toEqual('An error occurred');
     });
 
@@ -70,23 +75,27 @@ describe('src/module.ts', () => {
 
     it('should sanitize status code', () => {
         const error = new HTTPError({ statusCode: 999 });
+
         expect(error.statusCode).toEqual(500);
     });
 
     it('should sanitize invalid status option', () => {
         const error = new HTTPError({ status: 999 });
+
         expect(error.status).toEqual(500);
         expect(error.statusCode).toEqual(500);
     });
 
     it('should allow status code override', () => {
         const error = new NotFoundError({ statusCode: 422 });
+
         expect(error.statusCode).toEqual(422);
     });
 
     it('should include status in toJSON', () => {
         const error = new NotFoundError('User not found');
         const json = error.toJSON();
+
         expect(json.status).toEqual(404);
         expect(json.message).toEqual('User not found');
         expect(json.code).toEqual('NOT_FOUND');
@@ -94,6 +103,7 @@ describe('src/module.ts', () => {
 
     it('should recognize client error', () => {
         const error = new NotFoundError();
+
         expect(isClientError(error)).toBeTruthy();
         expect(isServerError(error)).toBeFalsy();
         expect(isHTTPError(error)).toBeTruthy();
@@ -101,6 +111,7 @@ describe('src/module.ts', () => {
 
     it('should recognize server error', () => {
         const error = new InternalServerError();
+
         expect(isClientError(error)).toBeFalsy();
         expect(isServerError(error)).toBeTruthy();
         expect(isHTTPError(error)).toBeTruthy();
@@ -116,6 +127,7 @@ describe('src/module.ts', () => {
         // A chain-less plain Error with a status bolted on no longer matches —
         // identity is chain-only now, there is no shape/status fallback.
         const t2 = new Error();
+
         (t2 as Record<string, unknown>).statusCode = 500;
         (t2 as Record<string, unknown>).code = 'SERVER_ERROR';
         expect(isClientError(t2)).toBeFalsy();
@@ -125,6 +137,7 @@ describe('src/module.ts', () => {
 
     it('should normalize non-error status to 500', () => {
         const error = new HTTPError({ statusCode: 300 });
+
         expect(error.status).toEqual(500);
         expect(isServerError(error)).toBeTruthy();
         expect(isHTTPError(error)).toBeTruthy();
@@ -175,6 +188,7 @@ describe('src/module.ts', () => {
         it('should let isHTTPError fast-path-match a marker-only object', () => {
             // Simulate a foreign-realm instance: no prototype link, just the chain.
             const foreign: Record<string, unknown> = {};
+
             Object.defineProperty(foreign, INSTANCEOF_PROPERTY, {
                 value: [HTTP_ERROR_INSTANCE, CLIENT_ERROR_INSTANCE],
                 enumerable: false,
@@ -214,6 +228,7 @@ describe('src/module.ts', () => {
 
         it('should reject chain-less legacy payloads now that there is no status-based fallback', () => {
             const rehydrated = JSON.parse(JSON.stringify(new InternalServerError()));
+
             delete rehydrated[INSTANCEOF_PROPERTY];
 
             // No chain, no identity — status alone no longer decides.

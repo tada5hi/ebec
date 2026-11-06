@@ -10,4 +10,37 @@ export * from './module';
 export * from './options';
 export * from './helpers';
 export * from './catalog';
-export * from './issue';
+export type {
+    ErrorCatalogEntry,
+    ErrorCatalogDefinitions,
+    ErrorFactory,
+    ErrorCatalog,
+} from './types';
+export {
+    IssueCode,
+    defineIssueGroup,
+    defineIssueItem,
+    flattenIssueGroups,
+    flattenIssueItems,
+    formatIssue,
+    isIssue,
+    isIssueGroup,
+    isIssueItem,
+    prefixIssuePath,
+} from './issue';
+export type {
+    BareIssueCode,
+    DefineIssueItemData,
+    DefineIssueItemReturn,
+    Issue,
+    IssueBase,
+    IssueDataByCode,
+    IssueGroup,
+    IssueItem,
+    IssueItemBare,
+    IssueItemRaw,
+    IssueItemTyped,
+    IssueMessageTemplates,
+    ParameterizedIssueCode,
+    ResolveIssueCode,
+} from './issue';

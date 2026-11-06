@@ -12,6 +12,7 @@ import type {
     ParameterizedIssueCode,
 } from './constants';
 
+
 /**
  * Resolve a possibly-`undefined` `code` to its effective vocabulary entry.
  * When a producer (e.g. {@link defineIssueItem}) is called without a `code`,
@@ -26,6 +27,9 @@ export type ResolveIssueCode<C> = [C] extends [undefined] ?
     typeof IssueCode.VALUE_INVALID :
     C & string;
 
+
+
+// eslint-disable-next-line @typescript-eslint/naming-convention -- Preserve the public name and declaration merging.
 export interface IssueBase {
     /**
      * Out-of-band provenance about how this issue came to exist — context the
@@ -95,7 +99,7 @@ export interface IssueBase {
  * fields are intentionally absent here; each branch in the discriminated
  * union below pins them to the right pair.
  */
-interface IssueItemCommon extends IssueBase {
+interface IIssueItemCommon extends IssueBase {
     /**
      * Issue Type
      */
@@ -123,7 +127,7 @@ interface IssueItemCommon extends IssueBase {
  * concrete variant with `data: { min: number }`, not the joined union.
  */
 export type IssueItemTyped = {
-    [K in ParameterizedIssueCode]: IssueItemCommon & {
+    [K in ParameterizedIssueCode]: IIssueItemCommon & {
         code: K,
         data: IssueDataByCode[K],
     };
@@ -138,7 +142,7 @@ export type IssueItemTyped = {
  * `code: 'email'` variant.
  */
 export type IssueItemBare = {
-    [K in BareIssueCode]: IssueItemCommon & {
+    [K in BareIssueCode]: IIssueItemCommon & {
         code: K,
         data?: undefined,
     };
@@ -164,7 +168,8 @@ export type IssueItemBare = {
  * `Extract<IssueItem, { code: 'min_length' }>` or cast `issue.data` after
  * the code check.
  */
-export interface IssueItemRaw extends IssueItemCommon {
+// eslint-disable-next-line @typescript-eslint/naming-convention -- Preserve the public name and declaration merging.
+export interface IssueItemRaw extends IIssueItemCommon {
     code: string & {},
     data?: Record<string, unknown>,
 }
@@ -193,6 +198,7 @@ export type IssueItem = IssueItemTyped | IssueItemBare | IssueItemRaw;
  * consumer that does not care can call {@link flattenIssueItems} and
  * ignore grouping entirely; one that does can walk the tree.
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention -- Preserve the public name and declaration merging.
 export interface IssueGroup extends IssueBase {
     /**
      * Code identifying the issue. See `IssueItem.code` for the
@@ -215,3 +221,68 @@ export interface IssueGroup extends IssueBase {
 }
 
 export type Issue = IssueGroup | IssueItem;
+
+
+
+// eslint-disable-next-line @typescript-eslint/naming-convention -- Preserve the public name and declaration merging.
+export interface DefineIssueItemCommon extends Omit<IssueBase, 'data'> {
+    received?: unknown,
+    expected?: unknown,
+}
+
+/**
+ * Per-call `data` shape for {@link defineIssueItem}. The `data`
+ * requirement is selected from the resolved `code`:
+ *
+ * - Parameterized code → `data` required, typed per {@link IssueDataByCode}.
+ * - Bare code (incl. omitted, which resolves to `VALUE_INVALID`)
+ *   → `data` must be absent / `undefined`.
+ * - Ad-hoc string code → `data` optional `Record`.
+ */
+export type DefineIssueItemData<C> = DefineIssueItemCommon & {
+    code?: C,
+} & (
+    ResolveIssueCode<C> extends ParameterizedIssueCode ?
+        { data: IssueDataByCode[ResolveIssueCode<C> & ParameterizedIssueCode] } :
+        ResolveIssueCode<C> extends BareIssueCode ?
+            { data?: undefined } :
+            { data?: Record<string, unknown> }
+);
+
+/**
+ * Return type for {@link defineIssueItem} — picks the concrete `IssueItem`
+ * variant matching the resolved `code`.
+ *
+ * `R` is an internal binding, not an argument: the resolved code has to be
+ * computed **once** into a type parameter rather than re-spelled as
+ * `ResolveIssueCode<C>` at each use. Writing it inline collapses the whole
+ * alias to `never` — `Extract` distributes over `IssueItemTyped`'s union
+ * and, with the target still expressed in terms of the alias's own type
+ * parameter, no member is provably assignable, so every branch yields
+ * `never`. The branch *selection* keeps working, which is what makes the
+ * bug quiet: `defineIssueItem` still rejects a bad payload, it just hands
+ * back `never`, and `never` is assignable to everything — so no call site
+ * complains and consumer-side narrowing silently stops meaning anything.
+ * Pinned by the type-level cases in `test/unit/issue/define.spec.ts`, which
+ * are only load-bearing because `npm run typecheck` covers the specs.
+ */
+export type DefineIssueItemReturn<C, R = ResolveIssueCode<C>> = R extends ParameterizedIssueCode ?
+    Extract<IssueItemTyped, { code: R }> :
+    R extends BareIssueCode ?
+        Extract<IssueItemBare, { code: R }> :
+        IssueItemRaw;
+
+/**
+ * Map of issue `code` → message template. Templates use `{name}`
+ * placeholders — the syntax {@link interpolate} understands — and are
+ * resolved against `Issue.data` at format time.
+ *
+ * ```ts
+ * const de: IssueMessageTemplates = {
+ *     value_invalid: 'Wert ist ungültig',
+ *     min_length: 'Mindestens {min} Zeichen',
+ *     one_of_failed: 'Keine der Varianten war erfolgreich',
+ * };
+ * ```
+ */
+export type IssueMessageTemplates = Partial<Record<IssueCode, string>> & Record<string, string>;

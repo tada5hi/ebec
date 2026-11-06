@@ -13,7 +13,11 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 export async function saveFile(content, filePath) {
     return new Promise(((resolve, reject) => {
         fs.writeFile(filePath, content, (err) => {
-            if (err) reject(err);
+            if (err) {
+                reject(err);
+
+                return;
+            }
 
             resolve();
         });
@@ -32,7 +36,11 @@ export async function loadTemplate(file) {
 
     return new Promise((resolve, reject) => {
         fs.readFile(tplPath, ({ encoding: 'utf-8' }), (err, data) => {
-            if (err) reject(err);
+            if (err) {
+                reject(err);
+
+                return;
+            }
 
             resolve(data);
         });

@@ -11,7 +11,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    PRIMARY_NODE_VERSION: 22
+    PRIMARY_NODE_VERSION: 24
 
 jobs:
     install:

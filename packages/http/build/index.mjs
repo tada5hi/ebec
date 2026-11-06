@@ -33,6 +33,7 @@ function deriveCode(key) {
 function normalizeEntry(key, value) {
     const entry = typeof value === 'number' ? { statusCode: value } : value;
     const statusMessage = entry.statusMessage || deriveStatusMessage(key);
+
     return {
         statusCode: entry.statusCode,
         statusMessage: statusMessage.replace(/'/g, "\\'"),
@@ -69,6 +70,7 @@ function normalizeEntry(key, value) {
         let className = key;
 
         const classErrorSuffix = key.toLocaleLowerCase().endsWith('error');
+
         if (!classErrorSuffix) {
             className += 'Error';
         }
@@ -99,6 +101,7 @@ function normalizeEntry(key, value) {
 
     for (const item of items) {
         const parts = item.fileName.split('.');
+
         parts.pop();
 
         if (item.isServerError) {
@@ -114,16 +117,20 @@ function normalizeEntry(key, value) {
 
     const clientContent = clientExports.join('\n');
     const clientPath = path.join(`${destDirPath}/client/index.ts`);
+
     await saveFile(clientContent, clientPath);
 
     const serverContent = serverExports.join('\n');
     const serverPath = path.join(`${destDirPath}/server/index.ts`);
+
     await saveFile(serverContent, serverPath);
 
     // Generate status text map
     const statusTextEntries = [];
+
     for (const key of keys) {
         const entry = normalizeEntry(key, settings[key]);
+
         statusTextEntries.push(`    ${entry.statusCode}: '${entry.statusMessage}',`);
     }
 
@@ -137,5 +144,6 @@ function normalizeEntry(key, value) {
     ].join('\n');
 
     const statusTextPath = path.join(__dirname, '..', 'src', 'constants.ts');
+
     await saveFile(statusTextContent, statusTextPath);
 })();

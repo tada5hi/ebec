@@ -17,7 +17,7 @@ npm run lint
 npm run lint:fix
 ```
 
-- **Node.js**: >=22.0.0
+- **Development Node.js**: 24.11+ on the 24.x line, or 26+ (CI runs on 24). Published runtime requirements are declared in each package manifest.
 - **Package manager**: npm (workspaces)
 
 ### Packages

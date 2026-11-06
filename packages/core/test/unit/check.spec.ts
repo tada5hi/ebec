@@ -11,21 +11,25 @@ describe('src/check.ts', () => {
     describe('isErrorWithCode', () => {
         it('should match string code', () => {
             const error = new BaseError({ code: 'FOO' });
+
             expect(isErrorWithCode(error, 'FOO')).toBe(true);
         });
 
         it('should reject mismatched string code', () => {
             const error = new BaseError({ code: 'FOO' });
+
             expect(isErrorWithCode(error, 'BAR')).toBe(false);
         });
 
         it('should match code in array', () => {
             const error = new BaseError({ code: 'A' });
+
             expect(isErrorWithCode(error, ['A', 'B'])).toBe(true);
         });
 
         it('should reject code not in array', () => {
             const error = new BaseError({ code: 'C' });
+
             expect(isErrorWithCode(error, ['A', 'B'])).toBe(false);
         });
 
@@ -56,9 +60,9 @@ describe('src/check.ts', () => {
 
         it('should reject a foreign error carrying a code', () => {
             expect(isBaseError({
-                name: 'PrismaError', 
-                message: 'db', 
-                code: 'P2002', 
+                name: 'PrismaError',
+                message: 'db',
+                code: 'P2002',
             })).toBeFalsy();
         });
     });

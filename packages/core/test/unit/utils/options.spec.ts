@@ -8,17 +8,20 @@ import {
 describe('src/options/module.ts', () => {
     it('should extract options from string', () => {
         const options = extractErrorOptions('hello');
+
         expect(options).toEqual({ message: 'hello' });
     });
 
     it('should pass through options object', () => {
         const input: ErrorOptions = { code: 'FOO', message: 'bar' };
         const options = extractErrorOptions(input);
+
         expect(options).toEqual({ code: 'FOO', message: 'bar' });
     });
 
     it('should default to empty object', () => {
         const options = extractErrorOptions();
+
         expect(options).toEqual({});
     });
 

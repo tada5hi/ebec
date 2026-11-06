@@ -32,5 +32,6 @@ export function isBaseErrorGroup(
     }
 
     const { errors } = input as unknown as Record<string, unknown>;
+
     return Array.isArray(errors) && errors.length > 0 && errors.every((e) => isError(e));
 }

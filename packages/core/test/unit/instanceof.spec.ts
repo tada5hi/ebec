@@ -20,6 +20,7 @@ describe('src/helpers/instanceof.ts', () => {
             markInstanceof(target, marker);
 
             const chain = (target as Record<string, unknown>)[INSTANCEOF_PROPERTY];
+
             expect(Array.isArray(chain)).toBe(true);
             expect(chain).toEqual([marker]);
         });
@@ -33,6 +34,7 @@ describe('src/helpers/instanceof.ts', () => {
             markInstanceof(target, barMarker);
 
             const chain = (target as Record<string, unknown>)[INSTANCEOF_PROPERTY];
+
             expect(chain).toEqual([fooMarker, barMarker]);
         });
 
@@ -45,6 +47,7 @@ describe('src/helpers/instanceof.ts', () => {
             markInstanceof(target, marker);
 
             const chain = (target as Record<string, unknown>)[INSTANCEOF_PROPERTY];
+
             expect(chain).toEqual([marker]);
         });
 
@@ -55,6 +58,7 @@ describe('src/helpers/instanceof.ts', () => {
             markInstanceof(target, marker);
 
             const descriptor = Object.getOwnPropertyDescriptor(target, INSTANCEOF_PROPERTY);
+
             expect(descriptor).toBeDefined();
             expect(descriptor?.enumerable).toBe(false);
             expect(descriptor?.writable).toBe(false);
@@ -154,6 +158,7 @@ describe('src/helpers/instanceof.ts', () => {
 
         it('should emit each marker once when a re-marked rehydrated chain holds both forms', () => {
             const rehydrated = JSON.parse(JSON.stringify(new BaseError('boom')));
+
             // markInstanceof dedupes by symbol identity, so re-marking a
             // rehydrated chain appends the symbol next to its string form.
             markInstanceof(rehydrated, BASE_ERROR_INSTANCE);
@@ -288,6 +293,7 @@ describe('src/helpers/instanceof.ts', () => {
 
         it('should let isBaseError fast-path-match a marker-only foreign object', () => {
             const foreign: Record<string, unknown> = {};
+
             Object.defineProperty(foreign, INSTANCEOF_PROPERTY, {
                 value: [BASE_ERROR_INSTANCE],
                 enumerable: false,

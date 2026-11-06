@@ -13,21 +13,25 @@ describe('errors grouping', () => {
 
     it('should have undefined errors when not provided', () => {
         const error = new BaseError('simple');
+
         expect(error.errors).toBeUndefined();
     });
 
     it('should accept empty errors array', () => {
         const error = new BaseError({ errors: [] });
+
         expect(error.errors).toEqual([]);
     });
 
     it('should recognize error group via isBaseErrorGroup', () => {
         const error = new BaseError({ errors: [new Error('child')] });
+
         expect(isBaseErrorGroup(error)).toBeTruthy();
     });
 
     it('should not recognize regular BaseError as group', () => {
         const error = new BaseError('no children');
+
         expect(isBaseErrorGroup(error)).toBeFalsy();
     });
 
@@ -39,9 +43,9 @@ describe('errors grouping', () => {
     it('should include errors in toJSON when present', () => {
         const child = new BaseError({ message: 'child', code: 'CHILD' });
         const error = new BaseError({
-            message: 'parent', 
-            code: 'PARENT', 
-            errors: [child], 
+            message: 'parent',
+            code: 'PARENT',
+            errors: [child],
         });
         const json = error.toJSON();
 

@@ -2,7 +2,7 @@
 
 ## Framework
 
-**Vitest 4.x** with V8 coverage provider.
+**Vitest 5** with V8 coverage provider.
 
 ## Running Tests
 

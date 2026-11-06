@@ -1,3 +1,4 @@
+import type { Issue, IssueMessageTemplates  } from './types';
 /*
  * Copyright (c) 2026.
  * Author Peter Placzek (tada5hi)
@@ -6,23 +7,7 @@
  */
 
 import { interpolate } from '../helpers/interpolate';
-import type { IssueCode } from './constants';
-import type { Issue } from './types';
 
-/**
- * Map of issue `code` → message template. Templates use `{name}`
- * placeholders — the syntax {@link interpolate} understands — and are
- * resolved against `Issue.data` at format time.
- *
- * ```ts
- * const de: IssueMessageTemplates = {
- *     value_invalid: 'Wert ist ungültig',
- *     min_length: 'Mindestens {min} Zeichen',
- *     one_of_failed: 'Keine der Varianten war erfolgreich',
- * };
- * ```
- */
-export type IssueMessageTemplates = Partial<Record<IssueCode, string>> & Record<string, string>;
 
 /**
  * Render an issue's user-facing message.
@@ -45,6 +30,7 @@ export function formatIssue(
 ): string {
     if (templates && issue.code) {
         const template = templates[issue.code];
+
         if (typeof template === 'string') {
             return interpolate(template, issue.data || {});
         }

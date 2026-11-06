@@ -28,6 +28,7 @@ export function isServerError(input: unknown): input is IServerError {
     }
 
     const status = input.status ?? input.statusCode;
+
     return status >= 500 &&
         status < 600;
 }

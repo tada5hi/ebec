@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-error-is-error -- Keep compatibility with the published Node.js runtime requirement. */
 /*
  * Copyright (c) 2026.
  *  Author Peter Placzek (tada5hi)
@@ -12,7 +13,7 @@ export function isError(input: unknown): input is Error {
         return false;
     }
 
-    if (input instanceof Error) {
+    if ((input instanceof Error)) {
         return true;
     }
 
