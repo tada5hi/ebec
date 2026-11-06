@@ -1,5 +1,3 @@
-<!-- NOTE: Keep this file and all corresponding files in the .agents directory updated as the project evolves. When making architectural changes, adding new patterns, or discovering important conventions, update the relevant sections. -->
-
 # ebec — Agent Guide
 
 Extensible ES6 error class library for TypeScript. Provides a `BaseError` with single-input constructor, automatic code derivation, message interpolation, and JSON serialization, plus an HTTP layer with 43 generated status-code error classes. Monorepo with two packages: `@ebec/core` (implementation) and `@ebec/http` (HTTP errors).
@@ -45,6 +43,15 @@ npm run test -w packages/http
 - **[Architecture](.agents/architecture.md)** — Class hierarchy, constructor pattern, code generation
 - **[Testing](.agents/testing.md)** — Vitest setup, test conventions
 - **[Conventions](.agents/conventions.md)** — ESLint, commits, CI/CD, release process
+
+### Writing agent docs
+
+Keep the guides factual and focused on contracts a future change could silently break.
+
+- Update an existing line when an invariant or cross-cutting rule changes. Put defect stories and verification details in the PR, and user-facing changes in the documentation site or release notes.
+- Keep subsystem detail in `.agents/topics/` and link it from the relevant guide; do not import topic files into `CLAUDE.md`.
+- Describe current behavior and cite issues or PRs, rather than local plan files or a running history of completed work.
+- `npm run lint` enforces the shared config's agent-doc size, import-budget and history checks. Preserve the critical contracts when splitting a guide.
 
 ## Commits
 
