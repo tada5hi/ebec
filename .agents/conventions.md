@@ -35,7 +35,7 @@ Two GitHub Actions workflows:
 ### `main.yml` (CI)
 - Triggers: push/PR to develop, master, next, beta, alpha
 - Jobs: install → build → lint + test (parallel)
-- Node 22, concurrency groups cancel in-progress runs
+- the contributor Node version in AGENTS.md, concurrency groups cancel in-progress runs
 
 ### `release.yml` (Release)
 - Triggers: push to master
