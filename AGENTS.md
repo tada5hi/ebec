@@ -40,7 +40,7 @@ npm run test -w packages/http
 ## Detailed Guides
 
 
-AGENTS.md is the loaded entry point and the guide index. Read the linked guides when working on their topics.
+CLAUDE.md imports AGENTS.md and its explicitly listed core guides. Focused topic files are linked for on-demand reading.
 - **[Project Structure](.agents/structure.md)** — Source layout, modules, and dependency layers
 - **[Architecture](.agents/architecture.md)** — Class hierarchy, constructor pattern, code generation
 - **[Testing](.agents/testing.md)** — Vitest setup, test conventions
