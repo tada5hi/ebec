@@ -16,4 +16,31 @@ export type {
     ErrorFactory,
     ErrorCatalog,
 } from './types';
-export * from './issue';
+export {
+    IssueCode,
+    defineIssueGroup,
+    defineIssueItem,
+    flattenIssueGroups,
+    flattenIssueItems,
+    formatIssue,
+    isIssue,
+    isIssueGroup,
+    isIssueItem,
+    prefixIssuePath,
+} from './issue';
+export type {
+    BareIssueCode,
+    DefineIssueItemData,
+    DefineIssueItemReturn,
+    Issue,
+    IssueBase,
+    IssueDataByCode,
+    IssueGroup,
+    IssueItem,
+    IssueItemBare,
+    IssueItemRaw,
+    IssueItemTyped,
+    IssueMessageTemplates,
+    ParameterizedIssueCode,
+    ResolveIssueCode,
+} from './issue';
