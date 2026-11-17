@@ -38,7 +38,7 @@
         "@tada5hi/tsconfig": "^0.7.2",
         "@types/node": "^25.6.0",
         "@vitest/coverage-v8": "^5.1.0",
-        "eslint": "^10.14.0",
+        "eslint": "^10.15.0",
         "husky": "^9.1.7",
         "nx": "^24.0.4",
         "tsdown": "^0.23.7",
